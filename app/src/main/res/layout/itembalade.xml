@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:baselineAligned="false"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blanc">
+
+	<TextView android:id="@+id/titre"
+		android:focusable="false"
+		android:clickable="false"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		android:paddingLeft="10dp"
+		android:paddingTop="10dp"
+		android:paddingBottom="20dp"
+		android:textAllCaps="true"
+		android:textColor="@color/noir"/>
+
+	<LinearLayout android:orientation="horizontal"
+	     android:layout_width="fill_parent"
+		 android:paddingLeft="10dp"
+	     android:layout_gravity="left|top"
+	     android:gravity="left|top"
+         android:layout_height="wrap_content">
+
+		 <ImageView  android:src="@drawable/visuel_default"
+			 android:contentDescription="@string/libDescImage"
+			 android:focusable="false"
+			 android:clickable="false"
+			 android:layout_height="100dp"
+			 android:layout_width="100dp"
+			 android:paddingRight="10dp"
+			 android:paddingBottom="20dp"
+			 android:tag="0"
+			 android:layout_gravity="fill_vertical"
+			 android:scaleType="centerCrop"
+			 android:id="@+id/imgBalade"
+			 />
+
+		<TextView android:id="@+id/description"
+			android:focusable="false"
+			android:clickable="false"
+			android:layout_width="0dp"
+			android:lines="3"
+			android:layout_weight="1"
+			android:layout_height="wrap_content"
+			android:textSize="14sp"
+			android:textStyle="normal"
+			android:paddingLeft="10dp"
+			android:paddingTop="10dp"
+			android:paddingBottom="20dp"
+			android:textColor="@color/noir"/>
+
+
+		 <ImageView  android:src="@drawable/bouton_fleche"
+			 android:contentDescription="@string/libDescImage"
+			 android:focusable="false"
+			 android:clickable="false"
+			 android:layout_height="wrap_content"
+			 android:layout_width="wrap_content"
+			 android:tag="0"
+			 android:paddingLeft="10dp"
+			 android:paddingRight="10dp"
+			 android:layout_gravity="center_vertical"
+			 android:scaleType="centerCrop"
+			 />
+
+
+	 </LinearLayout>
+
+
+
+</LinearLayout>

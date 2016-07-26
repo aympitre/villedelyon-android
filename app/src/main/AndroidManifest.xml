@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="3"
+    android:versionName="2.5"
+    package="air.com.c2is.villedelyon" >
+
+    <permission
+        android:name="my.package.name.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+
+    <uses-permission android:name="my.package.name.permission.MAPS_RECEIVE"/>
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="19" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="air.com.c2is.villedelyon.permission.C2D_MESSAGE" />
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme" >
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+        <receiver android:name=".GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="air.com.c2is.villedelyon" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".GCMNotificationIntentService" />
+
+        <activity
+            android:name="air.com.c2is.villedelyon.SplashScreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.PubScreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.ListType"
+            android:label="@string/title_activity_list_type"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.FormAlerte"
+            android:label="@string/title_activity_form_alerte"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.FragmentDetailEquipement"
+            android:label="@string/title_activity_list_type"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="air.com.c2is.villedelyon.FragmentDetailEvt"
+            android:label="@string/title_activity_detail_evt"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="air.com.c2is.villedelyon.FragmentDetailIncontournable"
+            android:label="@string/title_activity_detail_evt_inc"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="air.com.c2is.villedelyon.FragmentCarte"
+            android:label="@string/title_activity_carte"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.FragmentCarteBalade"
+            android:label="@string/title_activity_carte_balade"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="air.com.c2is.villedelyon.RechercheMarcheFragment"
+            android:label="@string/title_activity_recherche_marche"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.ResMarche"
+            android:label="@string/title_activity_res_recherche_marche"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+
+        <activity
+            android:name="air.com.c2is.villedelyon.favoris"
+            android:label="@string/title_activity_favoris"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.Actualite"
+            android:label="@string/title_activity_actualite"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <!--
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDOz1UxQBvr8HucHkFjAZHbQ-QucYuXkv8" />
+-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDOz1UxQBvr8HucHkFjAZHbQ-QucYuXkv8" />
+
+        <activity
+            android:name="air.com.c2is.villedelyon.SeDeplacer"
+            android:label="@string/title_activity_se_deplacer"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.LeSaviezVous"
+            android:label="@string/title_activity_le_saviez_vous"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.LeSaviezVousDetail"
+            android:label="@string/title_activity_le_saviez_vous_detail"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="air.com.c2is.villedelyon.Reveil"
+            android:label="@string/title_activity_reveil"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.Parametre"
+            android:label="@string/title_activity_parametre"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+
+        <!-- Broadcast receiver -->
+        <receiver   android:name=".AlarmManagerBroadcastReceiver"></receiver>
+    </application>
+
+</manifest>

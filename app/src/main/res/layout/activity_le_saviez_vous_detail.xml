@@ -1,0 +1,148 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="air.com.c2is.villedelyon.LeSaviezVousDetail">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/rouge"
+        android:gravity="left">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rouge"
+            android:gravity="left">
+
+            <include layout="@layout/header"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bouton_gris"
+            android:gravity="left">
+
+            <TextView android:id="@+id/titre"
+                android:textColor="@color/blanc"
+                android:text="@string/libHomeBt7"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingLeft="15dp"
+                android:textSize="18sp"
+                android:textAllCaps="true"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/bouton_gris"
+                android:gravity="right">
+
+                <ImageButton
+                    android:id="@+id/bt_menu"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="15dp"
+                    android:src="@drawable/bouton_home" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/grisbanniere"
+            android:padding="10dp"
+            android:gravity="left">
+
+            <TextView
+                android:id="@+id/titreSavoir"
+                android:textColor="@color/noir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:textAllCaps="true"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/grisnoir"/>
+
+            <WebView
+                android:id="@+id/texteSavoir"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="12sp"
+                android:background="@color/grisbanniere"
+                android:textStyle="normal"
+                android:textColor="@color/gris"
+                android:scrollbars="vertical"
+                tools:ignore="WebViewLayout"></WebView>
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grisbanniere"
+            android:padding="10dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/bt_guichet"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bouton_lyon"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/lbl_bt_savoir1"
+                    android:textSize="14sp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/bleu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblBoutonGuichet"
+                    />
+                <TextView
+                    android:id="@+id/lbl_bt_savoir2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblBoutonGuichet2"
+                    android:layout_marginBottom="5dp"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

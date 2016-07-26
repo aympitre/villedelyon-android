@@ -1,0 +1,204 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="air.com.c2is.villedelyon.RechercheMarcheFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/rouge"
+        android:gravity="left">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rouge"
+        android:gravity="left">
+
+        <include layout="@layout/header"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bouton_gris"
+        android:gravity="left">
+
+        <TextView android:id="@+id/titre"
+            android:textColor="@color/blanc"
+            android:text="@string/libHomeBt1"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingLeft="15dp"
+            android:textSize="18sp"
+            android:textAllCaps="true"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/bouton_gris"
+            android:gravity="right">
+
+            <ImageButton
+                android:id="@+id/bt_menu"
+                android:layout_gravity="center_vertical"
+                android:background="@color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="15dp"
+                android:src="@drawable/bouton_home" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/blanc"
+        android:gravity="top|center_horizontal">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blanc"
+            android:gravity="top|center_horizontal">
+
+            <Button
+                android:id="@+id/bt_menu1"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt6"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+            <Button
+                android:id="@+id/bt_menu2"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt7"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+            <Button
+                android:id="@+id/bt_menu3"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt7"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blanc"
+            android:paddingLeft="20dp"
+            android:gravity="top|left">
+
+                <TextView
+                    android:id="@+id/titreFrom1"
+                    android:text="@string/libFormEvt1"
+                    android:background="@color/blanc"
+                    android:textColor="@color/grisnoir"
+                    android:visibility="visible"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/titreFrom2"
+                    android:text="@string/libFormMarche"
+                    android:background="@color/blanc"
+                    android:textColor="@color/bleu"
+                    android:visibility="visible"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+        </LinearLayout>
+
+        <Spinner
+            android:background="@drawable/bg_liste_deroulante"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/spinnerArrondissement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/arrondissement_tab"
+        />
+
+        <Spinner
+            android:background="@drawable/bg_liste_deroulante"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/spinnerJour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/jour_tab"
+            />
+
+        <Spinner
+            android:background="@drawable/bg_liste_deroulante"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/spinnerTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/theme_tab"
+            />
+
+
+        <Button
+            android:id="@+id/btValider"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/libFormLancer"
+            android:textColor="@color/blanc"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bouton_valider"/>
+
+    </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

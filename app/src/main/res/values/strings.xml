@@ -1,0 +1,157 @@
+<resources>
+    <string name="app_name">Ville de Lyon</string>
+    <string name="facebook_app_id">154365064735937</string>
+    <string name="google_analytics_id">UA-39619680-1</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+
+    <string name="libSplash">Ecran de chargement</string>
+    <string name="libDescImage">Image</string>
+    <string name="libPartager">Partager</string>
+
+    <string name="libHomeBt1">INFOS UTILES</string>
+    <string name="libHomeBt2">ACTUALITES</string>
+    <string name="libHomeBt3">SE DETENDRE</string>
+    <string name="libHomeBt4">SE DEPLACER</string>
+    <string name="libHomeBt5">AGENDA</string>
+    <string name="libHomeBt6">DEMARCHES</string>
+
+    <string name="libHomeBt7">LE SAVIEZ-VOUS ?</string>
+    <string name="libHomeBt8">REVEILLEZ-MOI !</string>
+
+    <string name="lblBoutonVoirAvant">Charger les précédentes</string>
+    <string name="lblBoutonVoirSuite">Charger la suite</string>
+    <string name="lblBoutonGuichet">GUICHETDUSAVOIR.ORG</string>
+    <string name="lblBoutonDirect">LYON EN DIRECT : 04 72 10 30 30</string>
+    <string name="lblBoutonGuichet2">Bibliothèque municiale de Lyon</string>
+
+    <string name="libChargement">Chargement des données en cours...</string>
+    <string name="libChargement1">Veuillez patienter</string>
+    <string name="libChargement2">Chargement en cours...</string>
+    <string name="libChargement3">Chargement de la carte en cours...</string>
+    <string name="libVide">Cette rubrique est vide.</string>
+    <string name="libAucun">Aucun résultat ne correspond à votre recherche.</string>
+    <string name="libApartir">À partir de</string>
+
+    <string name="title_activity_recherche_marche">Moteur de recherche marche</string>
+    <string name="title_activity_list_type">ListType</string>
+    <string name="title_activity_actualite">Actualites</string>
+    <string name="title_activity_se_deplacer">Map</string>
+    <string name="title_activity_le_saviez_vous">Le Saviez Vous</string>
+    <string name="title_activity_le_saviez_vous_detail">Le Saviez Vous détail</string>
+    <string name="title_activity_reveil">Reveil</string>
+    <string name="title_activity_favoris">Favoris</string>
+    <string name="title_activity_parametre">Parametre</string>
+    <string name="title_activity_carte">Carto liste</string>
+    <string name="title_activity_carte_balade">Carto balade</string>
+    <string name="title_activity_detail_evt">Detail evenement</string>
+    <string name="title_activity_detail_evt_inc">Detail incontournable</string>
+    <string name="title_activity_res_recherche_marche">Resultat recherche marche</string>
+    <string name="title_activity_form_alerte">Formulaire alerte</string>
+
+    <string name="libFormAlerteBtPhoto1">PRENDRE UNE PHOTO *</string>
+    <string name="libFormAlerteBtPhoto2">SELECTIONNER UNE PHOTO *</string>
+    <string name="libFormAlerteMonsieur">Monsieur</string>
+    <string name="libFormAlerteMadame">Madame</string>
+    <string name="libFormAlerteLocalisation">LOCALISATION DU SIGNALEMENT OU DE LA DEMANDE</string>
+    <string name="libFormAlerteObligatoire">* les champs suivis d\'une étoile sont obligatoires.</string>
+    <string name="libFormAlerteNom">Votre nom *</string>
+    <string name="libFormAlertePrenom">Votre prénom *</string>
+    <string name="libFormAlerteEmail">Votre email *</string>
+    <string name="libFormAlerteMessage">Votre message*, merci d\'être le plus précis possible.</string>
+    <string name="libFormAlerteNumero">Numéro *</string>
+    <string name="libFormAlerteRue">Rue *</string>
+    <string name="libFormAlerteCp">Code postal *</string>
+    <string name="libFormAlerteVille">Ville *</string>
+    <string name="libFormAlerteTelephone">Votre numéro de portable *</string>
+
+    <string name="libFormAlerteChargement">Chargement...</string>
+    <string name="libFormAlerteTitreOk">VOTRE MESSAGE A BIEN ÉTÉ ENVOYÉ</string>
+    <string name="libFormAlerteTexteOk">Votre message a été transmis à Lyon en Direct le centre de contact de la Ville de Lyon qui va prendre en charge votre demande et vous répondra dans les meilleurs délais.\nSi vous disposez d\'un compte usager "Moncompte" et que vous avez utilisé les mêmes, nom, prénom et adresse e-mail, vous pourrez suivre votre demande sur lyon.fr - accès "Moncompte".\nMerci</string>
+    <string name="libFormAlerteTitreKo">VOTRE MESSAGE N\'A PAS PU ÊTRE ENVOYÉ</string>
+    <string name="libFormAlerteTexteKo">Il peut s\'agir d\'un problème de connexion.\nNous vous remercions de réessayer ultérieurement.</string>
+
+    <string name="libMenu1_1">N°URGENCE</string>
+    <string name="libMenu1_2">VIE QUOTIDIENNE</string>
+    <string name="libMenu1_3">LOISIRS</string>
+    <string name="libMenu3_1">PARCS &#38; JARDINS</string>
+    <string name="libMenu3_2">SPORT</string>
+    <string name="libMenu3_3">BALADES</string>
+    <string name="libMenu4_1">A PIED</string>
+    <string name="libMenu4_2">A VELO</string>
+    <string name="libMenu4_3">EN VOITURE</string>
+    <string name="libMenu5_1">EVENEMENTS</string>
+    <string name="libMenu5_2">RECHERCHER</string>
+    <string name="libMenu5_3">INCONTOURNABLES</string>
+    <string name="libMenu6_1">ET SI...</string>
+    <string name="libMenu6_2">PAR ORGANISME</string>
+    <string name="libMenu6_3">PAR DEMARCHE</string>
+
+    <string name="sqlType1_1">urgence</string>
+    <string name="sqlType1_2">vie-quotidienne</string>
+    <string name="sqlType1_3">loisirs</string>
+    <string name="sqlType3_1">parcs-jardins</string>
+    <string name="sqlType3_2">sport</string>
+    <string name="sqlType6_1">et-si</string>
+    <string name="sqlType6_2">par-organisme</string>
+    <string name="sqlType6_3">par-demarche</string>
+    <string name="sqlBalade">balade</string>
+    <string name="sqlIncontournable">incontournable</string>
+
+    <string name="paramGeoloc">ACTIVER LA GEOLOCALISATION</string>
+    <string name="paramMention">MENTIONS LEGALES</string>
+    <string name="titreFavoris">MES FAVORIS</string>
+
+    <string name="libBtAlarmeOn">ACTIVER L\'ALARME</string>
+    <string name="libBtAlarmeOff">DESACTIVER L\'ALARME</string>
+
+    <string name="txtRecherchePlaceholder">Par titre</string>
+    <string name="libFormEvt1">RECHERCHE :</string>
+    <string name="libFormEvt2">ÉVÈNEMENTS</string>
+    <string name="libFormMarche">MARCHÉS</string>
+    <string name="libFormOk">OK</string>
+    <string name="libFormValider">VALIDER</string>
+    <string name="libFormLancer">LANCER LA RECHERCHE</string>
+    <string name="libFormDeroulante">À partir du :</string>
+
+
+    <string-array name="arrondissement_tab">
+        <item>Par arrondissement</item>
+        <item>1er arrondissement</item>
+        <item>2ème arrondissement</item>
+        <item>3ème arrondissement</item>
+        <item>4ème arrondissement</item>
+        <item>5ème arrondissement</item>
+        <item>6ème arrondissement</item>
+        <item>7ème arrondissement</item>
+        <item>8ème arrondissement</item>
+        <item>9ème arrondissement</item>
+        <item>Tous les arrondissements</item>
+    </string-array>
+
+    <string-array name="jour_tab">
+        <item>Par jour</item>
+        <item>Lundi</item>
+        <item>Mardi</item>
+        <item>Mercredi</item>
+        <item>Jeudi</item>
+        <item>Vendredi</item>
+        <item>Samedi</item>
+        <item>Dimanche</item>
+        <item>Tous les jours</item>
+    </string-array>
+
+    <string-array name="theme_tab">
+        <item>Par thème</item>
+        <item>Marchés alimentaires</item>
+        <item>Marchés biologiques</item>
+        <item>Marchés Art et loisirs</item>
+        <item>Marchés divers</item>
+        <item>Marchés du soir</item>
+        <item>Produits manufacturés</item>
+        <item>Tous les thèmes</item>
+    </string-array>
+
+</resources>

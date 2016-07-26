@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:baselineAligned="false"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/blanc">
+
+	<LinearLayout
+		android:layout_gravity="left"
+		android:gravity="left"
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:gravity="left"
+			android:layout_gravity="center"
+			android:layout_width="0dp"
+			android:layout_weight="2"
+			android:layout_height="wrap_content">
+			<TextView
+				android:id="@+id/titre"
+				android:layout_width	="wrap_content"
+				android:layout_height	="wrap_content"
+				android:textSize		="12sp"
+				android:textStyle		="bold"
+				android:paddingLeft		="20dp"
+				android:paddingTop		="20dp"
+				android:paddingBottom	="20dp"
+				android:textAllCaps		="true"
+				android:textColor		="@color/noir"
+				android:layout_gravity	="left|center_vertical"
+				/>
+		</LinearLayout>
+
+		<LinearLayout
+			android:gravity="right"
+			android:layout_gravity="center"
+			android:layout_width="0dp"
+			android:layout_weight="1"
+			android:layout_height="wrap_content">
+
+			<Button
+				android:id="@+id/numero"
+				android:layout_gravity="center_horizontal"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/bleu"
+				android:background="@drawable/bouton_numero"
+				android:textAlignment="center"
+                android:focusable="false"
+                android:clickable="false"
+                android:gravity="center"
+				android:textSize="14sp"
+				android:layout_marginLeft="0dp"
+				android:layout_marginRight="10dp"
+				android:textAllCaps="true"/>
+		</LinearLayout>
+
+	</LinearLayout>
+</LinearLayout>

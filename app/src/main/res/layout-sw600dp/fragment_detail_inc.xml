@@ -1,0 +1,240 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="air.com.c2is.villedelyon.FragmentDetailIncontournable">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/rouge"
+        android:gravity="left">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rouge"
+        android:gravity="left">
+
+        <include layout="@layout/header"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bouton_gris"
+        android:gravity="left">
+
+        <TextView android:id="@+id/titre"
+            android:textColor="@color/blanc"
+            android:text="@string/libHomeBt5"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingLeft="15dp"
+            android:textSize="18sp"
+            android:textAllCaps="true"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/bouton_gris"
+            android:gravity="right">
+
+            <ImageButton
+                android:id="@+id/bt_menu"
+                android:layout_gravity="center_vertical"
+                android:background="@color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="15dp"
+                android:src="@drawable/bouton_home" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/grisFond"
+        android:gravity="top|center_horizontal">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rouge"
+            android:gravity="top|center_horizontal">
+
+            <Button
+                android:id="@+id/bt_menu1"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt6"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+            <Button
+                android:id="@+id/bt_menu2"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt7"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+            <Button
+                android:id="@+id/bt_menu3"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt7"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/grisFond"
+                android:gravity="top|center_horizontal">
+
+                <ImageView
+                    android:id="@+id/imgVisuel"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top|left">
+
+                    <TextView
+                        android:id="@+id/titrebalade"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:textAllCaps="true"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/bleu"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:tag="1"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/gris"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top|left">
+
+                    <TextView
+                        android:id="@+id/titrebalade2"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/noir"
+                        android:textSize="18sp"
+                        android:text="tijgoptjgpotjgpotk"
+                        android:textAllCaps="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top|left">
+
+                    <TextView
+                        android:id="@+id/titrebaladeduree"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/grisnoir"
+                        android:textSize="18sp"
+                        android:text="tijgoptjgpotjgpotk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:tag="1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@color/gris"/>
+
+                <WebView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:background="@color/transparent"
+                    android:textStyle="normal"
+                    android:textColor="@color/grisnoir"
+                    android:scrollbars="vertical"
+                    tools:ignore="WebViewLayout"></WebView>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

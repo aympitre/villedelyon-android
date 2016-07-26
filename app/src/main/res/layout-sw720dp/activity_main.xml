@@ -1,0 +1,252 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/rouge"
+        android:gravity="left">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rouge"
+            android:gravity="left">
+
+            <include layout="@layout/header"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layChargement"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/rouge"
+        android:gravity="center">
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true" />
+            <TextView android:id="@+id/libChargement"
+                android:textColor="@color/blanc"
+                android:text="@string/libChargement"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:textAlignment="center"
+                android:paddingBottom="5dp"
+                android:textSize="14sp" />
+            <TextView android:id="@+id/libChargement1"
+                android:textColor="@color/blanc"
+                android:text="@string/libChargement1"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:textAlignment="center"
+                android:paddingBottom="5dp"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layContenu"
+            android:visibility="visible"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/rouge"
+            android:layout_marginTop="40dp"
+            android:gravity="top|center_horizontal">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/rouge"
+                    android:gravity="top|center_horizontal">
+
+                    <Button
+                        android:id="@+id/bt_infos_utiles"
+                        android:layout_gravity="center"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blanc"
+                        android:background="@color/transparent"
+                        android:gravity="center"
+                        android:layout_marginRight="40dp"
+                        android:drawablePadding="10dp"
+                        android:drawableTop="@drawable/bouton_infos_utiles2"
+                        android:text="@string/libHomeBt1"
+                        android:textSize="18sp"
+                        android:textAllCaps="true"/>
+
+                    <Button
+                        android:id="@+id/bt_actualites"
+                        android:layout_gravity="center"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blanc"
+                        android:gravity="center"
+                        android:drawablePadding="10dp"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/bouton_atualites2"
+                        android:text="@string/libHomeBt2"
+                        android:textSize="18sp"
+                        android:padding="20dp"
+                        android:textAllCaps="true"/>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/rouge"
+                    android:gravity="top|center_horizontal">
+
+                    <Button
+                        android:id="@+id/bt_detendre"
+                        android:layout_gravity="center"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blanc"
+                        android:gravity="center"
+                        android:layout_marginRight="40dp"
+                        android:drawablePadding="10dp"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/bouton_se_detendre2"
+                        android:text="@string/libHomeBt3"
+                        android:textSize="18sp"
+                        android:textAllCaps="true"/>
+
+                    <Button
+                        android:id="@+id/bt_se_deplacer"
+                        android:layout_gravity="center"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blanc"
+                        android:gravity="center"
+                        android:drawablePadding="10dp"
+                        android:padding="20dp"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/bouton_se_delacer2"
+                        android:text="@string/libHomeBt4"
+                        android:textSize="18sp"
+                        android:textAllCaps="true"/>
+
+
+
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/rouge"
+                android:gravity="top|center_horizontal">
+
+
+
+                <Button
+                    android:id="@+id/bt_agenda"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
+                    android:textColor="@color/blanc"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@drawable/bouton_agenda2"
+                    android:text="@string/libHomeBt5"
+                    android:textSize="18sp"
+                    android:paddingRight="10dp"
+                    android:textAllCaps="true"/>
+
+
+
+                <Button
+                    android:id="@+id/bt_demarche"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blanc"
+                    android:background="@color/transparent"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    android:padding="20dp"
+                    android:drawableTop="@drawable/bouton_demarche2"
+                    android:text="@string/libHomeBt6"
+                    android:textSize="18sp"
+                    android:textAllCaps="true"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bouton_gris"
+        android:gravity="top|center_horizontal">
+
+        <Button
+            android:id="@+id/bt_saviez"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blanc"
+            android:textAlignment="center"
+            android:gravity="right|center_vertical"
+            android:drawablePadding="10dp"
+            android:layout_marginRight="60dp"
+            android:drawableTop="@drawable/bouton_le_saviez_vous2"
+            android:text="@string/libHomeBt7"
+            android:background="@color/transparent"
+            android:textSize="14sp"
+            android:textAllCaps="true"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:id="@+id/bt_reveil"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blanc"
+            android:textAlignment="center"
+            android:gravity="right|center_vertical"
+            android:drawablePadding="10dp"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/bouton_reveillez_moi2"
+            android:text="@string/libHomeBt8"
+            android:textSize="14sp"
+            android:textAllCaps="true"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

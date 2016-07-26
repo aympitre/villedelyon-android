@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="noir">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="gris">#D7D7D7</color>
+    <color name="grisFond">#EEEEEE</color>
+    <color name="grisbanniere">#EEEEEE</color>
+    <color name="blanc">#FFFFFF</color>
+    <color name="rouge">#EB051D</color>
+    <color name="bleu">#027BDA</color>
+    <color name="grisnoir">#404040</color>
+    <color name="grisleger">#5a5858</color>
+    <color name="fondlegende">#3c3b3c</color>
+
+</resources>

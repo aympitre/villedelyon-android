@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:baselineAligned="false"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blanc">
+
+ 	 <LinearLayout android:orientation="horizontal"
+	     android:layout_width="fill_parent"
+ 	     android:paddingTop="5dp"
+		 android:paddingLeft="10dp"
+         android:paddingRight="10dp"
+	     android:layout_gravity="left|top"
+	     android:gravity="left|top"
+         android:layout_height="wrap_content">
+
+		 <ImageView  android:src="@drawable/visuel_default"
+			 android:contentDescription="@string/libDescImage"
+			 android:layout_height="80dp"
+			 android:layout_width="80dp"
+			 android:tag="6"
+			 android:paddingRight="10dp"
+			 android:layout_gravity="fill_vertical"
+			 android:scaleType="centerCrop"
+			 android:id="@+id/imgactualite"
+			 />
+
+		 <LinearLayout android:orientation="vertical"
+			 android:layout_width="0dp"
+			 android:layout_weight="8"
+			 android:paddingTop="5dp"
+			 android:paddingLeft="10dp"
+			 android:paddingRight="10dp"
+			 android:layout_gravity="left|top"
+			 android:gravity="left|top"
+			 android:layout_height="wrap_content">
+
+			 <TextView android:id="@+id/type"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"
+				 android:textSize="12sp"
+				 android:textStyle="bold"
+				 android:paddingLeft="10dp"
+				 android:textAllCaps="true"
+				 android:textColor="@color/bleu"/>
+
+			 <ImageView
+				 android:layout_width="match_parent"
+				 android:layout_height="2dp"
+				 android:tag="1"
+				 android:paddingTop="5dp"
+				 android:paddingBottom="10dp"
+				 android:paddingLeft="10dp"
+				 android:background="@color/gris"/>
+
+			 <TextView android:id="@+id/titreEvtListe"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"
+				 android:text="eoprjgeporjgpoej"
+				 android:textSize="14sp"
+				 android:textStyle="bold"
+				 android:paddingLeft="10dp"
+				 android:textAllCaps="true"
+				 android:textColor="@color/noir"/>
+
+			 <TextView android:id="@+id/accroche"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"
+				 android:textSize="12sp"
+				 android:text=""
+				 android:textStyle="normal"
+                 android:lines="3"
+				 android:paddingLeft="10dp"
+				 android:paddingTop="10dp"
+				 android:textColor="@color/grisnoir"/>
+
+		 </LinearLayout>
+
+		 <LinearLayout
+			 android:gravity="center_horizontal"
+			 android:layout_gravity="center"
+			 android:layout_width="0dp"
+			 android:layout_weight="1"
+			 android:layout_height="wrap_content">
+			 <ImageView
+				 android:src="@drawable/bouton_fleche"
+				 android:contentDescription="@string/libDescImage"
+				 android:layout_height="wrap_content"
+				 android:layout_width="wrap_content"
+				 android:layout_gravity="center_vertical|right"
+				 />
+		 </LinearLayout>
+
+
+	 </LinearLayout>
+
+    
+</LinearLayout>

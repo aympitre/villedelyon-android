@@ -1,0 +1,55 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/degrade"
+    tools:context=".Header">
+
+
+             <LinearLayout
+	                    android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_gravity="right|center_vertical"
+		                android:gravity="right|center_vertical"
+                        android:background="@drawable/lion"
+		                android:orientation="horizontal" >
+
+						 <ImageButton
+							 android:id="@+id/bt_favoris"
+							 android:background="@color/transparent"
+							 android:layout_width="wrap_content"
+							 android:layout_height="wrap_content"
+                             android:src="@drawable/bouton_favoris" />
+                         <TextView
+                             android:textColor="@color/blanc"
+                             android:id="@+id/txt_nbe_favoris"
+                             android:paddingLeft="5dp"
+                             android:paddingRight="20dp"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content" />
+
+						 <ImageButton
+							 android:id="@+id/bt_param"
+							 android:background="@color/transparent"
+							 android:layout_width="wrap_content"
+							 android:layout_height="wrap_content"
+                             android:paddingRight="20dp"
+							 android:src="@drawable/bouton_parametre" />
+
+			</LinearLayout>
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:alpha="1"
+            android:layout_margin="0dp"
+            android:layout_marginBottom="0dp"
+            android:contentDescription="@string/libDescImage"
+            android:gravity="left"
+            android:paddingLeft="0dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/lyon" />
+
+</FrameLayout>

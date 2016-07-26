@@ -1,0 +1,195 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="air.com.c2is.villedelyon.ListTypeFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/blanc"
+        android:gravity="top|center_horizontal">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blanc"
+            android:gravity="top|center_horizontal">
+
+            <Button
+                android:id="@+id/bt_menu1"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt6"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+            <Button
+                android:id="@+id/bt_menu2"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt7"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+            <Button
+                android:id="@+id/bt_menu3"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt7"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/grisbanniere"
+            android:id="@+id/layBtAvant"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bleu"
+                android:textAllCaps="true"
+                android:text="@string/lblBoutonVoirAvant"
+                android:textSize="12sp"
+                android:id="@+id/btSuiteAvant"
+                android:background="@drawable/bouton_lyon"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:background="@color/blanc"
+            android:gravity="top|center_horizontal">
+
+            <LinearLayout
+                android:id="@+id/myChargement"
+                android:orientation="vertical"
+                android:background="@color/blanc"
+                android:visibility="visible"
+                android:layout_width="fill_parent"
+                android:layout_gravity="center"
+                android:layout_height="fill_parent"
+                >
+                <TextView
+                    android:id="@+id/myChargementText"
+                    android:text="@string/libChargement2"
+                    android:background="@color/blanc"
+                    android:visibility="visible"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+            <ListView
+                android:visibility="visible"
+                android:id="@+id/mylistview"
+                android:background="@color/blanc"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="0dp"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/grisbanniere"
+            android:id="@+id/layBtSuite"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bleu"
+                android:textAllCaps="true"
+                android:text="@string/lblBoutonVoirSuite"
+                android:textSize="12sp"
+                android:id="@+id/btSuiteEvt"
+                android:background="@drawable/bouton_lyon"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grisbanniere"
+            android:id="@+id/layLyonDirect"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bleu"
+                android:textAllCaps="true"
+                android:text="@string/lblBoutonDirect"
+                android:textSize="12sp"
+                android:id="@+id/btLyonDirect"
+                android:background="@drawable/bouton_lyon"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layBtCarto"
+            android:layout_marginTop="-78dp"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/btCarto"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:background="@color/transparent"
+                android:src="@drawable/picto_liste"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
