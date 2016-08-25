@@ -116,7 +116,11 @@
             android:label="@string/title_activity_res_recherche_marche"
             android:screenOrientation="portrait">
         </activity>
-
+        <activity
+            android:name="air.com.c2is.villedelyon.RechercheVieFragment"
+            android:label="@string/title_activity_recherche_vie"
+            android:screenOrientation="portrait">
+        </activity>
 
 
         <activity
@@ -129,6 +133,13 @@
             android:label="@string/title_activity_actualite"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name="air.com.c2is.villedelyon.FragmentDetailActualite"
+            android:label="@string/title_activity_detail_actualite"
+            android:screenOrientation="portrait">
+        </activity>
+
+
 
         <meta-data
             android:name="com.google.android.gms.version"

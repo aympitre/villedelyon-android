@@ -201,12 +201,17 @@ public class MainActivity extends Activity {
         Button myBt5 = (Button) findViewById(R.id.bt_agenda);
         Button myBt6 = (Button) findViewById(R.id.bt_demarche);
 
+        Button myBt9 = (Button) findViewById(R.id.bt_favoris_home);
+        Button myBt10 = (Button) findViewById(R.id.bt_quiz);
+
         myBt1.setTypeface(myTypeface);
         myBt2.setTypeface(myTypeface);
         myBt3.setTypeface(myTypeface);
         myBt4.setTypeface(myTypeface);
         myBt5.setTypeface(myTypeface);
         myBt6.setTypeface(myTypeface);
+        myBt9.setTypeface(myTypeface);
+        myBt10.setTypeface(myTypeface);
 
         Button myBt7 = (Button) findViewById(R.id.bt_saviez);
         Button myBt8 = (Button) findViewById(R.id.bt_reveil);
@@ -215,6 +220,7 @@ public class MainActivity extends Activity {
         myBt8.setTypeface(myTypeface);
 
         ImageButton myBtParam   = (ImageButton) findViewById(R.id.bt_param);
+
         ImageButton myBtFavoris = (ImageButton) findViewById(R.id.bt_favoris);
         myBtParam.setOnClickListener(
                 new View.OnClickListener() {
@@ -224,7 +230,7 @@ public class MainActivity extends Activity {
                     }
                 }
         );
-        myBtFavoris.setOnClickListener(
+        myBt9.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, favoris.class);

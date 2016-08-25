@@ -201,6 +201,52 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/rouge"
+                android:gravity="top|center_horizontal">
+
+
+
+                <Button
+                    android:id="@+id/bt_favoris_home"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
+                    android:textColor="@color/blanc"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@drawable/bouton_favori"
+                    android:text="@string/libHomeBt9"
+                    android:textSize="18sp"
+                    android:paddingRight="10dp"
+                    android:textAllCaps="true"/>
+
+
+
+                <Button
+                    android:id="@+id/bt_quiz"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blanc"
+                    android:background="@color/transparent"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    android:padding="20dp"
+                    android:drawableTop="@drawable/bouton_quizz"
+                    android:text="@string/libHomeBt10"
+                    android:textSize="18sp"
+                    android:textAllCaps="true"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     <LinearLayout

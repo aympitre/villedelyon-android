@@ -140,7 +140,7 @@
                     />
                 <TextView
                     android:id="@+id/titreFrom2"
-                    android:text="@string/libFormMarche"
+                    android:text="@string/libFormVie"
                     android:background="@color/blanc"
                     android:textColor="@color/bleu"
                     android:visibility="visible"
@@ -153,27 +153,19 @@
 
         </LinearLayout>
 
-        <Spinner
-            android:background="@drawable/bg_liste_deroulante"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/spinnerArrondissement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/arrondissement_tab"
-        />
 
-        <Spinner
-            android:background="@drawable/bg_liste_deroulante"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/spinnerJour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/jour_tab"
-            />
+        <TextView
+            android:id="@+id/txtIntro"
+            android:text="texte d'introduction"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:textColor="@color/grisnoir"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
 
         <Spinner
             android:background="@drawable/bg_liste_deroulante"
@@ -184,6 +176,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/theme_tab"
+            />
+
+        <Spinner
+            android:background="@drawable/bg_liste_deroulante"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/spinnerJour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/arrondissement_tab"
             />
 
 

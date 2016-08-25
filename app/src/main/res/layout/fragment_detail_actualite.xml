@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="air.com.c2is.villedelyon.RechercheVieFragment">
+    tools:context="air.com.c2is.villedelyon.FragmentDetailActualite">
 
     <LinearLayout
         android:orientation="vertical"
@@ -32,7 +32,7 @@
 
         <TextView android:id="@+id/titre"
             android:textColor="@color/blanc"
-            android:text="@string/libHomeBt1"
+            android:text="@string/libHomeBt5"
             android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -60,19 +60,20 @@
 
     </LinearLayout>
 
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/blanc"
+        android:background="@color/grisFond"
         android:gravity="top|center_horizontal">
-
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blanc"
+            android:background="@color/rouge"
             android:gravity="top|center_horizontal">
 
             <Button
@@ -119,86 +120,90 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/blanc"
-            android:paddingLeft="20dp"
-            android:gravity="top|left">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
 
-                <TextView
-                    android:id="@+id/titreFrom1"
-                    android:text="@string/libFormEvt1"
-                    android:background="@color/blanc"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/grisFond"
+                android:gravity="top|center_horizontal">
+
+                <ImageView
+                    android:id="@+id/imgVisuel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top|left">
+
+                    <TextView
+                        android:id="@+id/titreActualite"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/bleu"
+                        android:textAllCaps="true"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/bouton_favoris"/>
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:tag="1"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/gris"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:tag="1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@color/gris"/>
+
+                <WebView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:background="@color/transparent"
+                    android:textStyle="normal"
                     android:textColor="@color/grisnoir"
-                    android:visibility="visible"
-                    android:paddingTop="20dp"
-                    android:layout_gravity="left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <TextView
-                    android:id="@+id/titreFrom2"
-                    android:text="@string/libFormMarche"
-                    android:background="@color/blanc"
-                    android:textColor="@color/bleu"
-                    android:visibility="visible"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="20dp"
-                    android:layout_gravity="left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-
-        </LinearLayout>
-
-        <Spinner
-            android:background="@drawable/bg_liste_deroulante"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/spinnerArrondissement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/arrondissement_tab"
-        />
-
-        <Spinner
-            android:background="@drawable/bg_liste_deroulante"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/spinnerJour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/jour_tab"
-            />
-
-        <Spinner
-            android:background="@drawable/bg_liste_deroulante"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/spinnerTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/theme_tab"
-            />
+                    android:scrollbars="vertical"
+                    tools:ignore="WebViewLayout"></WebView>
 
 
-        <Button
-            android:id="@+id/btValider"
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/libFormLancer"
-            android:textColor="@color/blanc"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bouton_valider"/>
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

@@ -47,17 +47,19 @@
 			 android:id="@+id/imgactualite"
 			 />
 
-		 <WebView
-			 android:id="@+id/texte"
-			 android:paddingLeft="10dp"
-			 android:layout_width="match_parent"
-			 android:layout_height="wrap_content"
-			 android:textSize="12sp"
-			 android:background="@color/transparent"
-			 android:textStyle="normal"
-			 android:textColor="@color/gris"
-			 android:scrollbars="vertical"
-			 tools:ignore="WebViewLayout"></WebView>
+		 <TextView
+			 android:id="@+id/description"
+			 android:layout_width	="match_parent"
+			 android:layout_height	="wrap_content"
+			 android:textSize		="14sp"
+			 android:textStyle		="bold"
+			 android:paddingLeft	="20dp"
+			 android:paddingTop		="20dp"
+			 android:paddingBottom	="20dp"
+			 android:textAllCaps	="true"
+			 android:textColor		="@color/noir"
+			 android:layout_gravity	="center_vertical"
+			 />
 
 	</LinearLayout>
 

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -116,7 +117,7 @@ public class Actualite extends Activity {
                     public void onClick(View v) {
                         Intent intent = new Intent(Actualite.this, Parametre.class);
                         startActivityForResult(intent, 2);
-                    }
+                  }
                 }
         );
         myBtFavoris.setOnClickListener(
@@ -124,14 +125,24 @@ public class Actualite extends Activity {
                     public void onClick(View v) {
                         Intent intent = new Intent(Actualite.this, favoris.class);
                         startActivityForResult(intent, 2);
-
                     }
                 }
         );
 
         listItems = new ArrayList<HashMap<String, Object>>();
 
-        Log.d("myTag", "load actu");
+        mylistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Log.d("myTag", "This is my MalformedURLException");
+/*
+                Intent intent = new Intent(Actualite.this, FragmentDetailActualite.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivityForResult(intent, 0);
+                */
+            }
+        });
 
         myWebFetch = new myAsyncTask2();
         myWebFetch.execute();
@@ -228,13 +239,23 @@ public class Actualite extends Activity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
+            /*
             SimpleAdapter mSchedule = new SimpleAdapter (Config.myHome.getBaseContext(), listItems, R.layout.itemactualite,
                     new String[] {"titreActu","texte","image"},
                     new int[] {R.id.titreActualite, R.id.texte, R.id.imgactualite});
 
             mSchedule.setViewBinder(new MyViewBinderActu());
+*/
+
+            SimpleAdapter mSchedule = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itemactualite,
+                    new String[]{"titreActu"},
+                    new int[]{R.id.titreActualite});
+
+            mSchedule.setViewBinder(new MyViewBinderActu());
+
 
             mylistview.setAdapter(mSchedule);
+
             myChargement.setVisibility(View.GONE);
             mylistview.setVisibility(View.VISIBLE);
 

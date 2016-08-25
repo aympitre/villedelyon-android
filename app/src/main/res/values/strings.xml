@@ -17,6 +17,8 @@
     <string name="libHomeBt4">SE DEPLACER</string>
     <string name="libHomeBt5">AGENDA</string>
     <string name="libHomeBt6">DEMARCHES</string>
+    <string name="libHomeBt9">MES FAVORIS</string>
+    <string name="libHomeBt10">LYON QUIZ</string>
 
     <string name="libHomeBt7">LE SAVIEZ-VOUS ?</string>
     <string name="libHomeBt8">REVEILLEZ-MOI !</string>
@@ -35,6 +37,7 @@
     <string name="libAucun">Aucun résultat ne correspond à votre recherche.</string>
     <string name="libApartir">À partir de</string>
 
+    <string name="title_activity_recherche_vie">Moteur de recherche lyon ville equitable</string>
     <string name="title_activity_recherche_marche">Moteur de recherche marche</string>
     <string name="title_activity_list_type">ListType</string>
     <string name="title_activity_actualite">Actualites</string>
@@ -50,6 +53,7 @@
     <string name="title_activity_detail_evt_inc">Detail incontournable</string>
     <string name="title_activity_res_recherche_marche">Resultat recherche marche</string>
     <string name="title_activity_form_alerte">Formulaire alerte</string>
+    <string name="title_activity_detail_actualite">Detail actualité</string>
 
     <string name="libFormAlerteBtPhoto1">PRENDRE UNE PHOTO *</string>
     <string name="libFormAlerteBtPhoto2">SELECTIONNER UNE PHOTO *</string>
@@ -115,7 +119,7 @@
     <string name="libFormValider">VALIDER</string>
     <string name="libFormLancer">LANCER LA RECHERCHE</string>
     <string name="libFormDeroulante">À partir du :</string>
-
+    <string name="libFormVie">LYON VILLE EQUITABLE ET DURABLE</string>
 
     <string-array name="arrondissement_tab">
         <item>Par arrondissement</item>
