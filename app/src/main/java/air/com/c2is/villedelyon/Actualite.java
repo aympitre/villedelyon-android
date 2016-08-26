@@ -76,6 +76,7 @@ public class Actualite extends Activity {
         myChargement= (LinearLayout) this.findViewById(R.id.myChargement);
         myPub       = (ImageButton) this.findViewById(R.id.myPub);
 
+
         flag_load_fini = 0;
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "Oswald-Regular.ttf");
         TextView myChargementText   = (TextView) findViewById(R.id.myChargementText);
@@ -135,12 +136,12 @@ public class Actualite extends Activity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Log.d("myTag", "This is my MalformedURLException");
-/*
+                Config.titreActu    = listItems.get(position).get("titreActu").toString();
+                Config.urlActu      = listItems.get(position).get("url_actu").toString();
+
                 Intent intent = new Intent(Actualite.this, FragmentDetailActualite.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 0);
-                */
             }
         });
 
@@ -239,20 +240,11 @@ public class Actualite extends Activity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            /*
             SimpleAdapter mSchedule = new SimpleAdapter (Config.myHome.getBaseContext(), listItems, R.layout.itemactualite,
                     new String[] {"titreActu","texte","image"},
-                    new int[] {R.id.titreActualite, R.id.texte, R.id.imgactualite});
+                    new int[] {R.id.titreActualite, R.id.description, R.id.imgactualite});
 
             mSchedule.setViewBinder(new MyViewBinderActu());
-*/
-
-            SimpleAdapter mSchedule = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itemactualite,
-                    new String[]{"titreActu"},
-                    new int[]{R.id.titreActualite});
-
-            mSchedule.setViewBinder(new MyViewBinderActu());
-
 
             mylistview.setAdapter(mSchedule);
 
@@ -275,7 +267,7 @@ public class Actualite extends Activity {
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://appvilledelyon.c2is.fr/actualites.php?limit="+Config.LIMIT_ACTU);
+                    URL url = new URL("http://appvilledelyon.c2is.fr/actualites.php?limit="+Config.LIMIT_ACTU+"&version="+Config.VERSION_API);
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());
@@ -302,6 +294,10 @@ public class Actualite extends Activity {
 
                             }else if(listNode.item(j).getNodeName().equals("xml_id")){
                                 mapping.put("xml_id",listNode.item(j).getTextContent());
+
+                            }else if(listNode.item(j).getNodeName().equals("url_actu")){
+                                mapping.put("url_actu",listNode.item(j).getTextContent());
+
                             }
                         }
                         listItems.add(mapping);

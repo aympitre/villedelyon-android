@@ -197,7 +197,7 @@
                                 android:layout_margin="15dp"
                                 android:id="@+id/btAddFavoris"
                                 android:background="@color/transparent"
-                                android:src="@drawable/picto_favoris"
+                                android:src="@drawable/bt_favoris_off"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp" />
                         </LinearLayout>

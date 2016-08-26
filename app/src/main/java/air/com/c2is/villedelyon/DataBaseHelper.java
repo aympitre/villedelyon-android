@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+import java.util.HashMap;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -112,7 +113,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     	//Open your local db as the input stream
     	InputStream myInput = myContext.getAssets().open(DB_NAME);
 
-		Log.d("myTag"," mon cotext : " + myContext.getAssets().toString());
 
     	// Path to the just created empty db
     	String outFileName = DB_PATH + DB_NAME;
@@ -231,6 +231,10 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	public void deleteFavoris(String p_id) {
 		myDataBase.delete("Favoris", "id_equipement=" + p_id, null);
 	}
+	public void deleteFavorisActu(int p_id) {
+		myDataBase.delete("Favoris", "id_favoris=" + p_id, null);
+	}
+
 	public void deleteFavorisXml(String p_id) {
 		myDataBase.delete("Favoris", "xml_equipement='" + p_id + "'", null);
 	}
@@ -381,6 +385,40 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
 		return c;
 	}
+	public int checkFavorisActu(String p_url) {
+		Cursor c;
+
+		c = myDataBase.rawQuery("SELECT id_favoris FROM Favoris WHERE url='"+p_url+"'", null);
+
+		try {
+			if (c != null) {
+				if (c.moveToNext()) {
+					return c.getInt(0);
+				}
+			}
+		}catch(SQLException sqle){
+			throw sqle;
+		}
+
+		return 0;
+	}
+	public int checkFavorisEvt(String p_param) {
+		Cursor c;
+
+		c = myDataBase.rawQuery("SELECT id_favoris FROM Favoris WHERE xml_id='"+p_param+"'", null);
+
+		try {
+			if (c != null) {
+				if (c.moveToNext()) {
+					return c.getInt(0);
+				}
+			}
+		}catch(SQLException sqle){
+			throw sqle;
+		}
+
+		return 0;
+	}
 
 	public Cursor loadTitreEquipementFromXML(String p_xml_id) {
 		Cursor c;
@@ -392,8 +430,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
 	public Cursor loadEquipementFromXML(String p_xml_id) {
 		Cursor c;
-
-		Log.d("myTag", "SELECT titre, adresse, code_postal, ville, horaires, fermeture_exceptionnelle, site_web, email, telephone, afficher_complement, complement_info, longitude, latitude, id_equipement, type_associe, xml_id  FROM equipement WHERE xml_id='"+p_xml_id+"' ORDER BY arrondissement");
 
 		c = myDataBase.rawQuery("SELECT titre, adresse, code_postal, ville, horaires, fermeture_exceptionnelle, site_web, email, telephone, afficher_complement, complement_info, longitude, latitude, id_equipement, type_associe, xml_id  FROM equipement WHERE xml_id='"+p_xml_id+"' ORDER BY arrondissement", null);
 

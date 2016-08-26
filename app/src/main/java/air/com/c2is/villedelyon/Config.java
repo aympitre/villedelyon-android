@@ -66,6 +66,9 @@ public class Config {
 	public static ResMarche myResMarche;
 	public static SeDeplacer mySeDeplacer;
 
+	public static String titreActu = "";
+	public static String urlActu   = "";
+
 	public static FragmentCarte myFragCarte;
 	public static FragmentDetailEquipement myDetailEquip;
 	public static FragmentCarteBalade myCarteBalade;

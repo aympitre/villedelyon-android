@@ -186,24 +186,51 @@
                     android:layout_marginRight="10dp"
                     android:background="@color/grisnoir"/>
 
-                <TextView
-                    android:id="@+id/titreDetailEvt"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/grisnoir"
-                    android:textAllCaps="true"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/dateDetailEvt"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/grisnoir"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/titreDetailEvt"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/grisnoir"
+                            android:textAllCaps="true"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/dateDetailEvt"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/grisnoir"
+                            android:textAllCaps="false"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+                        <ImageButton
+                            android:id="@+id/btFavoris"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/transparent"
+                            android:src="@drawable/bt_favoris_off"/>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"

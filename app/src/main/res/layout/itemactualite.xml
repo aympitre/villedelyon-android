@@ -43,6 +43,7 @@
 				 android:layout_width="80dp"
 				 android:tag="7"
 				 android:paddingRight="10dp"
+				 android:paddingBottom="10dp"
 				 android:layout_gravity="fill_vertical"
 				 android:scaleType="centerCrop"
 				 android:id="@+id/imgactualite"
@@ -53,12 +54,10 @@
 				 android:layout_width	="match_parent"
 				 android:layout_height	="wrap_content"
 				 android:textSize		="14sp"
-				 android:textStyle		="bold"
 				 android:paddingLeft	="20dp"
-				 android:paddingTop		="20dp"
 				 android:paddingBottom	="20dp"
-				 android:textAllCaps	="true"
-				 android:textColor		="@color/noir"
+				 android:textAllCaps	="false"
+				 android:textColor		="@color/grisleger"
 				 android:layout_gravity	="center_vertical"
 				 />
 

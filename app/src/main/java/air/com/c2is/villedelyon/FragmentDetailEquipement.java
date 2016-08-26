@@ -453,9 +453,9 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
     public void majImgFavoris() {
         if (flagIsFavoris == 1) {
-            btAddFavoris.setImageResource(R.drawable.picto_favoris_on);
+            btAddFavoris.setImageResource(R.drawable.bt_favoris_on);
         } else {
-            btAddFavoris.setImageResource(R.drawable.picto_favoris);
+            btAddFavoris.setImageResource(R.drawable.bt_favoris_off);
         }
     }
 

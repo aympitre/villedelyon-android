@@ -382,6 +382,8 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
                                     mapping.put("equipement", listNode.item(j).getTextContent());
                                 } else if (listNode.item(j).getNodeName().equals("evenement_url")) {
                                     mapping.put("evenement_url", listNode.item(j).getTextContent());
+                                } else if (listNode.item(j).getNodeName().equals("xml_id")) {
+                                    mapping.put("xml_id", listNode.item(j).getTextContent());
                                 }
 
                             //}

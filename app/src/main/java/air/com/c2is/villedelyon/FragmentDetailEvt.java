@@ -58,6 +58,8 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
     public Button btEquipement;
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
+    public ImageButton myAddFavoris;
+    public int id_favoris;
 
     public FragmentDetailEvt() {
     }
@@ -166,6 +168,8 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
                 }
         );
 
+
+
         TextView myTitre    = (TextView) findViewById(R.id.titreDetailEvt);
         myTitre.setTypeface(myTypeface);
         myTitre.setText(Config.myContentValue.get("titre").toString());
@@ -201,6 +205,30 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
             throw sqle;
         }
 
+        myAddFavoris  = (ImageButton) findViewById(R.id.btFavoris);
+
+        myAddFavoris.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (id_favoris==0) {
+                            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
+                            id_favoris = 2;
+                        }else{
+                            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_off));
+                            myDbHelper.deleteFavorisActu(id_favoris);
+                            id_favoris = 0;
+                        }
+                    }
+                }
+        );
+
+        id_favoris = myDbHelper.checkFavorisEvt(Config.myContentValue.get("xml_id").toString());
+
+        if (id_favoris!=0) {
+            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
+        }
+
+
         btEquipement    = (Button) findViewById(R.id.btEqt);
 
         if (Config.myContentValue.get("equipement").toString().length()>0) {
@@ -217,7 +245,7 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
             }catch(SQLException sqle){
                 throw sqle;
             }
-            myDbHelper.close();
+            //myDbHelper.close();
 
             if (flag_ok==0) {
                 myAsyncTask2 myWebFetch = new myAsyncTask2();

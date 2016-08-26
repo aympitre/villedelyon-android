@@ -1,14 +1,19 @@
 package air.com.c2is.villedelyon;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.SQLException;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +22,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
@@ -24,8 +30,21 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 
 /**
@@ -36,6 +55,10 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
     public ArrayList<HashMap<String, Object>> listItems;
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
+    public WebView myTexte;
+    public ImageButton myAddFavoris;
+    public int id_favoris;
+
 
     public FragmentDetailActualite() {
     }
@@ -86,19 +109,59 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
 
         TextView myTitre    = (TextView) findViewById(R.id.titreActualite);
         myTitre.setTypeface(myTypeface);
+        myTitre.setText(Config.titreActu);
 
-
-        WebView myTexte  = (WebView) findViewById(R.id.description);
+        myTexte  = (WebView) findViewById(R.id.description);
         WebSettings settings = myTexte.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
         myTexte.setBackgroundColor(Color.TRANSPARENT);
 
 
+        // lancement du chargement HTTP
+        myAsyncTask2 myWebFetch = new myAsyncTask2();
+        myWebFetch.execute();
+
+
 //        myTexte.loadDataWithBaseURL(null, Config.myContentValue.get("description").toString(), "text/html", "UTF-8", null);
 
+        myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
+        try {
+            myDbHelper.openDataBase();
+        }catch(SQLException sqle){
+            throw sqle;
+        }
 
-        ImageButton myBtParam = (ImageButton) findViewById(R.id.bt_param);
-        ImageButton myBtFavoris = (ImageButton) findViewById(R.id.bt_favoris);
+        ImageButton myBtParam       = (ImageButton) findViewById(R.id.bt_param);
+        ImageButton myBtFavoris     = (ImageButton) findViewById(R.id.bt_favoris);
+        myAddFavoris                = (ImageButton) findViewById(R.id.btFavoris);
+
+        myAddFavoris.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (id_favoris==0) {
+                            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
+                            id_favoris = 2;
+                        }else{
+                            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_off));
+
+                            myDbHelper.deleteFavorisActu(id_favoris);
+
+                            id_favoris = 0;
+                        }
+
+
+                    }
+                }
+        );
+
+
+
+        id_favoris = myDbHelper.checkFavorisActu(Config.urlActu);
+
+        if (id_favoris!=0) {
+            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
+        }
+
         myBtParam.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -119,6 +182,76 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
 
 
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
+    }
+
+
+
+    class myAsyncTask2 extends AsyncTask<Void, Void, Void> {
+        Document doc;
+
+        myAsyncTask2()    {
+
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+            String retour   = doc.outerHtml().toString();
+            int dep         = retour.indexOf("alaune_detail_chapo");
+            int fin         = retour.indexOf("milieu_colonne_droite");
+
+            retour = retour.substring(dep+21,fin);
+
+            myTexte.loadDataWithBaseURL(null, retour.replace("Et aussi...","<!--"), "text/html", "UTF-8", null);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.d("myTag", "je onPreExecute");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+
+                //try {
+                    URL url                  = new URL(Config.urlActu);
+                    URLConnection connection = url.openConnection();
+
+
+                doc = Jsoup.connect(Config.urlActu).get();
+                Elements newsHeadlines = doc.select("#mp-itn b a");
+                //Elements newsHeadlines = doc.body();
+
+//                    String theString         = IOUtils.toString(url.openStream(), "UTF-8");
+
+                    Log.d("myTag", ">>"+ doc.title());
+                Log.d("myTag", ">>"+ doc.outerHtml());
+
+
+
+/*
+                } catch (MalformedURLException e) {
+                    Log.d("myTag", "This is my MalformedURLException");
+                } catch (Exception e) {
+                    Log.d("myTag", "erreur : " + e.getMessage());
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+*/
+                return null;
+
+            } catch (Exception e) {
+                Log.d("myTag", "erreur:" + e.toString());
+                //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
+            }
+
+            return null;
+        }
     }
 
     public void goReveilOn() {

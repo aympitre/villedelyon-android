@@ -18,7 +18,20 @@ public class MyViewBinderActu implements ViewBinder {
 
 			return true;
 		}
-		
+
+		if (view.getId() == R.id.description) {
+			String myData2 		= (String) data;
+			TextView myTexte 	= (TextView) view;
+
+			/*Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");
+			myTexte.setTypeface(myTypeface);
+			myTexte.getPaint().setAntiAlias(true);
+*/
+			myTexte.setText(myData2);
+
+			return true;
+		}
+
 		if ((view.getId() == R.id.titre)||(view.getId() == R.id.titreActualite)) {
 			String myData2 		= (String) data;
 			TextView myTexte 	= (TextView) view;
