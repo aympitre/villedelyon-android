@@ -121,14 +121,17 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
         titre.setTypeface(myTypeface);
         titre.setText(getResources().getString(R.string.libHomeBt5));
 
-        FacebookSdk.sdkInitialize(Config.myHome.getApplicationContext());
-
-        ShareLinkContent content = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse(Config.myContentValue.get("evenement_url").toString()))
-                .build();
-
         ShareButton shareButton = (ShareButton) findViewById(R.id.share_button);
-        shareButton.setShareContent(content);
+        if (Config.flagEvtFromFav==1) {
+            shareButton.setVisibility(View.GONE);
+        }else {
+            FacebookSdk.sdkInitialize(Config.myHome.getApplicationContext());
+
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse(Config.myContentValue.get("evenement_url").toString()))
+                    .build();
+            shareButton.setShareContent(content);
+        }
 
         Button myMenu1    = (Button) findViewById(R.id.bt_menu1);
         Button myMenu2    = (Button) findViewById(R.id.bt_menu2);
@@ -169,7 +172,6 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
         );
 
 
-
         TextView myTitre    = (TextView) findViewById(R.id.titreDetailEvt);
         myTitre.setTypeface(myTypeface);
         myTitre.setText(Config.myContentValue.get("titre").toString());
@@ -189,7 +191,11 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
             task.execute(Config.myContentValue.get("visuel").toString());
         }
 
-        Config.xml_id = Config.myContentValue.get("equipement").toString();
+        if (Config.flagEvtFromFav==1) {
+            Config.xml_id = ""; //Config.myContentValue.get("xml_equipement").toString();
+        }else {
+            Config.xml_id = Config.myContentValue.get("equipement").toString();
+        }
 
         WebView myTexte2  = (WebView) findViewById(R.id.descriptionEvt);
         WebSettings settings = myTexte2.getSettings();
@@ -212,7 +218,8 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
                     public void onClick(View v) {
                         if (id_favoris==0) {
                             myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
-                            id_favoris = 2;
+                            addToFavoris();
+
                         }else{
                             myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_off));
                             myDbHelper.deleteFavorisActu(id_favoris);
@@ -222,7 +229,12 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
                 }
         );
 
-        id_favoris = myDbHelper.checkFavorisEvt(Config.myContentValue.get("xml_id").toString());
+        if (Config.flagEvtFromFav==1) {
+            Config.flagEvtFromFav = 0;
+            id_favoris = 0;
+        }else {
+            id_favoris = myDbHelper.checkFavorisEvt(Config.myContentValue.get("xml_id").toString());
+        }
 
         if (id_favoris!=0) {
             myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
@@ -327,6 +339,23 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
 
 
+    }
+
+    public void addToFavoris() {
+        ContentValues myValue = new ContentValues();
+
+        myValue.put("libelle"           , Config.myContentValue.get("titre").toString());
+        myValue.put("type_principal"    , Config.myContentValue.get("type_principal").toString());
+        myValue.put("accroche"          , Config.myContentValue.get("accroche").toString());
+        if (Config.myContentValue.get("visuel").toString().length()>0) {
+            myValue.put("visuel", Config.myContentValue.get("visuel").toString());
+        }
+        myValue.put("description"       , Config.myContentValue.get("description").toString());
+        myValue.put("xml_equipement"    , Config.xml_id);
+
+        myValue.put("type"    , 2);
+
+        id_favoris = (int) myDbHelper.insertFavorisActu(myValue);
     }
 
     private Document parseXML(InputStream stream)

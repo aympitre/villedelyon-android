@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -61,13 +62,25 @@ public class favoris extends android.support.v4.app.FragmentActivity {
 
     public void loadEquipement() {
         Config.flagContentEquip = 0;
-
         Config.xml_id           = Config.myContentValue.get("xml_equipement").toString();
 
         Intent intent = new Intent(favoris.this, FragmentDetailEquipement.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivityForResult(intent, 0);
     }
+
+    public void loadEvenement() {
+        Config.flagEvtFromFav = 1;
+
+        Intent intent = new Intent(favoris.this, FragmentDetailEvt.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivityForResult(intent, 0);
+    }
+
+    public void loadActualite() {
+        Log.d("myTag", "je loadActualite");
+    }
+
 
     @Override
     protected void onPause() {

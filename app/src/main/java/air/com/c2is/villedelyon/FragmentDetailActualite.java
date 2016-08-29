@@ -140,16 +140,14 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
                     public void onClick(View v) {
                         if (id_favoris==0) {
                             myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
-                            id_favoris = 2;
+                            addToFavoris();
+
                         }else{
                             myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_off));
-
                             myDbHelper.deleteFavorisActu(id_favoris);
 
                             id_favoris = 0;
                         }
-
-
                     }
                 }
         );
@@ -184,6 +182,16 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
     }
 
+
+    public void addToFavoris() {
+        ContentValues myValue = new ContentValues();
+
+        myValue.put("libelle" , Config.titreActu);
+        myValue.put("type"    , 1);
+        myValue.put("url"     , Config.urlActu);
+
+        id_favoris = (int) myDbHelper.insertFavorisActu(myValue);
+    }
 
 
     class myAsyncTask2 extends AsyncTask<Void, Void, Void> {
@@ -229,8 +237,8 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
 
 //                    String theString         = IOUtils.toString(url.openStream(), "UTF-8");
 
-                    Log.d("myTag", ">>"+ doc.title());
-                Log.d("myTag", ">>"+ doc.outerHtml());
+//                    Log.d("myTag", ">>"+ doc.title());
+//                Log.d("myTag", ">>"+ doc.outerHtml());
 
 
 

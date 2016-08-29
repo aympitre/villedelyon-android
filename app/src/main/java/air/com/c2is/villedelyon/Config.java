@@ -122,7 +122,9 @@ public class Config {
 	public static String myDemarcheTitre = "";
 	public static String myDemarcheDesc  = "";
 
-	public static int flagContentEquip = 0;
+	public static int flagContentEquip 	= 0;
+	public static int flagEvtFromFav	= 0;
+
 	public static ContentValues myContentEquip;
 	public static HashMap<String, Object> myCourant;
 
@@ -152,6 +154,8 @@ public class Config {
 			}else {
 				p_param.setText(String.valueOf(nbe));
 			}
+			// ici pour virer le favoris numero dans le header
+			p_param.setText("");
 
 			myDbHelperTemp.close();
 		}catch(Exception e){

@@ -234,10 +234,15 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	public void deleteFavorisActu(int p_id) {
 		myDataBase.delete("Favoris", "id_favoris=" + p_id, null);
 	}
-
 	public void deleteFavorisXml(String p_id) {
 		myDataBase.delete("Favoris", "xml_equipement='" + p_id + "'", null);
 	}
+
+	public long insertFavorisActu(ContentValues p_param) {
+		return myDataBase.insert("Favoris", null, p_param);
+
+	}
+
 
 	public void deleteSousType() { myDataBase.delete("soustype","",null); }
 	public void deleteBalade() {
@@ -381,7 +386,8 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	public Cursor loadFavoris() {
 		Cursor c;
 
-		c = myDataBase.rawQuery("SELECT libelle, id_equipement, xml_equipement FROM Favoris", null);
+		c = myDataBase.rawQuery("SELECT libelle, id_equipement, xml_equipement, type, type_principal, accroche, visuel, description FROM Favoris", null);
+
 
 		return c;
 	}

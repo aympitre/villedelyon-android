@@ -1,5 +1,12 @@
 package air.com.c2is.villedelyon;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +43,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SeDeplacer extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -53,11 +64,72 @@ public class SeDeplacer extends FragmentActivity {
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
 
+    public String urlAuto       = "https://download.data.grandlyon.com/wfs/grandlyon";
+    public String urlParking    = "http://appvilledelyon.c2is.fr/opendata.php?flag=1";
+    public String urlPmr        = "https://download.data.grandlyon.com/wfs/grandlyon";
+
+    public String urlVelov      = "http://appvilledelyon.c2is.fr/opendata.php?flag=0";
+    public String urlParcVelo   = "https://download.data.grandlyon.com/wfs/grandlyon";
+
+    public List<NameValuePair> nameValuePairAuto;
+    public List<NameValuePair> nameValuePairParking;
+    public List<NameValuePair> nameValuePairPmr;
+    public List<NameValuePair> nameValuePairVelov;
+    public List<NameValuePair> nameValuePairParcVelo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         analytics = GoogleAnalytics.getInstance(this);
         analytics.setLocalDispatchPeriod(1800);
         tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
+
+        // Init des parametres des webservices
+            nameValuePairAuto = new ArrayList<NameValuePair>(2);
+            nameValuePairAuto.add(new BasicNameValuePair("SERVICE"      , "WFS"));
+            nameValuePairAuto.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
+            nameValuePairAuto.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
+            nameValuePairAuto.add(new BasicNameValuePair("maxfeatures"  , "2000"));
+            nameValuePairAuto.add(new BasicNameValuePair("request"      , "GetFeature"));
+            nameValuePairAuto.add(new BasicNameValuePair("typename"     , "pvo_patrimoine_voirie.pvostationautopartage"));
+
+            nameValuePairParking = new ArrayList<NameValuePair>(2);
+        /*
+        nameValuePairParking.add(new BasicNameValuePair("SERVICE"      , "WFS"));
+            nameValuePairParking.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
+            nameValuePairParking.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
+            nameValuePairParking.add(new BasicNameValuePair("maxfeatures"  , "2000"));
+            nameValuePairParking.add(new BasicNameValuePair("request"      , "GetFeature"));
+            nameValuePairParking.add(new BasicNameValuePair("typename"     , "pvo_patrimoine_voirie.pvoparkingtr"));
+*/
+            nameValuePairPmr = new ArrayList<NameValuePair>(2);
+            nameValuePairPmr.add(new BasicNameValuePair("SERVICE"      , "WFS"));
+            nameValuePairPmr.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
+            nameValuePairPmr.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
+            nameValuePairPmr.add(new BasicNameValuePair("maxfeatures"  , "2000"));
+            nameValuePairPmr.add(new BasicNameValuePair("request"      , "GetFeature"));
+            nameValuePairPmr.add(new BasicNameValuePair("typename"     , "vdl_deplacements.emplacement_pmr"));
+
+        nameValuePairVelov = new ArrayList<NameValuePair>(2);
+        /*
+        nameValuePairVelov.add(new BasicNameValuePair("SERVICE"      , "WFS"));
+        nameValuePairVelov.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
+        nameValuePairVelov.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
+        nameValuePairVelov.add(new BasicNameValuePair("maxfeatures"  , "3030"));
+        nameValuePairVelov.add(new BasicNameValuePair("request"      , "GetFeature"));
+        nameValuePairVelov.add(new BasicNameValuePair("typename"     , "jcd_jcdecaux.jcdvelov"));
+        nameValuePairVelov.add(new BasicNameValuePair("SRSNAME"     , "urn:ogc:def:crs:EPSG::4326"));
+*/
+        nameValuePairParcVelo = new ArrayList<NameValuePair>(2);
+        nameValuePairParcVelo.add(new BasicNameValuePair("SERVICE"      , "WFS"));
+        nameValuePairParcVelo.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
+        nameValuePairParcVelo.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
+        nameValuePairParcVelo.add(new BasicNameValuePair("maxfeatures"  , "3030"));
+        nameValuePairParcVelo.add(new BasicNameValuePair("request"      , "GetFeature"));
+        nameValuePairParcVelo.add(new BasicNameValuePair("typename"     , "pvo_patrimoine_voirie.pvostationnementvelo"));
+        nameValuePairParcVelo.add(new BasicNameValuePair("SRSNAME"     , "urn:ogc:def:crs:EPSG::4326"));
+
+
 
         if (Config.MENU_ACTIVITE==2) {
             tracker.setScreenName("/Se deplacer à velo");
@@ -390,7 +462,7 @@ public class SeDeplacer extends FragmentActivity {
     }
     */
 
-    private void showMapVoiture() {
+    private void showMapVoiture2() {
         Cursor c = myDbHelper.loadParking();
 
         try {
@@ -446,13 +518,9 @@ public class SeDeplacer extends FragmentActivity {
     }
 
     public void zoomTheMap() {
-
-        Log.d("myTag", "zoomTheMap");
         Location location = mMap.getMyLocation();
 
         if (location != null) {
-            Log.d("myTag", "toto");
-
             LatLng myLocation = new LatLng(location.getLatitude(),
                     location.getLongitude());
 
@@ -470,6 +538,87 @@ public class SeDeplacer extends FragmentActivity {
     }
 
     private void showMapVelo() {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            // VELO'V
+            JSONParser jParser = new JSONParser();
+            JSONObject json = jParser.getJSONFromUrl(urlVelov, nameValuePairVelov);
+            JSONArray contacts = null;
+
+            try {
+                contacts = json.getJSONArray("features");
+
+                for (int i = 0; i < contacts.length(); i++) {
+
+                    JSONObject c = contacts.getJSONObject(i);
+
+                    JSONObject o = c.getJSONObject("properties");
+                    int nbeEmpl         = o.getInt("available_bikes");
+                    int nbeEmplRestant  = o.getInt("available_bike_stands");
+
+                    //Log.d("myTag", "velo : " + nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_velib));
+
+                    markerOptions.position(new LatLng(o.getDouble("lat"), o.getDouble("lng")));
+
+                    markerOptions.title("Station Velo'v");
+                    markerOptions.snippet(nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
+
+                    mMap.addMarker(markerOptions);
+
+                }
+            } catch (JSONException e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+
+
+            // PARC A VELO
+            jParser     = new JSONParser();
+            json        = jParser.getJSONFromUrl(urlParcVelo, nameValuePairParcVelo);
+            contacts    = null;
+
+            try {
+                contacts = json.getJSONArray("features");
+
+                for (int i = 0; i < contacts.length(); i++) {
+                    JSONObject c    = contacts.getJSONObject(i);
+
+                    JSONObject o    = c.getJSONObject("properties");
+                    String adresse  = o.getString("adresse");
+                    String commune  = o.getString("commune");
+                    JSONObject g    = c.getJSONObject("geometry");
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(0), g.getJSONArray("coordinates").getDouble(1)));
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_neutre));
+                    markerOptions.title("Parc à vélo");
+                    markerOptions.snippet(adresse + " " + commune);
+
+                    mMap.addMarker(markerOptions);
+                }
+            } catch (JSONException e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            Log.d("myTag", "mon Exception : " + e.getMessage());
+            //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
+
+
+    private void showMapVelo2() {
         Cursor c = myDbHelper.loadVelo();
 
         try {
@@ -484,7 +633,137 @@ public class SeDeplacer extends FragmentActivity {
         } catch (SQLException sqle) {
             throw sqle;
         }
+
+
     }
+
+    private void showMapVoiture() {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            // AUTO-PARTAGE
+            JSONParser jParser  = new JSONParser();
+            JSONObject json     = jParser.getJSONFromUrl(urlAuto, nameValuePairAuto);
+            JSONArray contacts   = null;
+
+            try {
+                contacts = json.getJSONArray("features");
+
+                for(int i = 0; i < contacts.length(); i++){
+
+                    JSONObject c    = contacts.getJSONObject(i);
+
+                    JSONObject o    = c.getJSONObject("properties");
+                    String nom      = o.getString("nom");
+                    String nbeEmpl  = o.getString("nbemplacements");
+                    JSONObject g    = c.getJSONObject("geometry");
+                    String type     = o.getString("typeautopartage");
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    if (type.equalsIgnoreCase("Citiz LPA")) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
+                    }else if (type.equalsIgnoreCase("SunMoov")) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
+                    }else if (type.equalsIgnoreCase("Wattmobile")) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
+                    }else if (type.equalsIgnoreCase("Bluely")) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
+                    }
+
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(0), g.getJSONArray("coordinates").getDouble(1)));
+
+                    markerOptions.title(type);
+                    markerOptions.snippet(nbeEmpl + " emplacements");
+
+                    mMap.addMarker(markerOptions);
+
+                }
+            } catch (JSONException e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+
+
+            // PARKINGS
+            jParser  = new JSONParser();
+            json     = jParser.getJSONFromUrl(urlParking, nameValuePairParking);
+            contacts = null;
+
+            try {
+                contacts = json.getJSONArray("features");
+
+                for(int i = 0; i < contacts.length(); i++){
+
+                    JSONObject c    = contacts.getJSONObject(i);
+
+                    JSONObject o    = c.getJSONObject("properties");
+                    String nom      = o.getString("nom");
+                    String etat  = o.getString("etat");
+                    String nbeEmpl  = o.getString("capacitevoiture");
+                    JSONObject g    = c.getJSONObject("geometry");
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
+
+
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(0), g.getJSONArray("coordinates").getDouble(1)));
+
+                    markerOptions.title(nom);
+                    markerOptions.snippet(etat + "sur" + nbeEmpl + " emplacements");
+
+                    mMap.addMarker(markerOptions);
+
+                }
+            } catch (JSONException e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+
+
+            // PMR
+            jParser  = new JSONParser();
+            json     = jParser.getJSONFromUrl(urlPmr, nameValuePairPmr);
+            contacts = null;
+
+            try {
+                contacts = json.getJSONArray("features");
+
+                for(int i = 0; i < contacts.length(); i++){
+
+                    JSONObject c    = contacts.getJSONObject(i);
+
+                    JSONObject o    = c.getJSONObject("properties");
+                    String nom      = o.getString("nom");
+                    String nbeEmpl  = o.getString("nb_places");
+                    JSONObject g    = c.getJSONObject("geometry");
+
+                    Log.d("myTag", "mon pmr : " + nom);
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(0), g.getJSONArray("coordinates").getDouble(1)));
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
+                    markerOptions.title("Stationnement PMR");
+                    markerOptions.snippet(nbeEmpl + " emplacements");
+
+                    mMap.addMarker(markerOptions);
+                }
+
+            } catch (JSONException e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+
+
+        } catch (Exception e) {
+            Log.d("myTag", "mon Exception : " + e.getMessage());
+            //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     private void showMapPied() {
         Cursor c = myDbHelper.loadPied();
