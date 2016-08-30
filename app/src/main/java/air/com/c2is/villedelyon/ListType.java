@@ -245,10 +245,12 @@ public class ListType extends android.support.v4.app.FragmentActivity {
                 Intent intent = new Intent(ListType.this, RechercheMarcheFragment.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 0);
+
             }else if (p_param.equals("label-lyon-ville-equitable-et-durable-vie-quotidienne")&&(Config.flagDirectMarche==0)) {
                 Intent intent = new Intent(ListType.this, RechercheVieFragment.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 0);
+
             }else{
                 Config.flagDirectMarche = 0;
                 ListTypeFragment fragment2 = new ListTypeFragment();

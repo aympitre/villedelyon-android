@@ -117,6 +117,12 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="air.com.c2is.villedelyon.ResVie"
+            android:label="@string/title_activity_res_recherche_vie"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name="air.com.c2is.villedelyon.RechercheVieFragment"
             android:label="@string/title_activity_recherche_vie"
             android:screenOrientation="portrait">

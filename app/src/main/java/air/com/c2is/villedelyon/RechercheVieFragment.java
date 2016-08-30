@@ -174,12 +174,12 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
                         Config.flagDirectMarche = 1;
 
                         if (spinnerJour.getSelectedItemPosition()!=0) {
-                            Config.str_marche_jour = spinnerJour.getSelectedItem().toString();
+                            Config.str_marche_arrondissement = spinnerJour.getSelectedItemPosition();
                         }else{
-                            Config.str_marche_jour = "";
+                            Config.str_marche_arrondissement = 0;
                         }
                         if (spinnerTheme.getSelectedItemPosition()!=0) {
-                            Config.str_marche_theme = getSqlMarche(spinnerTheme.getSelectedItemPosition());
+                            Config.str_marche_theme = spinnerTheme.getSelectedItem().toString();
                         }else{
                             Config.str_marche_theme = "";
                         }
@@ -188,7 +188,7 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
                         Config.MENU_ACTIVITE        = 2;
                         Config.CODE_DE_MON_ACTIVITE = 1;
 
-                        Intent intent = new Intent(RechercheVieFragment.this, ResMarche.class);
+                        Intent intent = new Intent(RechercheVieFragment.this, ResVie.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivityForResult(intent, 5);
                     }
@@ -231,7 +231,6 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
 
         list = new ArrayList<String>();
         list.add("Par thème");
-
 
         // lancement du chargement HTTP
         myAsyncTask2 myWebFetch = new myAsyncTask2();
@@ -309,7 +308,7 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
             super.onPostExecute(result);
 
             for(int j=0; j<tabCategorie.size();j++) {
-                Log.d("myTag", tabCategorie.get(j).get("categorie").toString());
+                //Log.d("myTag", tabCategorie.get(j).get("categorie").toString());
 
             }
 

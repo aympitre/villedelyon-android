@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.os.Bundle;
@@ -40,7 +39,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 
-public class ResMarche extends Activity {
+public class ResVie extends Activity {
     public ListView mylistview;
     public LinearLayout myChargement;
     public TextView myChargementText;
@@ -56,7 +55,7 @@ public class ResMarche extends Activity {
         analytics   = GoogleAnalytics.getInstance(this);
         analytics.setLocalDispatchPeriod(1800);
         tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Resultat recherche marche");
+        tracker.setScreenName("/Resultat recherche lyon ville equitable");
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         super.onCreate(savedInstanceState);
@@ -99,7 +98,7 @@ public class ResMarche extends Activity {
         myLogo.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        startActivity(new Intent(ResMarche.this, MainActivity.class));
+                        startActivity(new Intent(ResVie.this, MainActivity.class));
                     }
                 }
         );
@@ -107,7 +106,7 @@ public class ResMarche extends Activity {
         myBtFavoris.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent intent = new Intent(ResMarche.this, favoris.class);
+                        Intent intent = new Intent(ResVie.this, favoris.class);
                         startActivityForResult(intent, 2);
                     }
                 }
@@ -116,7 +115,7 @@ public class ResMarche extends Activity {
         myBtParam.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent intent = new Intent(ResMarche.this, Parametre.class);
+                        Intent intent = new Intent(ResVie.this, Parametre.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivityForResult(intent, 0);
 
@@ -127,7 +126,7 @@ public class ResMarche extends Activity {
         myBtMenu.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        startActivity(new Intent(ResMarche.this, MainActivity.class));
+                        startActivity(new Intent(ResVie.this, MainActivity.class));
                     }
                 }
         );
@@ -172,13 +171,12 @@ public class ResMarche extends Activity {
                 Config.xml_id = "";
                 Config.flagContentEquip = 1;
 
-                Intent intent = new Intent(ResMarche.this, FragmentDetailEquipement.class);
+                Intent intent = new Intent(ResVie.this, FragmentDetailEquipement.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 0);
             }
         });
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
-
 
     }
 
@@ -246,7 +244,7 @@ public class ResMarche extends Activity {
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=2&type=marches");
+                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=2&type=label-lyon-ville-equitable-et-durable-vie-quotidienne");
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());

@@ -52,6 +52,7 @@
     <string name="title_activity_detail_evt">Detail evenement</string>
     <string name="title_activity_detail_evt_inc">Detail incontournable</string>
     <string name="title_activity_res_recherche_marche">Resultat recherche marche</string>
+    <string name="title_activity_res_recherche_vie">Resultat recherche ville equitable</string>
     <string name="title_activity_form_alerte">Formulaire alerte</string>
     <string name="title_activity_detail_actualite">Detail actualité</string>
 
