@@ -186,9 +186,11 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
     public void addToFavoris() {
         ContentValues myValue = new ContentValues();
 
-        myValue.put("libelle" , Config.titreActu);
-        myValue.put("type"    , 1);
-        myValue.put("url"     , Config.urlActu);
+        myValue.put("libelle"        , Config.titreActu);
+        myValue.put("type"           , "1");
+        myValue.put("url"            , Config.urlActu);
+        myValue.put("xml_equipement" , "");
+
 
         id_favoris = (int) myDbHelper.insertFavorisActu(myValue);
     }
@@ -204,14 +206,18 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            String retour   = doc.outerHtml().toString();
-            int dep         = retour.indexOf("alaune_detail_chapo");
-            int fin         = retour.indexOf("milieu_colonne_droite");
+            try {
+                String retour   = doc.outerHtml().toString();
+                int dep         = retour.indexOf("alaune_detail_chapo");
+                int fin         = retour.indexOf("milieu_colonne_droite");
 
-            retour = retour.substring(dep+21,fin);
+                retour = retour.substring(dep+21,fin);
 
-            myTexte.loadDataWithBaseURL(null, retour.replace("Et aussi...","<!--"), "text/html", "UTF-8", null);
+                myTexte.loadDataWithBaseURL(null, retour.replace("Et aussi...","<!--"), "text/html", "UTF-8", null);
+            } catch (Exception e) {
+                myTexte.loadDataWithBaseURL(null, "<br>Un problème est survenu avec votre connexion 3G à lyon.fr.", "text/html", "UTF-8", null);
 
+            }
         }
 
         @Override
@@ -226,36 +232,16 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                //try {
-                    URL url                  = new URL(Config.urlActu);
-                    URLConnection connection = url.openConnection();
-
+                URL url                  = new URL(Config.urlActu);
+                URLConnection connection = url.openConnection();
 
                 doc = Jsoup.connect(Config.urlActu).get();
                 Elements newsHeadlines = doc.select("#mp-itn b a");
-                //Elements newsHeadlines = doc.body();
 
-//                    String theString         = IOUtils.toString(url.openStream(), "UTF-8");
-
-//                    Log.d("myTag", ">>"+ doc.title());
-//                Log.d("myTag", ">>"+ doc.outerHtml());
-
-
-
-/*
-                } catch (MalformedURLException e) {
-                    Log.d("myTag", "This is my MalformedURLException");
-                } catch (Exception e) {
-                    Log.d("myTag", "erreur : " + e.getMessage());
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-*/
                 return null;
 
             } catch (Exception e) {
                 Log.d("myTag", "erreur:" + e.toString());
-                //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
             }
 
             return null;

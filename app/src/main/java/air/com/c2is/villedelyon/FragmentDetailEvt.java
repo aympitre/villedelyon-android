@@ -191,11 +191,11 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
             task.execute(Config.myContentValue.get("visuel").toString());
         }
 
-        if (Config.flagEvtFromFav==1) {
+/*        if (Config.flagEvtFromFav==1) {
             Config.xml_id = ""; //Config.myContentValue.get("xml_equipement").toString();
-        }else {
+        }else {*/
             Config.xml_id = Config.myContentValue.get("equipement").toString();
-        }
+        //}
 
         WebView myTexte2  = (WebView) findViewById(R.id.descriptionEvt);
         WebSettings settings = myTexte2.getSettings();
@@ -230,8 +230,7 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
         );
 
         if (Config.flagEvtFromFav==1) {
-            Config.flagEvtFromFav = 0;
-            id_favoris = 0;
+            id_favoris = (int) Config.myContentValue.get("id_favoris");
         }else {
             id_favoris = myDbHelper.checkFavorisEvt(Config.myContentValue.get("xml_id").toString());
         }
@@ -268,14 +267,30 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
             btEquipement.setVisibility(View.GONE);
         }
 
-        btEquipement.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.flagContentEquip = 0;
-                        Config.myFragment.loadEquipement();
+        if (Config.flagEvtFromFav==1) {
+            Config.flagEvtFromFav = 0;
+
+            btEquipement.setOnClickListener(
+                    new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Config.flagContentEquip = 0;
+
+                            Intent intent = new Intent(FragmentDetailEvt.this, FragmentDetailEquipement.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivityForResult(intent, 0);
+                        }
                     }
-                }
-        );
+            );
+        }else {
+            btEquipement.setOnClickListener(
+                    new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Config.flagContentEquip = 0;
+                            Config.myFragment.loadEquipement();
+                        }
+                    }
+            );
+        }
 
         // *** Bouton du menu
         myMenu1.setOnClickListener(

@@ -78,9 +78,12 @@ public class favoris extends android.support.v4.app.FragmentActivity {
     }
 
     public void loadActualite() {
-        Log.d("myTag", "je loadActualite");
-    }
+        Config.flagEvtFromFav = 1;
 
+        Intent intent = new Intent(favoris.this, FragmentDetailActualite.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivityForResult(intent, 0);
+    }
 
     @Override
     protected void onPause() {

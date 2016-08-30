@@ -27,7 +27,7 @@ public class ListType extends android.support.v4.app.FragmentActivity {
 
         Log.d("myTag", "CODE_DE_MON_ACTIVITE : " + Config.CODE_DE_MON_ACTIVITE);
 
-        Config.myActu  =this;
+        Config.myActu       = this;
         Config.myFragment   = this;
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "Oswald-Regular.ttf");
         TextView myTitre    = (TextView) findViewById(R.id.titre);

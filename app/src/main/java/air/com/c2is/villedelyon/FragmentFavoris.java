@@ -69,7 +69,9 @@ public class FragmentFavoris extends Fragment {
                         item.put("accroche"         , c.getString(5));
                         item.put("visuel"           , c.getString(6));
                         item.put("description"      , c.getString(7));
-                        item.put("equipement"       , "");
+                        item.put("equipement"       , c.getString(2));
+                        item.put("id_favoris"       , c.getInt(8));
+                        item.put("url"              , c.getString(9));
 
                         listItems.add(item);
                         nbe++;
@@ -106,13 +108,19 @@ public class FragmentFavoris extends Fragment {
                     Config.xml_id = "";
                 }
 
-                if (listItems.get(position).get("type")==2) {       // load evenement
 
+                if (listItems.get(position).get("type")==2) {       // load evenement
                     Config.myContentValue = listItems.get(position);
                     Config.myFavoris.loadEvenement();
 
                 }else if (listItems.get(position).get("type")==1) {       // load actualité
+                    Config.titreActu = listItems.get(position).get("titre").toString();
+
+                    Log.d("myTag", "url : " + listItems.get(position).get("url").toString());
+
+                    Config.urlActu   = listItems.get(position).get("url").toString();
                     Config.myFavoris.loadActualite();
+
                 }else {
                     Config.myFavoris.loadEquipement();
                 }
