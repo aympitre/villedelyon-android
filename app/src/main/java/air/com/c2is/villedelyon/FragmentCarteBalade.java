@@ -30,6 +30,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import android.widget.Button;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 
 
 /**
@@ -42,6 +44,9 @@ public class FragmentCarteBalade extends FragmentActivity {
     public String tempMarker;
     public LatLng firstLocation;
     public LatLng oldLocation;
+    public String[] myTab;
+
+    public DialogBalade myDialBalade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,7 @@ public class FragmentCarteBalade extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_carte);
 
+        myDialBalade         = new DialogBalade(this);
         Config.myCarteBalade = this;
 
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -97,6 +103,23 @@ public class FragmentCarteBalade extends FragmentActivity {
                         Intent intent = new Intent(FragmentCarteBalade.this, favoris.class);
                         startActivityForResult(intent, 2);
 
+                    }
+                }
+        );
+
+        Button myBtTest = (Button) findViewById(R.id.bt_test);
+        myBtTest.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        int pos = 0;
+                        String temp = myTab[pos].toString();
+                        String[] myTab2 = temp.split("\\|");
+
+                        if (myTab2.length > 0) {
+                            myDialBalade.show();
+                            myDialBalade.setValeur(Config.killHtml(String.valueOf(myTab2[0])), String.valueOf(myTab2[1]));
+
+                        }
                     }
                 }
         );
@@ -185,14 +208,15 @@ public class FragmentCarteBalade extends FragmentActivity {
         String str_point = Config.myContentValue.get("points").toString();
 
         if (str_point.length() > 0) {
-            String[] myTab = str_point.split(";");
+            myTab = str_point.split(";");
 
             int nbe = 0;
             for (int i = 0; i < myTab.length; i++) {
-                String temp = myTab[i].toString();
+                String temp     = myTab[i].toString();
                 String[] myTab2 = temp.split("\\|");
 
                 if (myTab2.length > 0) {
+
                     MarkerOptions markerOptions;
                     if (nbe == 0) {
                         markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_depart));
@@ -205,16 +229,16 @@ public class FragmentCarteBalade extends FragmentActivity {
                             markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_neutre));
                         }
 
-                        traceLaLigne(oldLocation, new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2])));
-
-                        oldLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
+                        if (String.valueOf(myTab2[4]).equalsIgnoreCase("2")) {
+                            traceLaLigne(oldLocation, new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2])));
+                            oldLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
+                        }
                     }
                     nbe++;
 
                     markerOptions.position(new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2])));
-
                     markerOptions.title(Config.killHtml(String.valueOf(myTab2[0])));
-                    markerOptions.snippet(Config.killHtml(String.valueOf(myTab2[1])));
+                    markerOptions.snippet(String.valueOf(i));
 
                     if (String.valueOf(myTab2[0]).length()>0) {
                         mMap.addMarker(markerOptions);
@@ -222,6 +246,24 @@ public class FragmentCarteBalade extends FragmentActivity {
                 }
             }
         }
+
+        mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                String title = marker.getTitle();
+                String snip = marker.getSnippet();
+
+                if (snip.length()>0) {
+                    String temp = myTab[Integer.valueOf(snip)].toString();
+                    String[] myTab2 = temp.split("\\|");
+
+                    if (myTab2.length > 0) {
+                        myDialBalade.show();
+                        myDialBalade.setValeur(Config.killHtml(String.valueOf(myTab2[0])), String.valueOf(myTab2[1]));
+                    }
+                }
+            }
+        });
 
     }
 

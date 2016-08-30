@@ -106,9 +106,22 @@
                         android:text="@string/libHomeBt2"
                         android:textSize="18sp"
                         android:padding="20dp"
+                        android:layout_marginRight="40dp"
                         android:textAllCaps="true"/>
 
-
+                    <Button
+                        android:id="@+id/bt_detendre"
+                        android:layout_gravity="center"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blanc"
+                        android:gravity="center"
+                        android:drawablePadding="10dp"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/bouton_se_detendre"
+                        android:text="@string/libHomeBt3"
+                        android:textSize="18sp"
+                        android:textAllCaps="true"/>
 
                 </LinearLayout>
 
@@ -120,20 +133,6 @@
                     android:background="@color/rouge"
                     android:gravity="top|center_horizontal">
 
-                    <Button
-                        android:id="@+id/bt_detendre"
-                        android:layout_gravity="center"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/blanc"
-                        android:gravity="center"
-                        android:layout_marginRight="40dp"
-                        android:drawablePadding="10dp"
-                        android:background="@color/transparent"
-                        android:drawableTop="@drawable/bouton_se_detendre"
-                        android:text="@string/libHomeBt3"
-                        android:textSize="18sp"
-                        android:textAllCaps="true"/>
 
                     <Button
                         android:id="@+id/bt_se_deplacer"
@@ -143,63 +142,49 @@
                         android:textColor="@color/blanc"
                         android:gravity="center"
                         android:drawablePadding="10dp"
-                        android:padding="20dp"
+                        android:layout_marginRight="40dp"
                         android:background="@color/transparent"
                         android:drawableTop="@drawable/bouton_se_delacer"
                         android:text="@string/libHomeBt4"
                         android:textSize="18sp"
                         android:textAllCaps="true"/>
 
+                    <Button
+                        android:id="@+id/bt_agenda"
+                        android:layout_gravity="center"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="50dp"
+                        android:textColor="@color/blanc"
+                        android:background="@color/transparent"
+                        android:gravity="center"
+                        android:drawablePadding="10dp"
+                        android:drawableTop="@drawable/bouton_agenda"
+                        android:text="@string/libHomeBt5"
+                        android:textSize="18sp"
+                        android:padding="20dp"
+                        android:textAllCaps="true"/>
 
+                    <Button
+                        android:id="@+id/bt_demarche"
+                        android:layout_gravity="center"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blanc"
+                        android:background="@color/transparent"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:drawablePadding="10dp"
+                        android:drawableTop="@drawable/bouton_demarche"
+                        android:text="@string/libHomeBt6"
+                        android:textSize="18sp"
+                        android:textAllCaps="true"/>
 
 
                 </LinearLayout>
 
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/rouge"
-                android:gravity="top|center_horizontal">
 
-
-
-                <Button
-                    android:id="@+id/bt_agenda"
-                    android:layout_gravity="center"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="40dp"
-                    android:textColor="@color/blanc"
-                    android:background="@color/transparent"
-                    android:gravity="center"
-                    android:drawablePadding="10dp"
-                    android:drawableTop="@drawable/bouton_agenda"
-                    android:text="@string/libHomeBt5"
-                    android:textSize="18sp"
-                    android:paddingRight="10dp"
-                    android:textAllCaps="true"/>
-
-
-
-                <Button
-                    android:id="@+id/bt_demarche"
-                    android:layout_gravity="center"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/blanc"
-                    android:background="@color/transparent"
-                    android:textAlignment="center"
-                    android:gravity="center"
-                    android:drawablePadding="10dp"
-                    android:padding="20dp"
-                    android:drawableTop="@drawable/bouton_demarche"
-                    android:text="@string/libHomeBt6"
-                    android:textSize="18sp"
-                    android:textAllCaps="true"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_marginTop="20dp"
@@ -207,9 +192,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/rouge"
-                android:gravity="top|center_horizontal">
-
-
+                android:gravity="left">
 
                 <Button
                     android:id="@+id/bt_favoris_home"

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+
+    <ScrollView
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:id="@+id/pageScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_gravity="left"
+            android:paddingTop="10dp"
+            android:id="@+id/myLay"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/noir"
+                android:textSize="20sp"
+                android:id="@+id/lblTitre"
+                android:text=""/>
+
+            <WebView
+                android:layout_marginTop="20dp"
+                android:id="@+id/description"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:background="@color/transparent"
+                android:textStyle="normal"
+                android:textColor="@color/noir"
+                tools:ignore="WebViewLayout"></WebView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

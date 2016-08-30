@@ -69,14 +69,14 @@ public class Config {
 	public static String titreActu = "";
 	public static String urlActu   = "";
 
-	public static FragmentCarte myFragCarte;
-	public static FragmentDetailEquipement myDetailEquip;
-	public static FragmentCarteBalade myCarteBalade;
-	public static FragmentDetailEvt myDetailEvt;
-	public static FragmentDetailIncontournable myDetailIncontournable;
-	public static LeSaviezVousDetail mySaviezDetail;
-	public static LeSaviezVous mySaviezVous;
-	public static FragmentDetailBalade myDetailBalade;
+	public static FragmentCarte 				myFragCarte;
+	public static FragmentDetailEquipement 		myDetailEquip;
+	public static FragmentCarteBalade 			myCarteBalade;
+	public static FragmentDetailEvt 			myDetailEvt;
+	public static FragmentDetailIncontournable 	myDetailIncontournable;
+	public static LeSaviezVousDetail 			mySaviezDetail;
+	public static LeSaviezVous 					mySaviezVous;
+	public static FragmentDetailBalade 			myDetailBalade;
 
 	public static String fragToReload 	= "";
 	public static ArrayList<HashMap<String, Object>> pointCarto;
@@ -92,6 +92,7 @@ public class Config {
 	public static  int flagBddExist 		= 0;
 	public static  int flagDemarche 		= 0;
 	public static  int flagForceRetour 		= 0;
+	public static  int flagActivePreprod	= 1;
 	public static  String str_demarche 		= "";
 
 	public static  int 		codeInterne		 = 1;

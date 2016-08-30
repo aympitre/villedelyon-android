@@ -821,6 +821,11 @@ public class MainActivity extends Activity {
 
                     try {
                         URL url = new URL("http://appvilledelyon.c2is.fr/balades.php?version="+Config.VERSION_API);
+
+                        if (Config.flagActivePreprod==1) {
+                            url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/balades.php?version="+Config.VERSION_API);
+                        }
+
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
