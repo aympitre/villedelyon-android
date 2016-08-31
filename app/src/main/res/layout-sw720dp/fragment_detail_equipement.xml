@@ -199,7 +199,7 @@
                                 android:background="@color/transparent"
                                 android:src="@drawable/bt_favoris_off"
                                 android:layout_width="wrap_content"
-                                android:layout_height="20dp" />
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
                     </LinearLayout>

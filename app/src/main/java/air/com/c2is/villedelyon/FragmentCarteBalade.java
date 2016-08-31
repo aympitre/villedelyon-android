@@ -44,6 +44,7 @@ public class FragmentCarteBalade extends FragmentActivity {
     public String tempMarker;
     public LatLng firstLocation;
     public LatLng oldLocation;
+    public int flagFirstLocation = 0;
     public String[] myTab;
 
     public DialogBalade myDialBalade;
@@ -107,22 +108,6 @@ public class FragmentCarteBalade extends FragmentActivity {
                 }
         );
 
-        Button myBtTest = (Button) findViewById(R.id.bt_test);
-        myBtTest.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        int pos = 0;
-                        String temp = myTab[pos].toString();
-                        String[] myTab2 = temp.split("\\|");
-
-                        if (myTab2.length > 0) {
-                            myDialBalade.show();
-                            myDialBalade.setValeur(Config.killHtml(String.valueOf(myTab2[0])), String.valueOf(myTab2[1]));
-
-                        }
-                    }
-                }
-        );
 
         TextView myTitre = (TextView) findViewById(R.id.titre);
         myTitre.setTypeface(myTypeface);
@@ -207,6 +192,8 @@ public class FragmentCarteBalade extends FragmentActivity {
 
         String str_point = Config.myContentValue.get("points").toString();
 
+
+
         if (str_point.length() > 0) {
             myTab = str_point.split(";");
 
@@ -218,22 +205,26 @@ public class FragmentCarteBalade extends FragmentActivity {
                 if (myTab2.length > 0) {
 
                     MarkerOptions markerOptions;
-                    if (nbe == 0) {
-                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_depart));
-                        firstLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
-                        oldLocation   = firstLocation;
-                    } else {
+                    if (nbe==(myTab.length-1)) {
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_arrivee));
+                    }else {
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_neutre));
+                    }
+
+                    if (String.valueOf(myTab2[4]).equalsIgnoreCase("2")) {
                         if (nbe==(myTab.length-1)) {
                             markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_arrivee));
-                        }else {
-                            markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_neutre));
                         }
 
-                        if (String.valueOf(myTab2[4]).equalsIgnoreCase("2")) {
+                        if (flagFirstLocation==1) {
                             traceLaLigne(oldLocation, new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2])));
-                            oldLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
+                        }else{
+                            markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_depart));
+                            flagFirstLocation = 1;
                         }
+                        oldLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
                     }
+
                     nbe++;
 
                     markerOptions.position(new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2])));
@@ -247,11 +238,13 @@ public class FragmentCarteBalade extends FragmentActivity {
             }
         }
 
-        mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+        {
+
             @Override
-            public void onInfoWindowClick(Marker marker) {
-                String title = marker.getTitle();
-                String snip = marker.getSnippet();
+            public boolean onMarkerClick(Marker arg0) {
+                String title = arg0.getTitle();
+                String snip = arg0.getSnippet();
 
                 if (snip.length()>0) {
                     String temp = myTab[Integer.valueOf(snip)].toString();
@@ -262,7 +255,9 @@ public class FragmentCarteBalade extends FragmentActivity {
                         myDialBalade.setValeur(Config.killHtml(String.valueOf(myTab2[0])), String.valueOf(myTab2[1]));
                     }
                 }
+                return true;
             }
+
         });
 
     }

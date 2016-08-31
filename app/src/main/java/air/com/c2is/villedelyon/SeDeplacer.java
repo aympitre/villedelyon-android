@@ -1,5 +1,6 @@
 package air.com.c2is.villedelyon;
 
+import java.net.URLDecoder;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -45,6 +46,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.os.Handler;
 
 public class SeDeplacer extends FragmentActivity {
 
@@ -58,8 +60,8 @@ public class SeDeplacer extends FragmentActivity {
     public int flagLegende = 0;
 
     public LinearLayout layLegende;
-    public WebView description;
-    public ImageButton btLegende;
+    public WebView      description;
+    public ImageButton  btLegende;
     public int flagMap = 0;
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
@@ -77,6 +79,7 @@ public class SeDeplacer extends FragmentActivity {
     public List<NameValuePair> nameValuePairVelov;
     public List<NameValuePair> nameValuePairParcVelo;
 
+    public DialogLoading myDialLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +132,7 @@ public class SeDeplacer extends FragmentActivity {
         nameValuePairParcVelo.add(new BasicNameValuePair("typename"     , "pvo_patrimoine_voirie.pvostationnementvelo"));
         nameValuePairParcVelo.add(new BasicNameValuePair("SRSNAME"     , "urn:ogc:def:crs:EPSG::4326"));
 
-
+        myDialLoading         = new DialogLoading(this);
 
         if (Config.MENU_ACTIVITE==2) {
             tracker.setScreenName("/Se deplacer à velo");
@@ -249,6 +252,8 @@ public class SeDeplacer extends FragmentActivity {
                         Config.MENU_ACTIVITE = 1;
                         setRollMenu();
                         closeLegende();
+
+                        mMap.clear();
                         if (flagMap!=1) {
                             flagMap = 1;
                             mMap.clear();
@@ -266,15 +271,26 @@ public class SeDeplacer extends FragmentActivity {
                         Config.MENU_ACTIVITE = 2;
                         setRollMenu();
                         closeLegende();
-                        mMap.clear();
-                        if (flagMap!=2) {
-                            flagMap = 2;
-                            mMap.clear();
 
-                            myAsyncTask2 myWebFetch = new myAsyncTask2();
-                            myWebFetch.flag = 2;
-                            myWebFetch.execute();
-                        }
+                        showLoading();
+
+                        final Handler handler = new Handler();
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mMap.clear();
+                                if (flagMap!=2) {
+                                    flagMap = 2;
+                                    mMap.clear();
+
+                                    myAsyncTask2 myWebFetch = new myAsyncTask2();
+                                    myWebFetch.flag = 2;
+                                    myWebFetch.execute();
+                                }
+                            }
+                        }, 100);
+
                     }
                 }
         );
@@ -284,15 +300,26 @@ public class SeDeplacer extends FragmentActivity {
                         Config.MENU_ACTIVITE = 3;
                         setRollMenu();
                         closeLegende();
-                        mMap.clear();
-                        if (flagMap!=3) {
-                            flagMap = 3;
-                            mMap.clear();
 
-                            myAsyncTask2 myWebFetch = new myAsyncTask2();
-                            myWebFetch.flag = 3;
-                            myWebFetch.execute();
-                        }
+                        showLoading();
+
+                        final Handler handler = new Handler();
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mMap.clear();
+                                if (flagMap!=3) {
+                                    flagMap = 3;
+                                    mMap.clear();
+
+                                    myAsyncTask2 myWebFetch = new myAsyncTask2();
+                                    myWebFetch.flag = 3;
+                                    myWebFetch.execute();
+                                }
+                            }
+                        }, 100);
+
                     }
                 }
         );
@@ -319,6 +346,13 @@ public class SeDeplacer extends FragmentActivity {
             description.loadUrl("file:///android_asset/legende1.html");
         }
 
+    }
+
+    public void showLoading() {
+        myDialLoading.show();
+    }
+    public void hideLoading() {
+        myDialLoading.hide();
     }
 
     public void openLegende () {
@@ -543,9 +577,9 @@ public class SeDeplacer extends FragmentActivity {
             StrictMode.setThreadPolicy(policy);
 
             // VELO'V
-            JSONParser jParser = new JSONParser();
-            JSONObject json = jParser.getJSONFromUrl(urlVelov, nameValuePairVelov);
-            JSONArray contacts = null;
+            JSONParser jParser  = new JSONParser();
+            JSONObject json     = jParser.getJSONFromUrl(urlVelov, nameValuePairVelov);
+            JSONArray contacts  = null;
 
             try {
                 contacts = json.getJSONArray("features");
@@ -558,7 +592,7 @@ public class SeDeplacer extends FragmentActivity {
                     int nbeEmpl         = o.getInt("available_bikes");
                     int nbeEmplRestant  = o.getInt("available_bike_stands");
 
-                    //Log.d("myTag", "velo : " + nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
+                 //   Log.d("myTag", "velo : " + nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
 
                     MarkerOptions markerOptions = new MarkerOptions();
 
@@ -596,10 +630,11 @@ public class SeDeplacer extends FragmentActivity {
 
                     MarkerOptions markerOptions = new MarkerOptions();
 
-                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(0), g.getJSONArray("coordinates").getDouble(1)));
                     markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_neutre));
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+
                     markerOptions.title("Parc à vélo");
-                    markerOptions.snippet(adresse + " " + commune);
+                    markerOptions.snippet(URLDecoder.decode(adresse, "UTF-8"));
 
                     mMap.addMarker(markerOptions);
                 }
@@ -613,8 +648,6 @@ public class SeDeplacer extends FragmentActivity {
             //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
         }
     }
-
-
 
 
 
@@ -672,7 +705,9 @@ public class SeDeplacer extends FragmentActivity {
                         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
                     }
 
-                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(0), g.getJSONArray("coordinates").getDouble(1)));
+//                    Log.d("myTag", type + nbeEmpl + " emplacements");
+
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
                     markerOptions.title(type);
                     markerOptions.snippet(nbeEmpl + " emplacements");
@@ -709,10 +744,11 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
 
 
-                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(0), g.getJSONArray("coordinates").getDouble(1)));
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
                     markerOptions.title(nom);
-                    markerOptions.snippet(etat + "sur" + nbeEmpl + " emplacements");
+                    markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
+  //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
 
                     mMap.addMarker(markerOptions);
 
@@ -740,14 +776,14 @@ public class SeDeplacer extends FragmentActivity {
                     String nbeEmpl  = o.getString("nb_places");
                     JSONObject g    = c.getJSONObject("geometry");
 
-                    Log.d("myTag", "mon pmr : " + nom);
-
                     MarkerOptions markerOptions = new MarkerOptions();
 
-                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(0), g.getJSONArray("coordinates").getDouble(1)));
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
                     markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
                     markerOptions.title("Stationnement PMR");
                     markerOptions.snippet(nbeEmpl + " emplacements");
+
+     //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
 
                     mMap.addMarker(markerOptions);
                 }
@@ -858,6 +894,8 @@ public class SeDeplacer extends FragmentActivity {
             }else if (flag==3) {
                 showMapVoiture();
             }
+
+            hideLoading();
         }
 
         @Override

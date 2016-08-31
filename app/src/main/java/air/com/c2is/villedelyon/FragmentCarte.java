@@ -262,8 +262,6 @@ public class FragmentCarte extends FragmentActivity {
 
                 tempMarker = arg0.getTitle();
 
-               Log.d("myTag", "mon marqueur : " + tempMarker);
-
                 return false;
 
             }
