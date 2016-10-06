@@ -210,7 +210,6 @@ public class FragmentCarte extends FragmentActivity {
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
 
-
         for (int i=0;i<Config.pointCarto.size();i++) {
 
             String temp = "" + Config.pointCarto.get(i).get("latitude");

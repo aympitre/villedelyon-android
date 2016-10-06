@@ -287,7 +287,11 @@ public class Actualite extends Activity {
                                 mapping.put("titreActu", listNode.item(j).getTextContent());
 
                             }else if(listNode.item(j).getNodeName().equals("accroche_detaillee")){
-                                mapping.put("texte", listNode.item(j).getTextContent());
+                                String temp = listNode.item(j).getTextContent();
+                                temp        = temp.replace("<p>","");
+                                temp        = temp.replace("</p>","");
+
+                                mapping.put("texte", temp);
 
                             }else if(listNode.item(j).getNodeName().equals("visuel")){
                                 mapping.put("image", listNode.item(j).getTextContent());

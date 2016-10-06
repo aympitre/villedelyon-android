@@ -743,7 +743,6 @@ me);
                 try {
                     FileInputStream fileInputStream = new FileInputStream(monImage);
 
-
                     bytesAvailable = fileInputStream.available();
 
 

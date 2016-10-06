@@ -329,7 +329,13 @@ public class MainActivity extends Activity {
         sharedPref             = this.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
         Config.flag_tri_geoloc = sharedPref.getInt("flag_geoloc", 1);
 
-        Log.d("myTag", "le flag tri est la : " + Config.flag_tri_geoloc);
+        resetRetour();
+    }
+
+    public void resetRetour() {
+        Config.flagDemarche     = 0;
+        Config.flagForceRetour  = 0;
+        Config.flagBisRetour    = 0;
     }
 
     public void goReveilOn() {

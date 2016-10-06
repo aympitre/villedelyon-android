@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
@@ -56,6 +57,21 @@ public class SeDeplacer extends FragmentActivity {
     public Button myMenu1;
     public Button myMenu2;
     public Button myMenu3;
+
+    public ImageButton btMenuLayer;
+    public ImageButton btMenuLayerPetit;
+
+    public ImageButton btPicto1;
+    public ImageButton btPicto2;
+    public ImageButton btPicto3;
+    public ImageButton btPicto4;
+    public RelativeLayout layMenuPicto;
+
+    public int flagPicto1;
+    public int flagPicto2;
+    public int flagPicto3;
+    public int flagPicto4;
+    public int flagOpenMenu;
 
     public int flagLegende = 0;
 
@@ -154,6 +170,8 @@ public class SeDeplacer extends FragmentActivity {
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "Oswald-Regular.ttf");
         TextView myTitre    = (TextView) findViewById(R.id.titre);
 
+        layMenuPicto = (RelativeLayout) findViewById(R.id.layMenuPicto);
+
         myTitre.setTypeface(myTypeface);
 
         description = (WebView) findViewById(R.id.description);
@@ -161,7 +179,14 @@ public class SeDeplacer extends FragmentActivity {
         settings.setDefaultTextEncodingName("utf-8");
         description.setBackgroundColor(Color.TRANSPARENT);
 
-        layLegende = (LinearLayout) findViewById(R.id.layLegende);
+        layLegende       = (LinearLayout) findViewById(R.id.layLegende);
+        btPicto1         = (ImageButton) findViewById(R.id.btPicto1);
+        btPicto2         = (ImageButton) findViewById(R.id.btPicto2);
+        btPicto3         = (ImageButton) findViewById(R.id.btPicto3);
+        btPicto4         = (ImageButton) findViewById(R.id.btPicto4);
+        btMenuLayer      = (ImageButton) findViewById(R.id.btMenuLayer);
+        btMenuLayerPetit = (ImageButton) findViewById(R.id.btMenuLayerPetit);
+        setMenuLayerAction();
 
         ImageButton myBtMenu = (ImageButton) findViewById(R.id.bt_menu);
 
@@ -253,6 +278,8 @@ public class SeDeplacer extends FragmentActivity {
                         setRollMenu();
                         closeLegende();
 
+                        showLoading();
+
                         mMap.clear();
                         if (flagMap!=1) {
                             flagMap = 1;
@@ -337,6 +364,259 @@ public class SeDeplacer extends FragmentActivity {
         setUpMapIfNeeded();
     }
 
+    public void initBtMenu(){
+        if (Config.MENU_ACTIVITE==2) {
+            if (Config.checkDevice()==2) {
+                btPicto1.setImageResource(R.drawable.picto_velo_grand_off);
+                btPicto2.setImageResource(R.drawable.picto_velov_grand_off);
+            }else {
+                btPicto1.setImageResource(R.drawable.picto_velo_off);
+                btPicto2.setImageResource(R.drawable.picto_velov_off);
+            }
+
+            btPicto1.setVisibility(View.VISIBLE);
+            btPicto2.setVisibility(View.VISIBLE);
+            btPicto3.setVisibility(View.INVISIBLE);
+            btPicto4.setVisibility(View.INVISIBLE);
+        }else if (Config.MENU_ACTIVITE==3) {
+            if (Config.checkDevice()==2) {
+                btPicto1.setImageResource(R.drawable.picto_parking_grand_off);
+                btPicto2.setImageResource(R.drawable.picto_pmr_grand_off);
+                btPicto3.setImageResource(R.drawable.picto_autolib_grand_off);
+            }else {
+                btPicto1.setImageResource(R.drawable.picto_parking_off);
+                btPicto2.setImageResource(R.drawable.picto_pmr_off);
+                btPicto3.setImageResource(R.drawable.picto_autolib_off);
+            }
+
+            btPicto1.setVisibility(View.VISIBLE);
+            btPicto2.setVisibility(View.VISIBLE);
+            btPicto3.setVisibility(View.VISIBLE);
+            btPicto4.setVisibility(View.INVISIBLE);
+        }else{
+            if (Config.checkDevice()==2) {
+                btPicto1.setImageResource(R.drawable.picto_tramway_grand_off);
+                btPicto2.setImageResource(R.drawable.picto_metro_grand_off);
+                btPicto3.setImageResource(R.drawable.picto_taxi_grand_off);
+                btPicto4.setImageResource(R.drawable.picto_train_grand_off);
+            }else {
+                btPicto1.setImageResource(R.drawable.picto_tramway_off);
+                btPicto2.setImageResource(R.drawable.picto_metro_off);
+                btPicto3.setImageResource(R.drawable.picto_taxi_off);
+                btPicto4.setImageResource(R.drawable.picto_train_off);
+            }
+
+            btPicto1.setVisibility(View.VISIBLE);
+            btPicto2.setVisibility(View.VISIBLE);
+            btPicto3.setVisibility(View.VISIBLE);
+            btPicto4.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setMenuLayerAction() {
+        btMenuLayer.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (flagOpenMenu==1) {
+                            layMenuPicto.animate().setDuration(100);
+                            layMenuPicto.animate().translationX(-250);  //-200
+                            layMenuPicto.animate().start();
+                            flagOpenMenu = 0;
+
+                            btMenuLayerPetit.setVisibility(View.VISIBLE);
+
+                        }
+                    }
+                }
+        );
+        btMenuLayerPetit.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+
+                            btMenuLayerPetit.setVisibility(View.GONE);
+
+                            layMenuPicto.animate().setDuration(100);
+                            layMenuPicto.animate().translationX(0);
+                            layMenuPicto.animate().start();
+                            flagOpenMenu = 1;
+
+                    }
+                }
+        );
+        flagOpenMenu = 1;
+
+        btPicto1.setAlpha(128);
+        btPicto2.setAlpha(128);
+        btPicto3.setAlpha(128);
+        btPicto4.setAlpha(128);
+        flagPicto1 = flagPicto2 = flagPicto3 = flagPicto4 = 0;
+
+        btPicto1.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (flagPicto1==0) {
+                            btPicto1.setAlpha(255);
+
+                            if (Config.checkDevice()==2) {
+                                if (Config.MENU_ACTIVITE == 2) {
+                                    btPicto1.setImageResource(R.drawable.picto_velo_grand_on);
+                                } else if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto1.setImageResource(R.drawable.picto_parking_grand_on);
+                                } else {
+                                    btPicto1.setImageResource(R.drawable.picto_tramway_grand_on);
+                                }
+                            }else {
+                                if (Config.MENU_ACTIVITE == 2) {
+                                    btPicto1.setImageResource(R.drawable.picto_velo_on);
+                                } else if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto1.setImageResource(R.drawable.picto_parking_on);
+                                } else {
+                                    btPicto1.setImageResource(R.drawable.picto_tramway_on);
+                                }
+                            }
+
+                            flagPicto1 = 1;
+                        }else{
+                            btPicto1.setAlpha(128);
+                            if (Config.checkDevice()==2) {
+                                if (Config.MENU_ACTIVITE == 2) {
+                                    btPicto1.setImageResource(R.drawable.picto_velo_grand_off);
+                                } else if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto1.setImageResource(R.drawable.picto_parking_grand_off);
+                                } else {
+                                    btPicto1.setImageResource(R.drawable.picto_tramway_grand_off);
+                                }
+                            }else {
+                                if (Config.MENU_ACTIVITE == 2) {
+                                    btPicto1.setImageResource(R.drawable.picto_velo_off);
+                                } else if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto1.setImageResource(R.drawable.picto_parking_off);
+                                } else {
+                                    btPicto1.setImageResource(R.drawable.picto_tramway_off);
+                                }
+                            }
+                            flagPicto1 = 0;
+                        }
+                    }
+                }
+        );
+        btPicto2.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (flagPicto2==0) {
+                            btPicto2.setAlpha(255);
+
+                            if (Config.checkDevice()==2) {
+                                if (Config.MENU_ACTIVITE == 2) {
+                                    btPicto2.setImageResource(R.drawable.picto_velov_grand_on);
+                                } else if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto2.setImageResource(R.drawable.picto_pmr_grand_on);
+                                } else {
+                                    btPicto2.setImageResource(R.drawable.picto_metro_grand_on);
+                                }
+                            }else {
+                                if (Config.MENU_ACTIVITE == 2) {
+                                    btPicto2.setImageResource(R.drawable.picto_velov_on);
+                                } else if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto2.setImageResource(R.drawable.picto_pmr_on);
+                                } else {
+                                    btPicto2.setImageResource(R.drawable.picto_metro_on);
+                                }
+                            }
+
+                            flagPicto2 = 1;
+                        }else{
+                            btPicto2.setAlpha(128);
+
+                            if (Config.checkDevice()==2) {
+                                if (Config.MENU_ACTIVITE == 2) {
+                                    btPicto2.setImageResource(R.drawable.picto_velov_grand_off);
+                                } else if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto2.setImageResource(R.drawable.picto_pmr_grand_off);
+                                } else {
+                                    btPicto2.setImageResource(R.drawable.picto_metro_grand_off);
+                                }
+                            }else {
+                                if (Config.MENU_ACTIVITE == 2) {
+                                    btPicto2.setImageResource(R.drawable.picto_velov_off);
+                                } else if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto2.setImageResource(R.drawable.picto_pmr_off);
+                                } else {
+                                    btPicto2.setImageResource(R.drawable.picto_metro_off);
+                                }
+                            }
+
+                            flagPicto2 = 0;
+                        }
+                    }
+                }
+        );
+        btPicto3.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (flagPicto3==0) {
+                            btPicto3.setAlpha(255);
+
+                            if (Config.checkDevice()==2) {
+                                if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto3.setImageResource(R.drawable.picto_autolib_grand_on);
+                                } else {
+                                    btPicto3.setImageResource(R.drawable.picto_taxi_grand_on);
+                                }
+
+                            }else {
+                                if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto3.setImageResource(R.drawable.picto_autolib_on);
+                                } else {
+                                    btPicto3.setImageResource(R.drawable.picto_taxi_on);
+                                }
+                            }
+                            flagPicto3 = 1;
+                        }else{
+                            btPicto3.setAlpha(128);
+                            if (Config.checkDevice()==2) {
+                                if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto3.setImageResource(R.drawable.picto_autolib_grand_off);
+                                } else {
+                                    btPicto3.setImageResource(R.drawable.picto_taxi_grand_off);
+                                }
+                            }else {
+                                if (Config.MENU_ACTIVITE == 3) {
+                                    btPicto3.setImageResource(R.drawable.picto_autolib_off);
+                                } else {
+                                    btPicto3.setImageResource(R.drawable.picto_taxi_off);
+                                }
+                            }
+                            flagPicto3 = 0;
+                        }
+                    }
+                }
+        );
+        btPicto4.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (flagPicto4==0) {
+                            btPicto4.setAlpha(255);
+                            if (Config.checkDevice()==2) {
+                                btPicto4.setImageResource(R.drawable.picto_train_grand_on);
+                            }else{
+                                btPicto4.setImageResource(R.drawable.picto_train_on);
+                            }
+                            flagPicto4 = 1;
+                        }else{
+                            btPicto4.setAlpha(128);
+                            if (Config.checkDevice()==2) {
+                                btPicto4.setImageResource(R.drawable.picto_train_grand_off);
+                            }else {
+                                btPicto4.setImageResource(R.drawable.picto_train_off);
+                            }
+                            flagPicto4 = 0;
+                        }
+                    }
+                }
+        );
+    }
+
     public void loadLegende(int p_param) {
         if (p_param==3) {
             description.loadUrl("file:///android_asset/legende3.html");
@@ -349,6 +629,7 @@ public class SeDeplacer extends FragmentActivity {
     }
 
     public void showLoading() {
+        initBtMenu();
         myDialLoading.show();
     }
     public void hideLoading() {
