@@ -24,6 +24,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Document;
@@ -123,6 +124,10 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
 
         ShareButton shareButton = (ShareButton) findViewById(R.id.share_button);
         if (Config.flagEvtFromFav==1) {
+            LinearLayout laySousMenu = (LinearLayout) findViewById(R.id.laySousMenu);
+            laySousMenu.setVisibility(View.GONE);
+            titre.setText(getResources().getString(R.string.titreFavoris));
+
             shareButton.setVisibility(View.GONE);
         }else {
             FacebookSdk.sdkInitialize(Config.myHome.getApplicationContext());

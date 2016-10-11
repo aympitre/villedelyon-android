@@ -125,6 +125,7 @@ public class Config {
 
 	public static int flagContentEquip 	= 0;
 	public static int flagEvtFromFav	= 0;
+	public static int flagFromFavoris	= 0;
 
 	public static ContentValues myContentEquip;
 	public static HashMap<String, Object> myCourant;
@@ -163,6 +164,12 @@ public class Config {
 		}
 	}
 
+	public static int paddingToPixel(int p_padding, Activity p_activite) {
+		final float scale = p_activite.getResources().getDisplayMetrics().density;
+		int pixels = (int) (p_padding * scale + 0.5f);
+
+		return pixels;
+	}
 	public static Spanned formatLastWord(String p_param) {
 		String first    = p_param;
 		String next     = "";

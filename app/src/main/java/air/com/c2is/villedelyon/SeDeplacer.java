@@ -1,5 +1,6 @@
 package air.com.c2is.villedelyon;
 
+import android.view.ViewGroup;
 import java.net.URLDecoder;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
@@ -66,6 +67,7 @@ public class SeDeplacer extends FragmentActivity {
     public ImageButton btPicto3;
     public ImageButton btPicto4;
     public RelativeLayout layMenuPicto;
+    public LinearLayout layFondMenu;
 
     public int flagPicto1;
     public int flagPicto2;
@@ -75,9 +77,9 @@ public class SeDeplacer extends FragmentActivity {
 
     public int flagLegende = 0;
 
-    public LinearLayout layLegende;
-    public WebView      description;
-    public ImageButton  btLegende;
+    public RelativeLayout layLegende;
+    public WebView        description;
+    public ImageButton    btLegende;
     public int flagMap = 0;
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
@@ -94,6 +96,14 @@ public class SeDeplacer extends FragmentActivity {
     public List<NameValuePair> nameValuePairPmr;
     public List<NameValuePair> nameValuePairVelov;
     public List<NameValuePair> nameValuePairParcVelo;
+
+    public JSONArray contactVelov = null;
+    public JSONArray contactParcVelo = null;
+    public JSONArray contactsPartage = null;
+    public JSONArray contactsParking = null;
+    public JSONArray contactsPmr = null;
+
+
 
     public DialogLoading myDialLoading;
 
@@ -170,6 +180,7 @@ public class SeDeplacer extends FragmentActivity {
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "Oswald-Regular.ttf");
         TextView myTitre    = (TextView) findViewById(R.id.titre);
 
+        layFondMenu  = (LinearLayout) findViewById(R.id.layFondMenu);
         layMenuPicto = (RelativeLayout) findViewById(R.id.layMenuPicto);
 
         myTitre.setTypeface(myTypeface);
@@ -179,7 +190,7 @@ public class SeDeplacer extends FragmentActivity {
         settings.setDefaultTextEncodingName("utf-8");
         description.setBackgroundColor(Color.TRANSPARENT);
 
-        layLegende       = (LinearLayout) findViewById(R.id.layLegende);
+        layLegende       = (RelativeLayout) findViewById(R.id.layLegende);
         btPicto1         = (ImageButton) findViewById(R.id.btPicto1);
         btPicto2         = (ImageButton) findViewById(R.id.btPicto2);
         btPicto3         = (ImageButton) findViewById(R.id.btPicto3);
@@ -274,6 +285,7 @@ public class SeDeplacer extends FragmentActivity {
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        initFlagPicto();
                         Config.MENU_ACTIVITE = 1;
                         setRollMenu();
                         closeLegende();
@@ -295,6 +307,7 @@ public class SeDeplacer extends FragmentActivity {
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        initFlagPicto();
                         Config.MENU_ACTIVITE = 2;
                         setRollMenu();
                         closeLegende();
@@ -324,6 +337,7 @@ public class SeDeplacer extends FragmentActivity {
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        initFlagPicto();
                         Config.MENU_ACTIVITE = 3;
                         setRollMenu();
                         closeLegende();
@@ -365,12 +379,18 @@ public class SeDeplacer extends FragmentActivity {
     }
 
     public void initBtMenu(){
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)layFondMenu.getLayoutParams();
+
         if (Config.MENU_ACTIVITE==2) {
+            params.setMargins(0, 200, 0, 0);
+            layFondMenu.setLayoutParams(params);
+
             if (Config.checkDevice()==2) {
-                btPicto1.setImageResource(R.drawable.picto_velo_grand_off);
+                btPicto1.setImageResource(R.drawable.picto_velo_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_velov_grand_off);
             }else {
-                btPicto1.setImageResource(R.drawable.picto_velo_off);
+                btPicto1.setImageResource(R.drawable.picto_velo_on);
                 btPicto2.setImageResource(R.drawable.picto_velov_off);
             }
 
@@ -379,12 +399,15 @@ public class SeDeplacer extends FragmentActivity {
             btPicto3.setVisibility(View.INVISIBLE);
             btPicto4.setVisibility(View.INVISIBLE);
         }else if (Config.MENU_ACTIVITE==3) {
+            params.setMargins(0, 150, 0, 0);
+            layFondMenu.setLayoutParams(params);
+
             if (Config.checkDevice()==2) {
-                btPicto1.setImageResource(R.drawable.picto_parking_grand_off);
+                btPicto1.setImageResource(R.drawable.picto_parking_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_pmr_grand_off);
                 btPicto3.setImageResource(R.drawable.picto_autolib_grand_off);
             }else {
-                btPicto1.setImageResource(R.drawable.picto_parking_off);
+                btPicto1.setImageResource(R.drawable.picto_parking_on);
                 btPicto2.setImageResource(R.drawable.picto_pmr_off);
                 btPicto3.setImageResource(R.drawable.picto_autolib_off);
             }
@@ -394,13 +417,16 @@ public class SeDeplacer extends FragmentActivity {
             btPicto3.setVisibility(View.VISIBLE);
             btPicto4.setVisibility(View.INVISIBLE);
         }else{
+            params.setMargins(0, 0, 0, 0);
+            layFondMenu.setLayoutParams(params);
+
             if (Config.checkDevice()==2) {
-                btPicto1.setImageResource(R.drawable.picto_tramway_grand_off);
+                btPicto1.setImageResource(R.drawable.picto_tramway_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_metro_grand_off);
                 btPicto3.setImageResource(R.drawable.picto_taxi_grand_off);
                 btPicto4.setImageResource(R.drawable.picto_train_grand_off);
             }else {
-                btPicto1.setImageResource(R.drawable.picto_tramway_off);
+                btPicto1.setImageResource(R.drawable.picto_tramway_on);
                 btPicto2.setImageResource(R.drawable.picto_metro_off);
                 btPicto3.setImageResource(R.drawable.picto_taxi_off);
                 btPicto4.setImageResource(R.drawable.picto_train_off);
@@ -445,11 +471,12 @@ public class SeDeplacer extends FragmentActivity {
         );
         flagOpenMenu = 1;
 
-        btPicto1.setAlpha(128);
+        //btPicto1.setAlpha(128);
         btPicto2.setAlpha(128);
         btPicto3.setAlpha(128);
         btPicto4.setAlpha(128);
-        flagPicto1 = flagPicto2 = flagPicto3 = flagPicto4 = 0;
+
+        initFlagPicto();
 
         btPicto1.setOnClickListener(
                 new View.OnClickListener() {
@@ -496,6 +523,14 @@ public class SeDeplacer extends FragmentActivity {
                                 }
                             }
                             flagPicto1 = 0;
+                        }
+
+                        if (Config.MENU_ACTIVITE==1) {
+                            showMapPied();
+                        }else if (Config.MENU_ACTIVITE==2) {
+                            showMapVeloFromPicto();
+                        }else if (Config.MENU_ACTIVITE==3) {
+                            showMapVoitureFromPicto();
                         }
                     }
                 }
@@ -548,6 +583,15 @@ public class SeDeplacer extends FragmentActivity {
 
                             flagPicto2 = 0;
                         }
+
+                        if (Config.MENU_ACTIVITE==1) {
+                            showMapPied();
+                        }else if (Config.MENU_ACTIVITE==2) {
+                            showMapVelo();
+                        }else if (Config.MENU_ACTIVITE==3) {
+                            showMapVoiture();
+                        }
+
                     }
                 }
         );
@@ -589,6 +633,11 @@ public class SeDeplacer extends FragmentActivity {
                             }
                             flagPicto3 = 0;
                         }
+                        if (Config.MENU_ACTIVITE==1) {
+                            showMapPied();
+                        }else if (Config.MENU_ACTIVITE==3) {
+                            showMapVoiture();
+                        }
                     }
                 }
         );
@@ -612,9 +661,17 @@ public class SeDeplacer extends FragmentActivity {
                             }
                             flagPicto4 = 0;
                         }
+                        if (Config.MENU_ACTIVITE==1) {
+                            showMapPied();
+                        }
                     }
                 }
         );
+    }
+
+    public void initFlagPicto() {
+        flagPicto2 = flagPicto3 = flagPicto4 = 0;
+        flagPicto1 = 1;
     }
 
     public void loadLegende(int p_param) {
@@ -852,28 +909,18 @@ public class SeDeplacer extends FragmentActivity {
         }
     }
 
-    private void showMapVelo() {
+    public void showMapVeloFromPicto() {
         try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
+            if (flagPicto1==1) {
+                for (int i = 0; i < contactVelov.length(); i++) {
 
-            // VELO'V
-            JSONParser jParser  = new JSONParser();
-            JSONObject json     = jParser.getJSONFromUrl(urlVelov, nameValuePairVelov);
-            JSONArray contacts  = null;
-
-            try {
-                contacts = json.getJSONArray("features");
-
-                for (int i = 0; i < contacts.length(); i++) {
-
-                    JSONObject c = contacts.getJSONObject(i);
+                    JSONObject c = contactVelov.getJSONObject(i);
 
                     JSONObject o = c.getJSONObject("properties");
-                    int nbeEmpl         = o.getInt("available_bikes");
-                    int nbeEmplRestant  = o.getInt("available_bike_stands");
+                    int nbeEmpl = o.getInt("available_bikes");
+                    int nbeEmplRestant = o.getInt("available_bike_stands");
 
-                 //   Log.d("myTag", "velo : " + nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
+                    //   Log.d("myTag", "velo : " + nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
 
                     MarkerOptions markerOptions = new MarkerOptions();
 
@@ -882,28 +929,20 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.position(new LatLng(o.getDouble("lat"), o.getDouble("lng")));
 
                     markerOptions.title("Station Velo'v");
-                    markerOptions.snippet(nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
-
+                    markerOptions.snippet(nbeEmpl + "/" + (nbeEmpl + nbeEmplRestant) + " vélos disponibles");
                     mMap.addMarker(markerOptions);
 
                 }
-            } catch (JSONException e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
-                e.printStackTrace();
             }
+        } catch (JSONException e) {
+            Log.d("myTag", "mon erreur : " + e.getMessage());
+            e.printStackTrace();
+        }
 
-
-            // PARC A VELO
-            jParser     = new JSONParser();
-            json        = jParser.getJSONFromUrl(urlParcVelo, nameValuePairParcVelo);
-            contacts    = null;
-
-            try {
-                contacts = json.getJSONArray("features");
-
-                for (int i = 0; i < contacts.length(); i++) {
-                    JSONObject c    = contacts.getJSONObject(i);
-
+        try {
+            if (flagPicto2==1) {
+                for (int i = 0; i < contactParcVelo.length(); i++) {
+                    JSONObject c    = contactParcVelo.getJSONObject(i);
                     JSONObject o    = c.getJSONObject("properties");
                     String adresse  = o.getString("adresse");
                     String commune  = o.getString("commune");
@@ -918,6 +957,187 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.snippet(URLDecoder.decode(adresse, "UTF-8"));
 
                     mMap.addMarker(markerOptions);
+                }
+            }
+        } catch (Exception e) {
+            Log.d("myTag", "mon erreur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public void showMapVoitureFromPicto() {
+        // AUTO-PARTAGE
+        if (flagPicto3==1) {
+            try {
+                for (int i = 0; i < contactsPartage.length(); i++) {
+
+                    JSONObject c = contactsPartage.getJSONObject(i);
+
+                    JSONObject o = c.getJSONObject("properties");
+                    String nom = o.getString("nom");
+                    String nbeEmpl = o.getString("nbemplacements");
+                    JSONObject g = c.getJSONObject("geometry");
+                    String type = o.getString("typeautopartage");
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    if (type.equalsIgnoreCase("Citiz LPA")) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
+                    } else if (type.equalsIgnoreCase("SunMoov")) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
+                    } else if (type.equalsIgnoreCase("Wattmobile")) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
+                    } else if (type.equalsIgnoreCase("Bluely")) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
+                    }
+
+                    //                    Log.d("myTag", type + nbeEmpl + " emplacements");
+
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+
+                    markerOptions.title(type);
+                    markerOptions.snippet(nbeEmpl + " emplacements");
+
+                    mMap.addMarker(markerOptions);
+
+                }
+            } catch (Exception e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        // PARKINGS
+        if (flagPicto1==1) {
+           try {
+                for (int i = 0; i < contactsParking.length(); i++) {
+
+                    JSONObject c = contactsParking.getJSONObject(i);
+
+                    JSONObject o = c.getJSONObject("properties");
+                    String nom = o.getString("nom");
+                    String etat = o.getString("etat");
+                    String nbeEmpl = o.getString("capacitevoiture");
+                    JSONObject g = c.getJSONObject("geometry");
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
+
+
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+
+                    markerOptions.title(nom);
+                    markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
+                    //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
+
+                    mMap.addMarker(markerOptions);
+
+                }
+            } catch (Exception e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        // PMR
+        if (flagPicto2==1) {
+            try {
+                for (int i = 0; i < contactsPmr.length(); i++) {
+
+                    JSONObject c = contactsPmr.getJSONObject(i);
+
+                    JSONObject o = c.getJSONObject("properties");
+                    String nom = o.getString("nom");
+                    String nbeEmpl = o.getString("nb_places");
+                    JSONObject g = c.getJSONObject("geometry");
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
+                    markerOptions.title("Stationnement PMR");
+                    markerOptions.snippet(nbeEmpl + " emplacements");
+
+                    //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
+
+                    mMap.addMarker(markerOptions);
+                }
+
+            } catch (JSONException e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private void showMapVelo() {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            // VELO'V
+            JSONParser jParser = new JSONParser();
+            JSONObject json = jParser.getJSONFromUrl(urlVelov, nameValuePairVelov);
+            contactVelov = null;
+
+            try {
+                contactVelov = json.getJSONArray("features");
+
+                if (flagPicto1==1) {
+                    for (int i = 0; i < contactVelov.length(); i++) {
+
+                        JSONObject c = contactVelov.getJSONObject(i);
+
+                        JSONObject o = c.getJSONObject("properties");
+                        int nbeEmpl = o.getInt("available_bikes");
+                        int nbeEmplRestant = o.getInt("available_bike_stands");
+
+                        //   Log.d("myTag", "velo : " + nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
+
+                        MarkerOptions markerOptions = new MarkerOptions();
+
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_velib));
+
+                        markerOptions.position(new LatLng(o.getDouble("lat"), o.getDouble("lng")));
+
+                        markerOptions.title("Station Velo'v");
+                        markerOptions.snippet(nbeEmpl + "/" + (nbeEmpl + nbeEmplRestant) + " vélos disponibles");
+                        mMap.addMarker(markerOptions);
+
+                    }
+                }
+            } catch (JSONException e) {
+                Log.d("myTag", "mon erreur : " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            // PARC A VELO
+            jParser         = new JSONParser();
+            json            = jParser.getJSONFromUrl(urlParcVelo, nameValuePairParcVelo);
+            contactParcVelo = null;
+
+            try {
+                contactParcVelo = json.getJSONArray("features");
+
+                if (flagPicto2==1) {
+                    for (int i = 0; i < contactParcVelo.length(); i++) {
+                        JSONObject c    = contactParcVelo.getJSONObject(i);
+                        JSONObject o    = c.getJSONObject("properties");
+                        String adresse  = o.getString("adresse");
+                        String commune  = o.getString("commune");
+                        JSONObject g    = c.getJSONObject("geometry");
+
+                        MarkerOptions markerOptions = new MarkerOptions();
+
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_neutre));
+                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+
+                        markerOptions.title("Parc à vélo");
+                        markerOptions.snippet(URLDecoder.decode(adresse, "UTF-8"));
+
+                        mMap.addMarker(markerOptions);
+                    }
                 }
             } catch (JSONException e) {
                 Log.d("myTag", "mon erreur : " + e.getMessage());
@@ -957,123 +1177,126 @@ public class SeDeplacer extends FragmentActivity {
             StrictMode.setThreadPolicy(policy);
 
             // AUTO-PARTAGE
-            JSONParser jParser  = new JSONParser();
-            JSONObject json     = jParser.getJSONFromUrl(urlAuto, nameValuePairAuto);
-            JSONArray contacts   = null;
+            if (flagPicto3==1) {
+                JSONParser jParser = new JSONParser();
+                JSONObject json = jParser.getJSONFromUrl(urlAuto, nameValuePairAuto);
+                contactsPartage = null;
 
-            try {
-                contacts = json.getJSONArray("features");
+                try {
+                    contactsPartage = json.getJSONArray("features");
 
-                for(int i = 0; i < contacts.length(); i++){
+                    for (int i = 0; i < contactsPartage.length(); i++) {
 
-                    JSONObject c    = contacts.getJSONObject(i);
+                        JSONObject c = contactsPartage.getJSONObject(i);
 
-                    JSONObject o    = c.getJSONObject("properties");
-                    String nom      = o.getString("nom");
-                    String nbeEmpl  = o.getString("nbemplacements");
-                    JSONObject g    = c.getJSONObject("geometry");
-                    String type     = o.getString("typeautopartage");
+                        JSONObject o = c.getJSONObject("properties");
+                        String nom = o.getString("nom");
+                        String nbeEmpl = o.getString("nbemplacements");
+                        JSONObject g = c.getJSONObject("geometry");
+                        String type = o.getString("typeautopartage");
 
-                    MarkerOptions markerOptions = new MarkerOptions();
+                        MarkerOptions markerOptions = new MarkerOptions();
 
-                    if (type.equalsIgnoreCase("Citiz LPA")) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
-                    }else if (type.equalsIgnoreCase("SunMoov")) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
-                    }else if (type.equalsIgnoreCase("Wattmobile")) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
-                    }else if (type.equalsIgnoreCase("Bluely")) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
+                        if (type.equalsIgnoreCase("Citiz LPA")) {
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
+                        } else if (type.equalsIgnoreCase("SunMoov")) {
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
+                        } else if (type.equalsIgnoreCase("Wattmobile")) {
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
+                        } else if (type.equalsIgnoreCase("Bluely")) {
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
+                        }
+
+                        //                    Log.d("myTag", type + nbeEmpl + " emplacements");
+
+                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+
+                        markerOptions.title(type);
+                        markerOptions.snippet(nbeEmpl + " emplacements");
+
+                        mMap.addMarker(markerOptions);
+
                     }
-
-//                    Log.d("myTag", type + nbeEmpl + " emplacements");
-
-                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
-
-                    markerOptions.title(type);
-                    markerOptions.snippet(nbeEmpl + " emplacements");
-
-                    mMap.addMarker(markerOptions);
-
+                } catch (JSONException e) {
+                    Log.d("myTag", "mon erreur : " + e.getMessage());
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
-                e.printStackTrace();
             }
-
 
             // PARKINGS
-            jParser  = new JSONParser();
-            json     = jParser.getJSONFromUrl(urlParking, nameValuePairParking);
-            contacts = null;
+            if (flagPicto1==1) {
+                JSONParser jParser = new JSONParser();
+                JSONObject json = jParser.getJSONFromUrl(urlParking, nameValuePairParking);
+                contactsParking = null;
 
-            try {
-                contacts = json.getJSONArray("features");
+                try {
+                    contactsParking = json.getJSONArray("features");
 
-                for(int i = 0; i < contacts.length(); i++){
+                    for (int i = 0; i < contactsParking.length(); i++) {
 
-                    JSONObject c    = contacts.getJSONObject(i);
+                        JSONObject c = contactsParking.getJSONObject(i);
 
-                    JSONObject o    = c.getJSONObject("properties");
-                    String nom      = o.getString("nom");
-                    String etat  = o.getString("etat");
-                    String nbeEmpl  = o.getString("capacitevoiture");
-                    JSONObject g    = c.getJSONObject("geometry");
+                        JSONObject o = c.getJSONObject("properties");
+                        String nom = o.getString("nom");
+                        String etat = o.getString("etat");
+                        String nbeEmpl = o.getString("capacitevoiture");
+                        JSONObject g = c.getJSONObject("geometry");
 
-                    MarkerOptions markerOptions = new MarkerOptions();
+                        MarkerOptions markerOptions = new MarkerOptions();
 
-                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
 
 
-                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
-                    markerOptions.title(nom);
-                    markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
-  //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
+                        markerOptions.title(nom);
+                        markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
+                        //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
 
-                    mMap.addMarker(markerOptions);
+                        mMap.addMarker(markerOptions);
 
+                    }
+                } catch (JSONException e) {
+                    Log.d("myTag", "mon erreur : " + e.getMessage());
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
-                e.printStackTrace();
             }
-
 
             // PMR
-            jParser  = new JSONParser();
-            json     = jParser.getJSONFromUrl(urlPmr, nameValuePairPmr);
-            contacts = null;
+            if (flagPicto2==1) {
+                JSONParser jParser = new JSONParser();
+                JSONObject json = jParser.getJSONFromUrl(urlPmr, nameValuePairPmr);
+                contactsPmr = null;
 
-            try {
-                contacts = json.getJSONArray("features");
+                try {
+                    contactsPmr = json.getJSONArray("features");
 
-                for(int i = 0; i < contacts.length(); i++){
+                    for (int i = 0; i < contactsPmr.length(); i++) {
 
-                    JSONObject c    = contacts.getJSONObject(i);
+                        JSONObject c = contactsPmr.getJSONObject(i);
 
-                    JSONObject o    = c.getJSONObject("properties");
-                    String nom      = o.getString("nom");
-                    String nbeEmpl  = o.getString("nb_places");
-                    JSONObject g    = c.getJSONObject("geometry");
+                        JSONObject o = c.getJSONObject("properties");
+                        String nom = o.getString("nom");
+                        String nbeEmpl = o.getString("nb_places");
+                        JSONObject g = c.getJSONObject("geometry");
 
-                    MarkerOptions markerOptions = new MarkerOptions();
+                        MarkerOptions markerOptions = new MarkerOptions();
 
-                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
-                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
-                    markerOptions.title("Stationnement PMR");
-                    markerOptions.snippet(nbeEmpl + " emplacements");
+                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
+                        markerOptions.title("Stationnement PMR");
+                        markerOptions.snippet(nbeEmpl + " emplacements");
 
-     //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
+                        //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
 
-                    mMap.addMarker(markerOptions);
+                        mMap.addMarker(markerOptions);
+                    }
+
+                } catch (JSONException e) {
+                    Log.d("myTag", "mon erreur : " + e.getMessage());
+                    e.printStackTrace();
                 }
-
-            } catch (JSONException e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
-                e.printStackTrace();
             }
-
 
         } catch (Exception e) {
             Log.d("myTag", "mon Exception : " + e.getMessage());
@@ -1083,68 +1306,82 @@ public class SeDeplacer extends FragmentActivity {
 
 
     private void showMapPied() {
+
         Cursor c = myDbHelper.loadPied();
 
-        try {
-            if (c != null) {
-                while (c.moveToNext()) {
-                    MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_metro));
-                    markerOptions.position(new LatLng(c.getFloat(2), c.getFloat(3)));
-                    markerOptions.title("Ligne " + c.getString(0));
-                    markerOptions.snippet(c.getString(1));
-                    mMap.addMarker(markerOptions);
+
+
+        if (flagPicto2==1){
+            try {
+                if (c != null) {
+                    while (c.moveToNext()) {
+                        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_metro));
+                        markerOptions.position(new LatLng(c.getFloat(2), c.getFloat(3)));
+                        markerOptions.title("Ligne " + c.getString(0));
+                        Log.d("myTag", "ligne");
+                        markerOptions.snippet(c.getString(1));
+                        mMap.addMarker(markerOptions);
+                    }
                 }
+            } catch (SQLException sqle) {
+                throw sqle;
             }
-        }catch(SQLException sqle){
-            throw sqle;
         }
 
-        c = myDbHelper.loadTaxi();
+        if (flagPicto3==1) {
+            c = myDbHelper.loadTaxi();
 
-        try {
-            if (c != null) {
-                while (c.moveToNext()) {
-                    MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_taxi));
-                    markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
-                    markerOptions.title("Station de taxi");
-                    mMap.addMarker(markerOptions);
+            try {
+                if (c != null) {
+                    while (c.moveToNext()) {
+                        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_taxi));
+                        markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
+                        markerOptions.title("Station de taxi");
+                        Log.d("myTag", "taxi");
+                        mMap.addMarker(markerOptions);
+                    }
                 }
+            } catch (SQLException sqle) {
+                throw sqle;
             }
-        }catch(SQLException sqle){
-            throw sqle;
         }
 
-        c = myDbHelper.loadTram();
+        if (flagPicto1==1) {
+            c = myDbHelper.loadTram();
 
-        try {
-            if (c != null) {
-                while (c.moveToNext()) {
-                    MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_tramway));
-                    markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
-                    markerOptions.title("Ligne " + c.getString(2));
-                    markerOptions.snippet(c.getString(3));
-                    mMap.addMarker(markerOptions);
+            try {
+                if (c != null) {
+                    while (c.moveToNext()) {
+                        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_tramway));
+                        markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
+                        markerOptions.title("Ligne " + c.getString(2));
+                        Log.d("myTag", "tram");
+                        markerOptions.snippet(c.getString(3));
+                        mMap.addMarker(markerOptions);
+                    }
                 }
+            } catch (SQLException sqle) {
+                throw sqle;
             }
-        }catch(SQLException sqle){
-            throw sqle;
         }
 
-        c = myDbHelper.loadGare();
+        if (flagPicto4==1) {
+            c = myDbHelper.loadGare();
 
-        try {
-            if (c != null) {
-                while (c.moveToNext()) {
-                    MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_train));
-                    markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
-                    markerOptions.title(c.getString(2));
-                    mMap.addMarker(markerOptions);
+            try {
+                if (c != null) {
+                    while (c.moveToNext()) {
+                        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_train));
+                        markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
+                        markerOptions.title(c.getString(2));
+                        Log.d("myTag", "gare");
+                        mMap.addMarker(markerOptions);
+                    }
                 }
+            } catch (SQLException sqle) {
+                throw sqle;
             }
-        }catch(SQLException sqle){
-            throw sqle;
         }
-
     }
 
     private void setUpMap() {

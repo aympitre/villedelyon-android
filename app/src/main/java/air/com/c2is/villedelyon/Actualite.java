@@ -136,8 +136,9 @@ public class Actualite extends Activity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Config.titreActu    = listItems.get(position).get("titreActu").toString();
-                Config.urlActu      = listItems.get(position).get("url_actu").toString();
+                Config.titreActu        = listItems.get(position).get("titreActu").toString();
+                Config.urlActu          = listItems.get(position).get("url_actu").toString();
+                Config.flagEvtFromFav   = 0;
 
                 Intent intent = new Intent(Actualite.this, FragmentDetailActualite.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

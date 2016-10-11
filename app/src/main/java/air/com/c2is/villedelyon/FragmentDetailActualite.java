@@ -86,7 +86,11 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
 
         TextView titre = (TextView) findViewById(R.id.titre);
         titre.setTypeface(myTypeface);
-        titre.setText(getResources().getString(R.string.libHomeBt2));
+        if (Config.flagEvtFromFav==1) {
+            titre.setText(getResources().getString(R.string.titreFavoris));
+        }else {
+            titre.setText(getResources().getString(R.string.libHomeBt2));
+        }
 
         ImageButton myBtMenu = (ImageButton) findViewById(R.id.bt_menu);
         ImageView myLogo     = (ImageView) findViewById(R.id.logo);

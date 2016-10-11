@@ -277,6 +277,7 @@ public class ListType extends android.support.v4.app.FragmentActivity {
     public void loadEquipement() {
         Config.flagFragment = 1;
 
+        Config.flagFromFavoris = 0;
         Intent intent = new Intent(ListType.this, FragmentDetailEquipement.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivityForResult(intent, 0);

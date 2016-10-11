@@ -107,6 +107,11 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         Button myMenu2 = (Button) findViewById(R.id.bt_menu2);
         Button myMenu3 = (Button) findViewById(R.id.bt_menu3);
 
+        if (Config.flagFromFavoris==1) {
+            LinearLayout layMenu = (LinearLayout) findViewById(R.id.layMenu);
+            layMenu.setVisibility(View.GONE);
+        }
+
         layBtFermerCarte    = (RelativeLayout) findViewById(R.id.layBtFermerCarte);
         myTitreEquipement   = (TextView) findViewById(R.id.titreEquipement);
 
@@ -329,17 +334,21 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     }
 
     public void majBigTitre(TextView p_titre) {
-        if (Config.CODE_DE_MON_ACTIVITE == 1) {
-            p_titre.setText(getResources().getString(R.string.libHomeBt1));
+        if (Config.flagFromFavoris==1) {
+            p_titre.setText(getResources().getString(R.string.titreFavoris));
+        }else {
+            if (Config.CODE_DE_MON_ACTIVITE == 1) {
+                p_titre.setText(getResources().getString(R.string.libHomeBt1));
 
-        } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-            p_titre.setText(getResources().getString(R.string.libHomeBt3));
+            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
+                p_titre.setText(getResources().getString(R.string.libHomeBt3));
 
-        } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
-            p_titre.setText(getResources().getString(R.string.libHomeBt5));
+            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
+                p_titre.setText(getResources().getString(R.string.libHomeBt5));
 
-        } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-            p_titre.setText(getResources().getString(R.string.libHomeBt6));
+            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
+                p_titre.setText(getResources().getString(R.string.libHomeBt6));
+            }
         }
     }
 

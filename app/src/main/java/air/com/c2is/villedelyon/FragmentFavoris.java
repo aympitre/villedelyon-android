@@ -95,7 +95,7 @@ public class FragmentFavoris extends Fragment {
 
                 Config.myContentValue   = listItems.get(position);
                 Config.sql_type         = listItems.get(position).get("id_equipement").toString();
-
+                Config.flagFromFavoris  = 1;
 
 //                Log.d("myTag", listItems.get(position).get("id_equipement").toString());
 
