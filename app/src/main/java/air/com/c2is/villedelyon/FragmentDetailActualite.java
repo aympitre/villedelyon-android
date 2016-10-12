@@ -120,13 +120,10 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
         settings.setDefaultTextEncodingName("utf-8");
         myTexte.setBackgroundColor(Color.TRANSPARENT);
 
-
         // lancement du chargement HTTP
         myAsyncTask2 myWebFetch = new myAsyncTask2();
         myWebFetch.execute();
 
-
-//        myTexte.loadDataWithBaseURL(null, Config.myContentValue.get("description").toString(), "text/html", "UTF-8", null);
 
         myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
         try {
@@ -217,7 +214,7 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
 
                 retour = retour.substring(dep+21,fin);
 
-                myTexte.loadDataWithBaseURL(null, retour.replace("Et aussi...","<!--"), "text/html", "UTF-8", null);
+                myTexte.loadDataWithBaseURL(null, "<head><base href='http://www.lyon.fr/' target='_blank'></head>"+retour.replace("Et aussi...","<!--"), "text/html", "UTF-8", null);
             } catch (Exception e) {
                 myTexte.loadDataWithBaseURL(null, "<br>Un problème est survenu avec votre connexion 3G à lyon.fr.", "text/html", "UTF-8", null);
 

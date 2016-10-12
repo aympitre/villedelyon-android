@@ -1,5 +1,6 @@
 package air.com.c2is.villedelyon;
 
+import android.media.AudioManager;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -76,7 +77,11 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
                 descriptor.close();
 
                 Config.mp.prepare();
-                Config.mp.setVolume(1f, 1f);
+                Config.mp.setVolume(8, 8);
+
+               // AudioManager mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+               // mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 100, 0);
+
                 Config.mp.setLooping(true);
                 Config.mp.start();
 

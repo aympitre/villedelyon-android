@@ -96,9 +96,9 @@
 
                     <TextView
                         android:id="@+id/titreActualite"
+                        android:paddingTop="15dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:paddingTop="10dp"
                         android:textColor="@color/bleu"
                         android:textAllCaps="true"
                         android:textSize="18sp"

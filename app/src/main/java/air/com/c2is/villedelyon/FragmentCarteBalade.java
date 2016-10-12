@@ -42,7 +42,7 @@ public class FragmentCarteBalade extends FragmentActivity {
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
     public String tempMarker;
-    public LatLng firstLocation;
+    public LatLng firstLocation = null;
     public LatLng oldLocation;
     public int flagFirstLocation = 0;
     public String[] myTab;
@@ -151,7 +151,7 @@ public class FragmentCarteBalade extends FragmentActivity {
 
             mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                 public void onMapLoaded() {
-                    zoomTheMap();
+                    //zoomTheMap();
                 }
             });
         }
@@ -221,6 +221,7 @@ public class FragmentCarteBalade extends FragmentActivity {
                         }else{
                             markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_depart));
                             flagFirstLocation = 1;
+                            firstLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
                         }
                         oldLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
                     }
@@ -260,6 +261,7 @@ public class FragmentCarteBalade extends FragmentActivity {
 
         });
 
+        zoomTheMap();
     }
 
     public void traceLaLigne(LatLng pt1, LatLng pt2) {
@@ -276,6 +278,5 @@ public class FragmentCarteBalade extends FragmentActivity {
         if (firstLocation != null) {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 15));
         }
-
     }
 }

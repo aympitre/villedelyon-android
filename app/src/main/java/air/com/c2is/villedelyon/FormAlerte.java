@@ -1,5 +1,6 @@
 package air.com.c2is.villedelyon;
 
+import android.os.Handler;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -507,78 +508,56 @@ public class FormAlerte extends Activity {
         return image;
     }
 
+    public void loadImageToGalerie() {
+        try {
+            Bitmap thumbnail = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+
+            imgPreview.setImageBitmap(thumbnail);
+            takenPictureData = thumbnail;
+
+            monImage = getRealPathFromUri(getApplicationContext(),imageUri);
+
+            String filename = "alerte-ville-de-lyon.png";
+            File sd = Environment.getExternalStorageDirectory();
+
+            String extr = Environment.getExternalStorageDirectory().toString();
+            extr = extr + "/Pictures/";
+
+            File dest = new File(extr, filename);
+            FileOutputStream out = new FileOutputStream(dest);
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 70, out);
+            out.flush();
+            out.close();
+        } catch (Exception et) {
+            et.printStackTrace();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
             try {
+                Log.d("myTag", ">> je suis dans le try");
                 takenPictureData = null;
                 takenPictureData = handleResultFromChooser(data);
                 imgPreview.setImageBitmap(takenPictureData);
                 actuBitmap = takenPictureData;
             } catch (Exception e) {
-/*
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-                actuBitmap = imageBitmap;
 
-                String filename = "alerte-ville-de-lyon.png";
-                File sd = Environment.getExternalStorageDirectory();
-
-                String extr = Environment.getExternalStorageDirectory().toString();
-                extr = extr + "/Pictures/";
-
-                File dest = new File(extr, filena
-me);
-                monImage = extr + filename;
-                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                imgPreview.setImageBitmap(bitmap);
-*/
-
+                Log.d("myTag", ">> je catche");
 
                 // AYMERIC
                 try {
-
-                    Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
-                            getContentResolver(), imageUri);
-
-                    imgPreview.setImageBitmap(thumbnail);
-                    //imageurl = getRealPathFromURI(imageUri);
-                    takenPictureData = thumbnail;
-
-                    monImage = getRealPathFromUri(getApplicationContext(),imageUri);
-
-
-
-                    String filename = "alerte-ville-de-lyon.png";
-                    File sd = Environment.getExternalStorageDirectory();
-
-                    String extr = Environment.getExternalStorageDirectory().toString();
-                    extr = extr + "/Pictures/";
-
-                    File dest = new File(extr, filename);
-                    FileOutputStream out = new FileOutputStream(dest);
-                    thumbnail.compress(Bitmap.CompressFormat.PNG, 70, out);
-                    out.flush();
-                    out.close();
-
+                    myAsyncTask4 myWebFetch4 = new myAsyncTask4();
+                    myWebFetch4.execute();
 
                 } catch (Exception et) {
                     et.printStackTrace();
                 }
 
-
-/*
-                try {
-                    FileOutputStream out = new FileOutputStream(dest);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-                    out.flush();
-                    out.close();
-
-                } catch (Exception et) {
-                    Log.d("myTag", "hhhhh : " + et.getMessage());
-                }
-                */
             }
 
             flagPhoto = 1;
@@ -593,6 +572,7 @@ me);
                 flagPhoto = 1;
             }
         }
+
     }
 
     public String getRealPathFromURI(Uri uri) {
@@ -1200,6 +1180,29 @@ me);
 
             }
 
+            return null;
+        }
+    }
+
+    class myAsyncTask4 extends AsyncTask<Void, Void, Void> {
+        public ArrayList<String> addressFragments;
+
+        myAsyncTask4()    {
+
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            loadImageToGalerie();
             return null;
         }
     }
