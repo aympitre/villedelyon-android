@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import java.nio.charset.Charset;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -399,17 +400,19 @@ public class SeDeplacer extends FragmentActivity {
             btPicto3.setVisibility(View.INVISIBLE);
             btPicto4.setVisibility(View.INVISIBLE);
         }else if (Config.MENU_ACTIVITE==3) {
-            params.setMargins(0, 150, 0, 0);
+            params.setMargins(0, 0, 0, 0);
             layFondMenu.setLayoutParams(params);
 
             if (Config.checkDevice()==2) {
                 btPicto1.setImageResource(R.drawable.picto_parking_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_pmr_grand_off);
                 btPicto3.setImageResource(R.drawable.picto_autolib_grand_off);
+                btPicto4.setImageResource(R.drawable.picto_bluely_grand_off);
             }else {
                 btPicto1.setImageResource(R.drawable.picto_parking_on);
                 btPicto2.setImageResource(R.drawable.picto_pmr_off);
                 btPicto3.setImageResource(R.drawable.picto_autolib_off);
+                btPicto4.setImageResource(R.drawable.picto_bluely_off);
             }
 
             btPicto1.setAlpha(255);
@@ -418,7 +421,7 @@ public class SeDeplacer extends FragmentActivity {
             btPicto1.setVisibility(View.VISIBLE);
             btPicto2.setVisibility(View.VISIBLE);
             btPicto3.setVisibility(View.VISIBLE);
-            btPicto4.setVisibility(View.INVISIBLE);
+            btPicto4.setVisibility(View.VISIBLE);
         }else{
             params.setMargins(0, 0, 0, 0);
             layFondMenu.setLayoutParams(params);
@@ -455,9 +458,7 @@ public class SeDeplacer extends FragmentActivity {
                             layMenuPicto.animate().translationX(-250);  //-200
                             layMenuPicto.animate().start();
                             flagOpenMenu = 0;
-
                             btMenuLayerPetit.setVisibility(View.VISIBLE);
-
                         }
                     }
                 }
@@ -465,14 +466,11 @@ public class SeDeplacer extends FragmentActivity {
         btMenuLayerPetit.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-
-                            btMenuLayerPetit.setVisibility(View.GONE);
-
-                            layMenuPicto.animate().setDuration(100);
-                            layMenuPicto.animate().translationX(0);
-                            layMenuPicto.animate().start();
-                            flagOpenMenu = 1;
-
+                        btMenuLayerPetit.setVisibility(View.GONE);
+                        layMenuPicto.animate().setDuration(100);
+                        layMenuPicto.animate().translationX(0);
+                        layMenuPicto.animate().start();
+                        flagOpenMenu = 1;
                     }
                 }
         );
@@ -654,23 +652,42 @@ public class SeDeplacer extends FragmentActivity {
                     public void onClick(View v) {
                         if (flagPicto4==0) {
                             btPicto4.setAlpha(255);
-                            if (Config.checkDevice()==2) {
-                                btPicto4.setImageResource(R.drawable.picto_train_grand_on);
-                            }else{
-                                btPicto4.setImageResource(R.drawable.picto_train_on);
+
+                            if (Config.MENU_ACTIVITE==3) {
+                                if (Config.checkDevice() == 2) {
+                                    btPicto4.setImageResource(R.drawable.picto_bluely_grand_on);
+                                } else {
+                                    btPicto4.setImageResource(R.drawable.picto_bluely_on);
+                                }
+                            }else {
+                                if (Config.checkDevice() == 2) {
+                                    btPicto4.setImageResource(R.drawable.picto_train_grand_on);
+                                } else {
+                                    btPicto4.setImageResource(R.drawable.picto_train_on);
+                                }
                             }
                             flagPicto4 = 1;
                         }else{
                             btPicto4.setAlpha(128);
-                            if (Config.checkDevice()==2) {
-                                btPicto4.setImageResource(R.drawable.picto_train_grand_off);
+                            if (Config.MENU_ACTIVITE==3) {
+                                if (Config.checkDevice() == 2) {
+                                    btPicto4.setImageResource(R.drawable.picto_bluely_grand_off);
+                                } else {
+                                    btPicto4.setImageResource(R.drawable.picto_bluely_off);
+                                }
                             }else {
-                                btPicto4.setImageResource(R.drawable.picto_train_off);
+                                if (Config.checkDevice() == 2) {
+                                    btPicto4.setImageResource(R.drawable.picto_train_grand_off);
+                                } else {
+                                    btPicto4.setImageResource(R.drawable.picto_train_off);
+                                }
                             }
                             flagPicto4 = 0;
                         }
                         if (Config.MENU_ACTIVITE==1) {
                             showMapPied();
+                        }else{
+                            showMapVoitureFromPicto();
                         }
                     }
                 }
@@ -967,7 +984,12 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
                     markerOptions.title("Parc à vélo");
-                    markerOptions.snippet(URLDecoder.decode(adresse, "UTF-8"));
+
+                    String s = new String(adresse.getBytes(), "UTF-8");
+                    s        = s.replace("Ã©","é");
+                    s        = s.replace("Ã¨","è");
+
+                    markerOptions.snippet(s);
 
                     mMap.addMarker(markerOptions);
                 }
@@ -985,38 +1007,49 @@ public class SeDeplacer extends FragmentActivity {
         mMap.clear();
 
         // AUTO-PARTAGE
-        if (flagPicto3==1) {
+        if ((flagPicto3==1)||(flagPicto4==1)) {
             try {
                 for (int i = 0; i < contactsPartage.length(); i++) {
-
-                    JSONObject c = contactsPartage.getJSONObject(i);
-
-                    JSONObject o = c.getJSONObject("properties");
-                    String nom = o.getString("nom");
+                    JSONObject c   = contactsPartage.getJSONObject(i);
+                    JSONObject o   = c.getJSONObject("properties");
+                    String nom     = o.getString("nom");
                     String nbeEmpl = o.getString("nbemplacements");
-                    JSONObject g = c.getJSONObject("geometry");
-                    String type = o.getString("typeautopartage");
+                    JSONObject g   = c.getJSONObject("geometry");
+                    String type    = o.getString("typeautopartage");
 
                     MarkerOptions markerOptions = new MarkerOptions();
 
+                    int flag = 0;
                     if (type.equalsIgnoreCase("Citiz LPA")) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
+                        if (flagPicto3==1) {
+                            flag = 1;
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
+                        }
                     } else if (type.equalsIgnoreCase("SunMoov")) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
+                        if (flagPicto4==1) {
+                            flag = 1;
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
+                        }
                     } else if (type.equalsIgnoreCase("Wattmobile")) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
+                        if (flagPicto4==1) {
+                            flag = 1;
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
+                        }
                     } else if (type.equalsIgnoreCase("Bluely")) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
+                        if (flagPicto4==1) {
+                            flag = 1;
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
+                        }
                     }
 
-                    //                    Log.d("myTag", type + nbeEmpl + " emplacements");
+                    if (flag==1) {
+                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
-                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+                        markerOptions.title(type);
+                        markerOptions.snippet(nbeEmpl + " emplacements");
 
-                    markerOptions.title(type);
-                    markerOptions.snippet(nbeEmpl + " emplacements");
-
-                    mMap.addMarker(markerOptions);
+                        mMap.addMarker(markerOptions);
+                    }
 
                 }
             } catch (Exception e) {
@@ -1377,7 +1410,7 @@ public class SeDeplacer extends FragmentActivity {
                         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_tramway));
                         markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
                         markerOptions.title("Ligne " + c.getString(2));
-                        Log.d("myTag", "tram");
+                        //Log.d("myTag", "tram");
                         markerOptions.snippet(c.getString(3));
                         mMap.addMarker(markerOptions);
                     }

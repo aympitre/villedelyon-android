@@ -20,7 +20,7 @@ import android.widget.TextView;
 public class Config {
 	public static int 	 VERSION_API			= 4;
 	public static int 	 LIMIT_EVENT			= 50;
-	public static int 	 LIMIT_ACTU				= 50;
+	public static int 	 LIMIT_ACTU				= 100;
 	public static int 	 CODE_DE_MON_ACTIVITE 	= 1;
 	public static int 	 MENU_ACTIVITE 			= 1;
 	public static String NBE_ANNONCE 			= "";

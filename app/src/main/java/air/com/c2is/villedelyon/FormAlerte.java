@@ -97,6 +97,7 @@ public class FormAlerte extends Activity {
     public LinearLayout layImage;
     public ScrollView myScrollForm;
 
+    public TextView layObligatoire;
     public TextView libLocalisation;
     public EditText chpNom;
     public EditText chpPrenom;
@@ -107,6 +108,7 @@ public class FormAlerte extends Activity {
     public EditText chpCp;
     public EditText chpVille;
     public EditText chpTelephone;
+
 
     public String monImage = "";
     public int    flagPhoto = 0;
@@ -136,6 +138,10 @@ public class FormAlerte extends Activity {
     public Bitmap takenPictureData;
     private DataBaseHelper myDbHelper;
 
+    public DialogOk myDialOk;
+    public DialogKo myDialKo;
+    public DialogLoading myDialLoading;
+
     public String urlAlerte = "http://appvilledelyon.c2is.fr/contact.php?version=4";
 //    public String urlAlerte = "http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/contact.php?version=4";
     /**
@@ -152,6 +158,10 @@ public class FormAlerte extends Activity {
         tracker.setScreenName("/Formulaire alerte");
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
+        myDialLoading = new DialogLoading(this);
+        myDialOk      = new DialogOk(this);
+        myDialKo      = new DialogKo(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_alerte);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -164,8 +174,7 @@ public class FormAlerte extends Activity {
 
         titre.setText(Config.myLabel);
 
-        TextView titreOk = (TextView) findViewById(R.id.titreConfOk);
-        titreOk.setTypeface(myTypeface);
+        layObligatoire = (TextView) findViewById(R.id.layObligatoire);
         TextView titreKo = (TextView) findViewById(R.id.titreConfKo);
         titreKo.setTypeface(myTypeface);
 
@@ -312,7 +321,7 @@ public class FormAlerte extends Activity {
         );
 
         myLayConfKo     = (LinearLayout) findViewById(R.id.myLayConfKo);
-        myLayConfOk     = (LinearLayout) findViewById(R.id.myLayConfOk);
+        //myLayConfOk     = (LinearLayout) findViewById(R.id.myLayConfOk);
         myScrollForm    = (ScrollView) findViewById(R.id.myScrollForm);
 
         sharedPref      = this.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
@@ -529,6 +538,7 @@ public class FormAlerte extends Activity {
             out.flush();
             out.close();
         } catch (Exception et) {
+            Log.d("myTag", ">> je encore faux " + et.getMessage());
             et.printStackTrace();
         }
     }
@@ -538,12 +548,15 @@ public class FormAlerte extends Activity {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
+
             try {
                 Log.d("myTag", ">> je suis dans le try");
                 takenPictureData = null;
+
                 takenPictureData = handleResultFromChooser(data);
                 imgPreview.setImageBitmap(takenPictureData);
                 actuBitmap = takenPictureData;
+
             } catch (Exception e) {
 
 
@@ -595,15 +608,13 @@ public class FormAlerte extends Activity {
     }
 
     public void showOk() {
-        myScrollForm.setVisibility(View.GONE);
-        myLayConfKo.setVisibility(View.GONE);
-        myLayConfOk.setVisibility(View.VISIBLE);
+        myDialOk.show();
+        btValider.setVisibility(View.VISIBLE);
     }
 
     public void showKo() {
-        myScrollForm.setVisibility(View.GONE);
-        myLayConfKo.setVisibility(View.VISIBLE);
-        myLayConfOk.setVisibility(View.GONE);
+        myDialKo.show();
+        btValider.setVisibility(View.VISIBLE);
     }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -721,10 +732,10 @@ public class FormAlerte extends Activity {
                 int bytesAvailable  = 0;
 
                 try {
+                    monImage = getRealPathFromUri(getApplicationContext(),imageUri);
+
                     FileInputStream fileInputStream = new FileInputStream(monImage);
-
                     bytesAvailable = fileInputStream.available();
-
 
                 } catch (Exception e) {
                     Log.d("myTag", "exep : " + e.toString());
@@ -750,7 +761,8 @@ public class FormAlerte extends Activity {
 
                 } else {
 
-                    btValiderChargement.setVisibility(View.VISIBLE);
+                    myDialLoading.show();
+
                     btValider.setVisibility(View.GONE);
 
                     ContentValues myValue = new ContentValues();
@@ -765,7 +777,8 @@ public class FormAlerte extends Activity {
                     myWebFetch.execute();
                 }
             }else{
-                btValiderChargement.setVisibility(View.VISIBLE);
+                myDialLoading.show();
+
                 btValider.setVisibility(View.GONE);
 
                 ContentValues myValue = new ContentValues();
@@ -776,8 +789,8 @@ public class FormAlerte extends Activity {
 
                 myDbHelper.updateUtilisateur(myValue);
 
-                 myAsyncTask2 myWebFetch = new myAsyncTask2();
-                 myWebFetch.execute();
+                myAsyncTask2 myWebFetch = new myAsyncTask2();
+                myWebFetch.execute();
             }
         }else{
             if (flag==2) {
@@ -871,7 +884,7 @@ public class FormAlerte extends Activity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Log.d("myTag", "onPostExecute : " + result);
+            myDialLoading.hide();
 
             if (flagOk==1) {
                 showOk();
@@ -889,7 +902,6 @@ public class FormAlerte extends Activity {
 
         @Override
         protected String doInBackground(List<NameValuePair>... nameValuePairs) {
-
             try {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
@@ -1045,7 +1057,7 @@ public class FormAlerte extends Activity {
                     }
 
                     if (monImage.length()>0) {
-                        Log.d("myTag", "StickerToSend : " + monImage);
+                        Log.d("myTag", "upload de l'imae : " + monImage);
 
                         FileInputStream fileInputStream = new FileInputStream(monImage);
 
@@ -1101,6 +1113,7 @@ public class FormAlerte extends Activity {
 
 
                 return null;
+
 
             } catch (Exception e) {
                 flagOk = 0;

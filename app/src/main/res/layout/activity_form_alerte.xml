@@ -60,39 +60,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/myLayConfOk"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:background="@color/grisbanniere"
-                android:padding="10dp"
-                android:gravity="left">
-
-                <TextView android:id="@+id/titreConfOk"
-                    android:textColor="@color/noir"
-                    android:text="@string/libFormAlerteTitreOk"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:textSize="20sp"
-                    android:textAllCaps="true"/>
-
-                <TextView android:id="@+id/texteConfOk"
-                    android:textColor="@color/noir"
-                    android:text="@string/libFormAlerteTexteOk"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="15dp"
-                    android:textSize="18sp"
-                    android:textAllCaps="false"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/myLayConfKo"
@@ -142,6 +109,8 @@
                 android:background="@color/grisbanniere"
                 android:padding="10dp"
                 android:gravity="left">
+
+
 
                 <LinearLayout
                     android:id="@+id/layRadio"
@@ -415,6 +384,7 @@
                     android:textColor="@color/noir"
                     android:text="@string/libFormAlerteObligatoire"
                     android:layout_gravity="center"
+                    android:id="@+id/layObligatoire"
                     android:paddingLeft="20dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"

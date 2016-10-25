@@ -151,7 +151,7 @@ public class FragmentCarteBalade extends FragmentActivity {
 
             mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                 public void onMapLoaded() {
-                    //zoomTheMap();
+                    zoomTheMap();
                 }
             });
         }
@@ -192,8 +192,6 @@ public class FragmentCarteBalade extends FragmentActivity {
 
         String str_point = Config.myContentValue.get("points").toString();
 
-
-
         if (str_point.length() > 0) {
             myTab = str_point.split(";");
 
@@ -219,9 +217,9 @@ public class FragmentCarteBalade extends FragmentActivity {
                         if (flagFirstLocation==1) {
                             traceLaLigne(oldLocation, new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2])));
                         }else{
-                            markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_depart));
+                            markerOptions     = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_depart));
                             flagFirstLocation = 1;
-                            firstLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
+                            firstLocation     = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
                         }
                         oldLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
                     }
@@ -234,6 +232,7 @@ public class FragmentCarteBalade extends FragmentActivity {
 
                     if (String.valueOf(myTab2[0]).length()>0) {
                         mMap.addMarker(markerOptions);
+                        oldLocation = new LatLng(Double.valueOf(myTab2[3]), Double.valueOf(myTab2[2]));
                     }
                 }
             }
@@ -277,6 +276,17 @@ public class FragmentCarteBalade extends FragmentActivity {
     public void zoomTheMap() {
         if (firstLocation != null) {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 15));
+        }else if (oldLocation != null) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(oldLocation, 15));
+        }else{
+            Location location = mMap.getMyLocation();
+
+            if (location != null) {
+                LatLng myLocation = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
+            }
         }
     }
 }

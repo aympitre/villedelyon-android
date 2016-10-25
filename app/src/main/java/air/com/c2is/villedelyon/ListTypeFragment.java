@@ -294,6 +294,13 @@ public class ListTypeFragment extends Fragment {
 
                     Config.flagForceRetour      = 1;
 
+
+                    if (Config.flagBisRetour==1) {
+                        Config.fragToReload = getResources().getString(R.string.sqlType1_2);
+                    }else if (Config.flagBisRetour==2) {
+                        Config.fragToReload = getResources().getString(R.string.sqlType1_3);
+                    }
+
                     if (Config.fragToReload==getResources().getString(R.string.sqlType1_2)) {
                         Config.flagBisRetour = 1;
                     }else if (Config.fragToReload==getResources().getString(R.string.sqlType1_3)) {
@@ -302,9 +309,6 @@ public class ListTypeFragment extends Fragment {
                         Config.flagBisRetour = 3;
 
                     }
-
-                    Log.d("myTag", "je suis dans le bon : " + Config.fragToReload);
-
 
                 }else {
                     Log.d("myTag", "code activite : " + Config.CODE_DE_MON_ACTIVITE + " menu : " +Config.MENU_ACTIVITE);

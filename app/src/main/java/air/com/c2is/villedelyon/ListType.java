@@ -366,14 +366,10 @@ public class ListType extends android.support.v4.app.FragmentActivity {
             }
         }else if (Config.fragToReload.length()>0) {
             Log.d("myTag", "CODE_DE_fragToReload : " + Config.fragToReload);
+
             Config.flagRetourRecherche = 0;
 
-            if (    (Config.fragToReload.equals(getResources().getString(R.string.sqlType3_2))) ||
-                    (Config.fragToReload.equals(getResources().getString(R.string.sqlBalade))) ||
-                    (Config.fragToReload.equals(getResources().getString(R.string.sqlType1_2))) ||
-                    (Config.fragToReload.equals(getResources().getString(R.string.sqlType1_3)))
-                    ) {
-
+            if ((Config.fragToReload.equals(getResources().getString(R.string.sqlType3_2))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlBalade))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlType1_2))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlType1_3)))) {
                 if (Config.flagForceRetour==1) {
                     Config.myFragment.loadFragment(Config.fragToReload);
                     Config.fragToReload = "";
@@ -385,17 +381,18 @@ public class ListType extends android.support.v4.app.FragmentActivity {
                 }
 
             }else{
-
                 finish();
             }
         }else {
 
-            Log.d("myTag", "CODE_DE_MON_RETOUR : " + Config.flagBisRetour);
+            Log.d("myTag", "CODE_DE_MON_RETOUR -- : " + Config.flagBisRetour);
 
             if (Config.flagBisRetour==1) {
                 Config.flagBisRetour = 0;
 
-                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_2));
+                Log.d("myTag", "ic ici ici");
+                finish();
+                //Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_2));
                 Config.fragToReload         = "";
                 Config.flagForceRetour      = 0;
                 Config.flagRetourRecherche  = 0;
@@ -403,7 +400,11 @@ public class ListType extends android.support.v4.app.FragmentActivity {
             }else if (Config.flagBisRetour==2) {
                 Config.flagBisRetour=0;
 
-                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_3));
+                //Log.d("myTag", "la la la");
+
+                //Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_3));
+                finish();
+
                 Config.fragToReload         = "";
                 Config.flagForceRetour      = 0;
                 Config.flagRetourRecherche  = 0;
