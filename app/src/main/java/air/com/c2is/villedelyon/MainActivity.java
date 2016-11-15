@@ -213,6 +213,8 @@ public class MainActivity extends Activity {
         myBt9.setTypeface(myTypeface);
         myBt10.setTypeface(myTypeface);
 
+        myBt10.setVisibility(View.INVISIBLE);
+
         Button myBt7 = (Button) findViewById(R.id.bt_saviez);
         Button myBt8 = (Button) findViewById(R.id.bt_reveil);
 

@@ -26,6 +26,8 @@ public class Config {
 	public static String NBE_ANNONCE 			= "";
 	public static int 	 FLAG_REVEIL_SAVOIR 	= 0;
 
+
+	public static ListTypeFragmentDemarche myFragDemarche;
 	public static Activity		myActu;
 	public static MainActivity 	myHome;
 	public static ListType 		myFragment;

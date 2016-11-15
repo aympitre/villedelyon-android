@@ -216,7 +216,7 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
 
                 myTexte.loadDataWithBaseURL(null, "<head><base href='http://www.lyon.fr/' target='_blank'></head>"+retour.replace("Et aussi...","<!--"), "text/html", "UTF-8", null);
             } catch (Exception e) {
-                myTexte.loadDataWithBaseURL(null, "<br>Un problème est survenu avec votre connexion 3G à lyon.fr.", "text/html", "UTF-8", null);
+                myTexte.loadDataWithBaseURL(null, "<br>Problème de connexion à lyon.fr.", "text/html", "UTF-8", null);
 
             }
         }

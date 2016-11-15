@@ -550,7 +550,6 @@ public class FormAlerte extends Activity {
 
 
             try {
-                Log.d("myTag", ">> je suis dans le try");
                 takenPictureData = null;
 
                 takenPictureData = handleResultFromChooser(data);
@@ -558,10 +557,6 @@ public class FormAlerte extends Activity {
                 actuBitmap = takenPictureData;
 
             } catch (Exception e) {
-
-
-                Log.d("myTag", ">> je catche");
-
                 // AYMERIC
                 try {
                     myAsyncTask4 myWebFetch4 = new myAsyncTask4();
@@ -580,6 +575,9 @@ public class FormAlerte extends Activity {
             if (requestCode == 10) {
                 takenPictureData = null;
                 takenPictureData = handleResultFromChooser(data);
+
+                imageUri = data.getData();
+
                 imgPreview.setImageBitmap(takenPictureData);
                 actuBitmap = takenPictureData;
                 flagPhoto = 1;
@@ -608,8 +606,11 @@ public class FormAlerte extends Activity {
     }
 
     public void showOk() {
-        myDialOk.show();
-        btValider.setVisibility(View.VISIBLE);
+        Config.myFragDemarche.showPopUp();
+        finish();
+
+//        myDialOk.show();
+  //      btValider.setVisibility(View.VISIBLE);
     }
 
     public void showKo() {
@@ -629,8 +630,7 @@ public class FormAlerte extends Activity {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-        imageUri = getContentResolver().insert(
-                Images.Media.EXTERNAL_CONTENT_URI, values);
+        imageUri = getContentResolver().insert(Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
@@ -742,6 +742,7 @@ public class FormAlerte extends Activity {
                     e.printStackTrace();
                 }
 
+                Log.d("myTag", ">> imageUri 2 : " + imageUri);
                 Log.d("myTag", ">> StickerToSend 2 : " + bytesAvailable);
 
 
@@ -750,7 +751,7 @@ public class FormAlerte extends Activity {
                     new AlertDialog.Builder(this)
                             .setIcon(R.drawable.ic_notif)
                             .setTitle("Attention")
-                            .setMessage("La taille des images est limitée à 2.5 mégas.")
+                            .setMessage("La taille des images est limitée à 2.5 Mo.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 

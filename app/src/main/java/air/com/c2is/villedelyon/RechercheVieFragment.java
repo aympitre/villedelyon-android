@@ -330,13 +330,14 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version="+Config.VERSION_API+"&type=label-lyon-ville-equitable-et-durable-vie-quotidienne");
+//                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version="+Config.VERSION_API+"&type=label-lyon-ville-equitable-et-durable-vie-quotidienne");
+                    URL url = new URL("http://prep.c2is.fr/appvilledelyon/current/types.php?annuaire=label-lyon-ville-equitable-et-durable");
 
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());
 
-                    NodeList descNodes = doc.getElementsByTagName("equipement");
+                    NodeList descNodes = doc.getElementsByTagName("type");
                     NodeList listChamps;
 
                     ContentValues myValue = new ContentValues();
@@ -346,7 +347,10 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
                         Node courant        = descNodes.item(i);
                         NodeList listNode   = courant.getChildNodes();
                         for(int j=0; j<listNode.getLength();j++) {
-                            if(listNode.item(j).getNodeName().equals("categorie")){
+                            if(listNode.item(j).getNodeName().equals("name")){
+
+                                list.add(listNode.item(j).getTextContent());
+/*
                                 String[] parts = listNode.item(j).getTextContent().split(";");
 
                                 for(int k=0;k<parts.length;k++) {
@@ -354,7 +358,7 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
                                         list.add(parts[k]);
                                     }
                                 }
-
+*/
                             }
                         }
                     }

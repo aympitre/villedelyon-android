@@ -199,7 +199,7 @@
                     android:layout_gravity="center"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="35dp"
                     android:textColor="@color/blanc"
                     android:background="@color/transparent"
                     android:gravity="center"
@@ -223,8 +223,26 @@
                     android:gravity="center"
                     android:drawablePadding="10dp"
                     android:padding="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="50dp"
                     android:drawableTop="@drawable/bouton_quizz"
                     android:text="@string/libHomeBt10"
+                    android:textSize="18sp"
+                    android:textAllCaps="true"/>
+
+                <Button
+                    android:id="@+id/bt_vide"
+                    android:visibility="invisible"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blanc"
+                    android:background="@color/transparent"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:drawableTop="@drawable/bouton_quizz"
                     android:textSize="18sp"
                     android:textAllCaps="true"/>
 

@@ -239,8 +239,6 @@ public class ListType extends android.support.v4.app.FragmentActivity {
                 }
             }
 
-            Log.d("myTag", "mon parametre : " + p_param);
-
             if (p_param.equals("marches")&&(Config.flagDirectMarche==0)) {
                 Intent intent = new Intent(ListType.this, RechercheMarcheFragment.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -263,6 +261,7 @@ public class ListType extends android.support.v4.app.FragmentActivity {
 
     public void loadBalade() {
         Config.flagFragment = 1;
+        Config.fragToReload = getResources().getString(R.string.sqlBalade);
         FragmentDetailBalade fragment2 = new FragmentDetailBalade();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment2).commit();
     }
@@ -321,16 +320,15 @@ public class ListType extends android.support.v4.app.FragmentActivity {
 
     @Override
     public void onBackPressed(){
-        Log.d("myTag", "mon menu : " + Config.MENU_ACTIVITE);
-        Log.d("myTag", "mon sous type : " + Config.sql_sous_type);
-        Log.d("myTag", "mon flag to reload : " + Config.fragToReload);
-        Log.d("myTag", "mon str_demarche : " + Config.str_demarche);
+        Log.d("myTag", "mon menu : "                + Config.MENU_ACTIVITE);
+        Log.d("myTag", "mon sous type : "           + Config.sql_sous_type);
+        Log.d("myTag", "mon flag to reload : "      + Config.fragToReload);
+        Log.d("myTag", "mon str_demarche : "        + Config.str_demarche);
         Log.d("myTag", "mon flagRetourRecherche : " + Config.flagRetourRecherche);
 
         if (Config.str_demarche.length()>0) {
             Config.flagRetourRecherche = 0;
 
-            Log.d("myTag", "CODE_DE_str_demarche : " + Config.str_demarche);
             if (Config.MENU_ACTIVITE == 1) {
                 if (Config.flagForceRetour==1) {
                     Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
@@ -390,7 +388,6 @@ public class ListType extends android.support.v4.app.FragmentActivity {
             if (Config.flagBisRetour==1) {
                 Config.flagBisRetour = 0;
 
-                Log.d("myTag", "ic ici ici");
                 finish();
                 //Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_2));
                 Config.fragToReload         = "";

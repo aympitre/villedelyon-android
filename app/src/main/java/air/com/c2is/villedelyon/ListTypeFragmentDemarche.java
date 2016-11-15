@@ -47,7 +47,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public class ListTypeFragmentDemarche extends ListTypeFragment {
     public myAsyncTask2 myWebFetch;
-
+    public DialogOk myDialOk;
     public ListTypeFragmentDemarche() {
         super();
     }
@@ -60,6 +60,9 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         flagDirectEquipement= 0;
         View rootView       = inflater.inflate(R.layout.fragment_list_type_demarche, container, false);
         Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");
+
+        Config.myFragDemarche = this;
+        myDialOk  = new DialogOk(getActivity());
 
         TextView myTitreEquipement = (TextView) rootView.findViewById(R.id.titreEquipement);
         myTitreEquipement.setTypeface(myTypeface);
@@ -198,6 +201,10 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         );
 
         return rootView;
+    }
+
+    public void showPopUp() {
+        myDialOk.show();
     }
 
     public void goFormAlerte() {

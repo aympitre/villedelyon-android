@@ -244,7 +244,8 @@ public class ResVie extends Activity {
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=2&type=label-lyon-ville-equitable-et-durable-vie-quotidienne");
+                    URL url = new URL("http://prep.c2is.fr/appvilledelyon/current/equipements.php?version=5&type=label-lyon-ville-equitable-et-durable");
+//                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=2&type=label-lyon-ville-equitable-et-durable-vie-quotidienne");
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());
@@ -310,7 +311,10 @@ public class ResVie extends Activity {
                                 mapping.put("longitude", listNode.item(j).getTextContent());
                             }else if(listNode.item(j).getNodeName().equals("latitude")){
                                 mapping.put("latitude", listNode.item(j).getTextContent());
-                            }else if(listNode.item(j).getNodeName().equals("categorie")){
+                            }else if(listNode.item(j).getNodeName().equals("sous_type")){
+
+                                //Log.d("myTag", listNode.item(j).getTextContent() + "/" + Config.str_marche_theme);
+
                                 if (Config.str_marche_theme.length() > 0) {
                                     try {
                                         if (listNode.item(j).getTextContent().toLowerCase().indexOf(Config.str_marche_theme.toLowerCase()) == -1) {
@@ -320,7 +324,7 @@ public class ResVie extends Activity {
                                     }
                                 }
 
-                                mapping.put("categorie", listNode.item(j).getTextContent());
+                                mapping.put("sous_type", listNode.item(j).getTextContent());
                             }
                         }
 
