@@ -192,9 +192,13 @@ public class FragmentCarte extends FragmentActivity {
             String temp = "" + Config.pointCarto.get(i).get("titre");
 
             if (temp.equals(p_titre)) {
-                String temp2 = "" + Config.pointCarto.get(i).get("id_equipement");
+                String temp2 = "" + Config.pointCarto.get(i).get("id_equipement").toString();
 
-                Config.flagContentEquip = 1;
+                if (temp2.length()>0) {
+                    Config.flagContentEquip = 0;
+                }else {
+                    Config.flagContentEquip = 1;
+                }
                 Config.myContentValue   = Config.pointCarto.get(i);
                 Config.sql_type         = temp2.toString();
                 Config.xml_id           = "";
@@ -211,7 +215,6 @@ public class FragmentCarte extends FragmentActivity {
         mMap.setMyLocationEnabled(true);
 
         for (int i=0;i<Config.pointCarto.size();i++) {
-
             String temp = "" + Config.pointCarto.get(i).get("latitude");
             String temp2 = "" + Config.pointCarto.get(i).get("longitude");
 

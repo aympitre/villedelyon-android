@@ -109,11 +109,11 @@ public class FragmentFavoris extends Fragment {
                 }
 
 
-                if (listItems.get(position).get("type")==2) {       // load evenement
+                if (listItems.get(position).get("type").toString().equalsIgnoreCase("2")) {       // load evenement
                     Config.myContentValue = listItems.get(position);
                     Config.myFavoris.loadEvenement();
 
-                }else if (listItems.get(position).get("type")==1) {       // load actualité
+                }else if (listItems.get(position).get("type").toString().equalsIgnoreCase("1")) {       // load actualité
                     Config.titreActu = listItems.get(position).get("titre").toString();
 
                     Log.d("myTag", "url : " + listItems.get(position).get("url").toString());

@@ -191,7 +191,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
 		Log.d("myTag", "sql : " + "SELECT count(*) as nbe FROM Favoris WHERE id_equipement=" + p_param.get("id_equipement"));
 
-		if ((p_param.get("xml_equipement").toString().length()>0)&&(p_param.get("id_equipement")==0)) {
+		if ( (p_param.get("xml_equipement").toString().length()>0) && (p_param.get("id_equipement").toString().equalsIgnoreCase("0")) ) {
 			c = myDataBase.rawQuery("SELECT count(*) as nbe FROM Favoris WHERE xml_equipement=" + p_param.get("xml_equipement"), null);
 		}
 

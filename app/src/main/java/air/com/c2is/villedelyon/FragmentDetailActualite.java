@@ -210,6 +210,10 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
             try {
                 String retour   = doc.outerHtml().toString();
                 int dep         = retour.indexOf("alaune_detail_chapo");
+
+                if (dep==-1) {
+                    dep         = retour.indexOf("alaune_detail_actu");
+                }
                 int fin         = retour.indexOf("milieu_colonne_droite");
 
                 retour = retour.substring(dep+21,fin);

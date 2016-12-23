@@ -791,13 +791,19 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                 } catch (Exception e) {
                 }
 
+                Log.d("myTag", "je suis dans le mauvais");
+
                 return null;
+
 
             }else {
                 Cursor c;
                 int flagTemp = 0;
 
                 idEquip = 0;
+
+
+                Log.d("myTag", "aymeric : " + Config.xml_id + "/" + Config.sql_type);
 
                 if (Config.xml_id.length() > 0) {
                     c = myDbHelper.loadEquipementFromXML(Config.xml_id);

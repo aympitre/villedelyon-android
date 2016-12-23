@@ -65,12 +65,10 @@ public class GCMNotificationIntentService extends IntentService {
                     }
                 }
 
-                Log.d("myTag", "Completed work @ " + SystemClock.elapsedRealtime());
+//                Log.d("myTag", "Completed work @ " + SystemClock.elapsedRealtime());
                 sendNotification(extras.getString("alert").toString());
 
-                Log.d("myTag", "Received: " + extras.toString());
-
-
+  //              Log.d("myTag", "Received: " + extras.toString());
             }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
@@ -85,11 +83,17 @@ public class GCMNotificationIntentService extends IntentService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 this).setSmallIcon(R.drawable.ic_notif)
                 .setContentTitle(getResources().getString(R.string.app_name))
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                 .setContentText(msg);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+
+
+        //Notification.FLAG_AUTO_CANCEL;
+
         Log.d("myTag", "Notification sent successfully.");
 
         Config.msg_notification = msg;

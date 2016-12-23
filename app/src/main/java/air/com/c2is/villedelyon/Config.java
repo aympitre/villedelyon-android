@@ -194,6 +194,8 @@ public class Config {
 					.setMessage(Config.msg_notification)
 					.show();
 			Config.msg_notification = "";
+
+
 		}
 	}
 
