@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
                     String regId = gcm.register("228960025800");
                     msg = "Terminal enregistré, register ID=" + regId;
 
-                    //Log.d("myTag", msg);
+                    Log.d("myTag", msg);
 
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("notif_vdl", regId);
@@ -104,7 +104,6 @@ public class MainActivity extends Activity {
 
                     URL url = new URL("http://appvilledelyon.c2is.fr/register_app.php?token="+regId);
                     URLConnection connection2 = url.openConnection();
-
 
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
