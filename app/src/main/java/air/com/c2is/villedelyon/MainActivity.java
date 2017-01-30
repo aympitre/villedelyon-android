@@ -147,21 +147,21 @@ public class MainActivity extends Activity {
 
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_notif)
-                    .setTitle("Réveil")
+                    .setTitle("Réveil aymeric")
                     .setMessage("Appuyer pour couper la sonnerie.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Config.mp.stop();
-//                            stopReveil();
-  //                          killAlarme();
-
                             Config.flagDirectSavoir = 1;
+                            Config.flag_is_playing = 0;
+
+                            finish();
 
                             Intent intent = new Intent(MainActivity.this, Reveil.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivityForResult(intent, 0);
 
-                            finish();
+
                         }
 
                     })
@@ -342,21 +342,21 @@ public class MainActivity extends Activity {
     public void goReveilOn() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_notif)
-                .setTitle("Réveil")
+                .setTitle("Réveil go on")
                 .setMessage("Appuyer pour couper la sonnerie.")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Config.mp.stop();
-                        //                            stopReveil();
-                        //                          killAlarme();
-
                         Config.flagDirectSavoir = 1;
+                        Config.flag_is_playing = 0;
+
+                        finish();
 
                         Intent intent = new Intent(MainActivity.this, Reveil.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivityForResult(intent, 0);
 
-                        finish();
+
                     }
 
                 })
@@ -436,33 +436,19 @@ public class MainActivity extends Activity {
         flagNotif = 1;
 
         try {
-/*
-            mp = new MediaPlayer();
-            int resId = -1;
-
-            AssetFileDescriptor descriptor = getAssets().openFd("reveil.mp3");
-            mp.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
-
-            mp.prepare();
-            mp.setVolume(1f, 1f);
-            mp.setLooping(true);
-            mp.start();
-*/
-
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_notif)
-                    .setTitle("Réveil")
+                    .setTitle("Réveil dans playReveil")
                     .setMessage("Appuyer pour couper la sonnerie.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             stopReveil();
 
+                            finish();
+
                             Intent intent = new Intent(MainActivity.this, Reveil.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivityForResult(intent, 0);
-
-                            finish();
                         }
 
                     })
@@ -1296,12 +1282,10 @@ public class MainActivity extends Activity {
     public void onResume() {
         super.onResume();  // Always call the superclass method first
 
-        Log.d("myTag", "onResume onResume : / " + Config.flag_is_playing);
-
         if (Config.flag_is_playing==1) {
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_notif)
-                    .setTitle("Réveil")
+                    .setTitle("Réveil on resume")
                     .setMessage("Appuyer pour couper la sonnerie.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -1309,11 +1293,11 @@ public class MainActivity extends Activity {
                             Config.flag_is_playing = 0;
                             Config.flagDirectSavoir = 1;
 
+                            finish();
+
                             Intent intent = new Intent(MainActivity.this, Reveil.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivityForResult(intent, 0);
-
-                            finish();
                         }
 
                     })
@@ -1333,18 +1317,19 @@ public class MainActivity extends Activity {
 
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.ic_notif)
-                        .setTitle("Réveil")
+                        .setTitle("Réveil dans le case")
                         .setMessage("Appuyer pour couper la sonnerie.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Config.mp.stop();
                                 Config.flagDirectSavoir = 1;
+                                Config.flag_is_playing = 0;
+
+                                finish();
 
                                 Intent intent = new Intent(MainActivity.this, Reveil.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 startActivityForResult(intent, 0);
-
-                                finish();
                             }
 
                         })

@@ -11,12 +11,16 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/blanc"
-        android:gravity="top|center_horizontal">
+        android:gravity="top|center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/laySousMenu"
             android:background="@color/blanc"
             android:gravity="top|center_horizontal">
 
@@ -83,14 +87,38 @@
             android:background="@color/blanc"
             android:gravity="top|left">
 
-            <TextView
-                android:layout_marginTop="20dp"
-                android:paddingLeft="20dp"
-                android:id="@+id/titreEquipement"
-                android:textColor="@color/noir"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="7"
+                    android:layout_height="fill_parent">
+                    <TextView
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="20dp"
+                        android:id="@+id/titreEquipement"
+                        android:textColor="@color/noir"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:id="@+id/btFavoris"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/transparent"
+                        android:src="@drawable/bt_favoris_off"/>
+                </LinearLayout>
+            </LinearLayout>
 
             <WebView
                 android:id="@+id/description"

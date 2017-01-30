@@ -95,8 +95,6 @@ public class Reveil extends Activity {
         btAlarme.setBackgroundResource(R.drawable.clock_bouton_stop);
         btAlarme.setText(getResources().getString(R.string.libBtAlarmeOff));
 
-
-
         btHorloge     = (Button) findViewById(R.id.btHorloge);
         btHorloge.setTypeface(myTypeface);
 
@@ -192,7 +190,8 @@ public class Reveil extends Activity {
                         Config.reveilDiff = actu2.getTimeInMillis() - actu.getTimeInMillis();
                         Config.reveilDiff = Math.abs(Config.reveilDiff);
 
-//                        Config.reveilDiff = 1000;
+                        //Log.d("myTag", "mon reveil : " + Config.reveilDiff);
+                        //Config.reveilDiff = 1000;
 
                         btHorloge.setText(formatted);
                         strHeure = formatted;
@@ -247,9 +246,7 @@ public class Reveil extends Activity {
                             }
                             Config.flagAlarm = 0;
 
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putLong("flag_alarm", 0);
-                            editor.commit();
+                            killSaveHeure();
 
                             Config.myHome.killAlarme();
                         }
@@ -313,12 +310,6 @@ public class Reveil extends Activity {
 
         if (flag_actif==1) {
             Config.flagAlarm = 1;
-            btAlarme.setText(getResources().getString(R.string.libBtAlarmeOff));
-            if (Config.checkDevice() > 1) {
-                btAlarme.setBackgroundResource(R.drawable.clock_bouton_stop2);
-            } else {
-                btAlarme.setBackgroundResource(R.drawable.clock_bouton_stop);
-            }
         }else{
             Config.flagAlarm = 0;
             btAlarme.setText(getResources().getString(R.string.libBtAlarmeOn));
@@ -342,20 +333,6 @@ public class Reveil extends Activity {
                 btAlarme.setBackgroundResource(R.drawable.clock_bouton_stop);
             }
         }
-
-        // QUAND ON VIENT DE LA NOTIFICATION
-        if (Config.flagOffReveil==1) {
-            Config.flagOffReveil = 0;
-            btAlarme.setText(getResources().getString(R.string.libBtAlarmeOn));
-            if (Config.checkDevice()>1) {
-                btAlarme.setBackgroundResource(R.drawable.clock_bouton_alarme2);
-            }else {
-                btAlarme.setBackgroundResource(R.drawable.clock_bouton_alarme);
-            }
-            Config.flagAlarm = 0;
-        }
-
-        testBtValider();
     }
 
     public void goReveilOn() {
@@ -397,6 +374,14 @@ public class Reveil extends Activity {
         editor.commit();
     }
 
+    public void killSaveHeure() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString("alarm_value", strHeure);
+        editor.putLong("flag_alarm", 0);
+        editor.commit();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -412,16 +397,18 @@ public class Reveil extends Activity {
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
         Config.showAlertNotif(this);
 
-        testBtValider();
+        //testBtValider();
     }
 
     public void testBtValider() {
-        if (Config.flagRelanceCompteur==1) {
+
+/*        if (Config.flagRelanceCompteur==1) {
             Config.flagAlarm = 1;
             btAlarme.setBackgroundResource(R.drawable.clock_bouton_stop);
             btAlarme.setText(getResources().getString(R.string.libBtAlarmeOff));
 
         }
+        */
     }
 
     public void loadSavoir() {

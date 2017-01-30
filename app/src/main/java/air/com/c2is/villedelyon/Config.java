@@ -42,6 +42,7 @@ public class Config {
 	public static int flagFragment 		= 0;
 	public static int flagShowCarto 	= 0;
 	public static int flagDirectMarche 	= 0;
+	public static int flagDirectDemarche= 0;
 	public static int flagDirectSavoir 	= 0;
 	public static int flag_tri_geoloc	= 0;
 	public static long reveilDiff		= 0;

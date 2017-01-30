@@ -47,22 +47,22 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public class ListTypeFragmentDemarche extends ListTypeFragment {
     public myAsyncTask2 myWebFetch;
+    public ImageButton myAddFavoris;
+    public int id_favoris;
     public DialogOk myDialOk;
     public ListTypeFragmentDemarche() {
         super();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         flagTypeToEquip     = 0;
         flagDirectEquipement= 0;
         View rootView       = inflater.inflate(R.layout.fragment_list_type_demarche, container, false);
         Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");
 
         Config.myFragDemarche = this;
-        myDialOk  = new DialogOk(getActivity());
+        myDialOk              = new DialogOk(getActivity());
 
         TextView myTitreEquipement = (TextView) rootView.findViewById(R.id.titreEquipement);
         myTitreEquipement.setTypeface(myTypeface);
@@ -95,13 +95,11 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         }
 
         Button btLyonTelephone  = (Button) rootView.findViewById(R.id.btLyonTelephone);
-        Button btLyonMail        = (Button) rootView.findViewById(R.id.btLyonMail);
-
+        Button btLyonMail       = (Button) rootView.findViewById(R.id.btLyonMail);
 
         myMenu1.setText(getResources().getString(R.string.libMenu6_1));
         myMenu2.setText(getResources().getString(R.string.libMenu6_2));
         myMenu3.setText(getResources().getString(R.string.libMenu6_3));
-
 
         if (Config.MENU_ACTIVITE==2) {
             myMenu2.setTextColor(getResources().getColor(R.color.blanc));
@@ -170,6 +168,23 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
             }
         });
 
+        myAddFavoris  = (ImageButton) rootView.findViewById(R.id.btFavoris);
+
+        myAddFavoris.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (id_favoris==0) {
+                            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
+                            addToFavoris();
+
+                        }else{
+                            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_off));
+                            myDbHelper.deleteFavorisActu(id_favoris);
+                            id_favoris = 0;
+                        }
+                    }
+                }
+        );
 
         myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
         try {
@@ -180,6 +195,8 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
             throw sqle;
         }
 
+
+        Log.d("myTag", "JE SUI DANS LE BON");
 
         myWebFetch = new myAsyncTask2();
         myWebFetch.execute();
@@ -200,7 +217,23 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
                 }
         );
 
+        Config.flagDirectDemarche = 0;
+
         return rootView;
+    }
+
+    public void addToFavoris() {
+        ContentValues myValue = new ContentValues();
+
+        myValue.put("libelle"           , Config.myDemarcheTitre);
+        myValue.put("type_principal"    , "");
+        myValue.put("accroche"          , "");
+        myValue.put("visuel"            , "");
+        myValue.put("description"       , Config.myDemarcheDesc);
+        myValue.put("xml_equipement"    , Config.str_demarche);
+        myValue.put("type"              , 4);
+
+        id_favoris = (int) myDbHelper.insertFavorisActu(myValue);
     }
 
     public void showPopUp() {
@@ -271,14 +304,7 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
             mylistview.setAdapter(null);
             mylistview.setAdapter(mSchedule);
 
-            /*
-            if (listItems.size()==0) {
-                showNoResult();
-            }else{
-            */
-                hideChargement();
-                Log.d("myTag", "str demarche size PAS 0");
-            //}
+            hideChargement();
 
             resetRechercheMarche();
 

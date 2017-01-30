@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
@@ -37,80 +38,83 @@ public class ListType extends android.support.v4.app.FragmentActivity {
 
         String myChaine = "";
 
+        if (Config.flagDirectDemarche==1) {
 
-        if (Config.CODE_DE_MON_ACTIVITE==1) {
-            myChaine = getResources().getString(R.string.libHomeBt1);
-            if (Config.codeInterne==1) {
-                Log.d("myTag", "codeInterne 1 ");
-                loadFragment(getResources().getString(R.string.sqlType1_1));
-                Config.sql_type = getResources().getString(R.string.sqlType1_1);
-            }else if (Config.codeInterne==3) {
-                Log.d("myTag", "codeInterne 3 ");
-                loadFragment(getResources().getString(R.string.sqlType1_3));
-                Config.sql_type = getResources().getString(R.string.sqlType1_3);
-            }else if (Config.codeInterne==4) {
-                Log.d("myTag", "codeInterne 4 ");
-                Config.sql_type = "marches";
-            }else if (Config.MENU_ACTIVITE==2) {
-                Log.d("myTag", "MENU_ACTIVITE 2 ");
-                Config.fragToReload  = getResources().getString(R.string.sqlType1_2);
-                loadFragment(getResources().getString(R.string.sqlType1_2));
+            loadDemarche(Config.str_demarche);
+
+        }else {
+            if (Config.CODE_DE_MON_ACTIVITE == 1) {
+                myChaine = getResources().getString(R.string.libHomeBt1);
+                if (Config.codeInterne == 1) {
+                    Log.d("myTag", "codeInterne 1 ");
+                    loadFragment(getResources().getString(R.string.sqlType1_1));
+                    Config.sql_type = getResources().getString(R.string.sqlType1_1);
+                } else if (Config.codeInterne == 3) {
+                    Log.d("myTag", "codeInterne 3 ");
+                    loadFragment(getResources().getString(R.string.sqlType1_3));
+                    Config.sql_type = getResources().getString(R.string.sqlType1_3);
+                } else if (Config.codeInterne == 4) {
+                    Log.d("myTag", "codeInterne 4 ");
+                    Config.sql_type = "marches";
+                } else if (Config.MENU_ACTIVITE == 2) {
+                    Log.d("myTag", "MENU_ACTIVITE 2 ");
+                    Config.fragToReload = getResources().getString(R.string.sqlType1_2);
+                    loadFragment(getResources().getString(R.string.sqlType1_2));
+                }
+
+
+                Config.codeInterne = 1;
+
+            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
+                myChaine = getResources().getString(R.string.libHomeBt3);
+
+                if (Config.MENU_ACTIVITE == 1) {
+                    Config.flagShowCarto = 1;
+                    Config.fragToReload = getResources().getString(R.string.sqlType3_1);
+
+                    Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_1));
+
+
+                } else if (Config.MENU_ACTIVITE == 2) {
+                    Config.fragToReload = getResources().getString(R.string.sqlType3_2);
+                    Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_2));
+                } else if (Config.MENU_ACTIVITE == 3) {
+                    Config.fragToReload = getResources().getString(R.string.sqlBalade);
+                    Config.myFragment.loadFragment(getResources().getString(R.string.sqlBalade));
+                }
+
+            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
+                myChaine = getResources().getString(R.string.libHomeBt5);
+
+                Log.d("myTag", "codeinterne : " + Config.codeInterne);
+
+                if (Config.codeInterne == 2) {
+                    loadRechercheEvenement();
+                } else if (Config.codeInterne == 3) {
+                    Config.fragToReload = getResources().getString(R.string.sqlIncontournable);
+                    Config.myFragment.loadFragment(getResources().getString(R.string.sqlIncontournable));
+                } else {
+                    Config.flagFromRecherche = 0;
+                    loadEvenement();
+                }
+
+                Config.codeInterne = 1;
+
+
+            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
+                myChaine = getResources().getString(R.string.libHomeBt6);
+
+                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
+                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_1));
+
             }
-
-
-
-            Config.codeInterne = 1;
-
-        }else if (Config.CODE_DE_MON_ACTIVITE==3) {
-            myChaine = getResources().getString(R.string.libHomeBt3);
-
-            if (Config.MENU_ACTIVITE==1) {
-                Config.flagShowCarto = 1;
-                Config.fragToReload  = getResources().getString(R.string.sqlType3_1);
-
-                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_1));
-
-
-            }else if (Config.MENU_ACTIVITE==2) {
-                Config.fragToReload  = getResources().getString(R.string.sqlType3_2);
-                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_2));
-            }else if (Config.MENU_ACTIVITE==3) {
-                Config.fragToReload  = getResources().getString(R.string.sqlBalade);
-                Config.myFragment.loadFragment(getResources().getString(R.string.sqlBalade));
-            }
-
-        }else if (Config.CODE_DE_MON_ACTIVITE==5) {
-            myChaine = getResources().getString(R.string.libHomeBt5);
-
-            Log.d("myTag", "codeinterne : " + Config.codeInterne);
-
-            if (Config.codeInterne==2) {
-                loadRechercheEvenement();
-            }else if (Config.codeInterne==3) {
-                Config.fragToReload = getResources().getString(R.string.sqlIncontournable);
-                Config.myFragment.loadFragment(getResources().getString(R.string.sqlIncontournable));
-            }else {
-                Config.flagFromRecherche = 0;
-                loadEvenement();
-            }
-
-            Config.codeInterne = 1;
-
-
-        }else if (Config.CODE_DE_MON_ACTIVITE==6) {
-            myChaine = getResources().getString(R.string.libHomeBt6);
-
-            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
-            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_1));
-
-            //Config.resetFragment();
-
         }
 
-
-
-
-        myTitre.setText(myChaine);
+        if (Config.flagDirectDemarche==1) {
+            myTitre.setText("FAVORIS");
+        }else {
+            myTitre.setText(myChaine);
+        }
         myTitre.setTypeface(myTypeface);
 
         // Bouton retour home
@@ -226,36 +230,37 @@ public class ListType extends android.support.v4.app.FragmentActivity {
     public void loadFragment(String p_param) {
         Log.d("myTag", "loadFragment : " + p_param);
 
-        Config.flagFragment = 0;
+//        if (p_param.length()>0) {
+            Config.flagFragment = 0;
 
-        try {
-            if (p_param.length()>0)
-            {
-                Config.sql_type = p_param;
-                Config.flagFragment = 1;
-            }else{
-                if (Config.fragToReload.length()>0) {
-                    Config.sql_type = Config.fragToReload;
+            try {
+                if (p_param.length() > 0) {
+                    Config.sql_type = p_param;
+                    Config.flagFragment = 1;
+                } else {
+                    if (Config.fragToReload.length() > 0) {
+                        Config.sql_type = Config.fragToReload;
+                    }
                 }
+
+                if (p_param.equals("marches") && (Config.flagDirectMarche == 0)) {
+                    Intent intent = new Intent(ListType.this, RechercheMarcheFragment.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivityForResult(intent, 0);
+
+                } else if (p_param.equals("label-lyon-ville-equitable-et-durable-vie-quotidienne") && (Config.flagDirectMarche == 0)) {
+                    Intent intent = new Intent(ListType.this, RechercheVieFragment.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivityForResult(intent, 0);
+
+                } else {
+                    Config.flagDirectMarche = 0;
+                    ListTypeFragment fragment2 = new ListTypeFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment2).commit();
+                }
+            } catch (Exception e) {
             }
-
-            if (p_param.equals("marches")&&(Config.flagDirectMarche==0)) {
-                Intent intent = new Intent(ListType.this, RechercheMarcheFragment.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivityForResult(intent, 0);
-
-            }else if (p_param.equals("label-lyon-ville-equitable-et-durable-vie-quotidienne")&&(Config.flagDirectMarche==0)) {
-                Intent intent = new Intent(ListType.this, RechercheVieFragment.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivityForResult(intent, 0);
-
-            }else{
-                Config.flagDirectMarche = 0;
-                ListTypeFragment fragment2 = new ListTypeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment2).commit();
-            }
-        } catch (Exception e) {
-        }
+  //      }
 
     }
 
@@ -320,6 +325,7 @@ public class ListType extends android.support.v4.app.FragmentActivity {
 
     @Override
     public void onBackPressed(){
+
         Log.d("myTag", "mon menu : "                + Config.MENU_ACTIVITE);
         Log.d("myTag", "mon sous type : "           + Config.sql_sous_type);
         Log.d("myTag", "mon flag to reload : "      + Config.fragToReload);

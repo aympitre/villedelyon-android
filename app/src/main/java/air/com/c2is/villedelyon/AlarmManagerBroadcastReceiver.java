@@ -58,11 +58,11 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
             try { Config.myHome.goReveilOn();       } catch (Exception e) { e.printStackTrace(); }
             try { Config.myParametre.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
             try { Config.mySeDeplacer.goReveilOn(); } catch (Exception e) { e.printStackTrace(); }
-            try { Config.myFavoris.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
+            try { Config.myFavoris.goReveilOn();    } catch (Exception e) { e.printStackTrace(); }
             try { Config.myFragCarte.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
             try { Config.myDetailEquip.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
             try { Config.myCarteBalade.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
-            try { Config.myDetailEvt.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
+            try { Config.myDetailEvt.goReveilOn();      } catch (Exception e) { e.printStackTrace(); }
             try { Config.myDetailIncontournable.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
             try { Config.mySaviezDetail.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
             try { Config.mySaviezVous.goReveilOn();  } catch (Exception e) { e.printStackTrace(); }
@@ -79,11 +79,9 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
                 Config.mp.prepare();
                 Config.mp.setVolume(8, 8);
 
-               // AudioManager mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-               // mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 100, 0);
-
                 Config.mp.setLooping(true);
-                Config.mp.start();
+// A REMETTRE
+//                Config.mp.start();
 
 
             } catch (Exception e) {
@@ -115,8 +113,6 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         actu.set(Calendar.MILLISECOND, 0);
 
         SharedPreferences sharedPref = context.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
-
-        //Config.reveilDiff = sharedPref.getLong("heure_reveil",0) - actu.getTimeInMillis();
         SetAlarmRelance(context);
     }
 
@@ -142,18 +138,6 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
         notificationManager.notify(11, notification.build());
 
-        /*
-
-        Notification notification = new Notification(R.drawable.ic_notif, "Ville de Lyon : Réveil", System.currentTimeMillis());
-
-        notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND;
-        notification.contentIntent = contentIntent;
-
-        notification.setLatestEventInfo(context, "Ville de Lyon", "Réveil", contentIntent);
-
-        notificationManager.notify(11, notification);
-        */
-
     }
 
     public  void SetAlarmRelance(Context context) {
@@ -163,7 +147,10 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
 
 //      Relance au lendemain
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (60000*60*24), pi);
+        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 86400000, pi);
+//        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pi);
+
+//        Log.d("myTag", "on relance a demain");
 
         Config.flagAlarm = 1;
         Config.flagFirst = 1;

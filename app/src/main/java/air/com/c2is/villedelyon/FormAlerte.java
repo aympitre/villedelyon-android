@@ -608,9 +608,6 @@ public class FormAlerte extends Activity {
     public void showOk() {
         Config.myFragDemarche.showPopUp();
         finish();
-
-//        myDialOk.show();
-  //      btValider.setVisibility(View.VISIBLE);
     }
 
     public void showKo() {
@@ -621,12 +618,6 @@ public class FormAlerte extends Activity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private void dispatchTakePictureIntent() {
-/*
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-*/
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
@@ -634,8 +625,6 @@ public class FormAlerte extends Activity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-
-
     }
 
     public int checkFormatMail(String p_param) {
@@ -745,9 +734,8 @@ public class FormAlerte extends Activity {
                 Log.d("myTag", ">> imageUri 2 : " + imageUri);
                 Log.d("myTag", ">> StickerToSend 2 : " + bytesAvailable);
 
-
-                //if (bytesAvailable > 2691000) {      // supérieur à 3 mega 3229200
-                if (bytesAvailable >  ((2691000*10)/7)) {      // supérieur à 3 mega 3229200
+                //if (bytesAvailable > 2691000) {      // un MO : 1 048 576 bytes
+                if (bytesAvailable > 2621440) {      // supérieur à 2.5 mega 2621440
                     new AlertDialog.Builder(this)
                             .setIcon(R.drawable.ic_notif)
                             .setTitle("Attention")

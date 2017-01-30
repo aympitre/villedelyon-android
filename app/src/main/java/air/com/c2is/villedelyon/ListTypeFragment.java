@@ -115,6 +115,13 @@ public class ListTypeFragment extends Fragment {
         View rootView       = inflater.inflate(R.layout.fragment_list_type, container, false);
         Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");
 
+        LinearLayout laySousMenu =  (LinearLayout) rootView.findViewById(R.id.laySousMenu);
+        if (1==Config.flagDirectDemarche) {
+            laySousMenu.setVisibility(View.GONE);
+        }else{
+            laySousMenu.setVisibility(View.VISIBLE);
+        }
+
         myChargement        =  (LinearLayout) rootView.findViewById(R.id.myChargement);
         myChargementText    =  (TextView) rootView.findViewById(R.id.myChargementText);
         Button myMenu1      = (Button) rootView.findViewById(R.id.bt_menu1);
@@ -387,17 +394,12 @@ public class ListTypeFragment extends Fragment {
             throw sqle;
         }
 
-/*  exemple pour copier la BDD sur le téléphone
-        try {
-            myDbHelper.copyToSD();
-        }catch(IOException sqle){
-        }
-        */
-
         Log.d("myTag", "list type fragment");
 
-        myWebFetch = new myAsyncTask2();
-        myWebFetch.execute();
+        if (Config.flagDirectDemarche!=1) {
+            myWebFetch = new myAsyncTask2();
+            myWebFetch.execute();
+        }
 
         return rootView;
     }

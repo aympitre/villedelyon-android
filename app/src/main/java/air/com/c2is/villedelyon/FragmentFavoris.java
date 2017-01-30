@@ -97,8 +97,6 @@ public class FragmentFavoris extends Fragment {
                 Config.sql_type         = listItems.get(position).get("id_equipement").toString();
                 Config.flagFromFavoris  = 1;
 
-//                Log.d("myTag", listItems.get(position).get("id_equipement").toString());
-
                 if (Config.sql_type.equals("0")) {
                     Config.flagContentEquip = 0;
                     Config.sql_type = "";
@@ -108,7 +106,6 @@ public class FragmentFavoris extends Fragment {
                     Config.xml_id = "";
                 }
 
-
                 if (listItems.get(position).get("type").toString().equalsIgnoreCase("2")) {       // load evenement
                     Config.myContentValue = listItems.get(position);
                     Config.myFavoris.loadEvenement();
@@ -116,10 +113,18 @@ public class FragmentFavoris extends Fragment {
                 }else if (listItems.get(position).get("type").toString().equalsIgnoreCase("1")) {       // load actualité
                     Config.titreActu = listItems.get(position).get("titre").toString();
 
-                    Log.d("myTag", "url : " + listItems.get(position).get("url").toString());
-
                     Config.urlActu   = listItems.get(position).get("url").toString();
                     Config.myFavoris.loadActualite();
+
+                }else if (listItems.get(position).get("type").toString().equalsIgnoreCase("4")) {       // load demarche
+                    Config.myDemarcheTitre  = listItems.get(position).get("titre").toString();
+                    Config.myDemarcheDesc   = listItems.get(position).get("description").toString();
+                    Config.str_demarche     = listItems.get(position).get("xml_equipement").toString();
+
+
+                    Log.d("myTag", "je sus dans le bon fragfavoris");
+
+                    Config.myFavoris.loadDemarche();
 
                 }else {
                     Config.myFavoris.loadEquipement();
