@@ -345,6 +345,18 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
 	}
 
+	public int checkFavorisDemarche(String p_titre) {
+		Cursor c;
+
+		c = myDataBase.rawQuery("SELECT id_favoris FROM Favoris WHERE libelle='"+p_titre+"'", null);
+
+		if (c.moveToFirst()) {
+			return c.getInt(0);
+		}
+
+		return 0;
+	}
+
 	public int checkFavoris(int p_id) {
 		Cursor c;
 

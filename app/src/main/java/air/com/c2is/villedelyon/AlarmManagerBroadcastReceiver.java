@@ -31,11 +31,6 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-        Log.d("myTag", "set alarm : " + Config.flagFirst);
-        /*
-        if (Config.flagFirst==0) {
-            Config.flagFirst = 1;
-        }else {*/
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "YOUR TAG");
             //Acquire the lock
@@ -80,9 +75,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
                 Config.mp.setVolume(8, 8);
 
                 Config.mp.setLooping(true);
-// A REMETTRE
-//                Config.mp.start();
-
+                Config.mp.start();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -96,7 +89,6 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
             CancelAlarm(context);
 
             relanceCompteur(context);
-        //}
 	}
 
     public void stopReveil() {
@@ -150,7 +142,6 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 86400000, pi);
 //        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pi);
 
-//        Log.d("myTag", "on relance a demain");
 
         Config.flagAlarm = 1;
         Config.flagFirst = 1;

@@ -190,9 +190,6 @@ public class Reveil extends Activity {
                         Config.reveilDiff = actu2.getTimeInMillis() - actu.getTimeInMillis();
                         Config.reveilDiff = Math.abs(Config.reveilDiff);
 
-                        //Log.d("myTag", "mon reveil : " + Config.reveilDiff);
-                        //Config.reveilDiff = 1000;
-
                         btHorloge.setText(formatted);
                         strHeure = formatted;
 
@@ -343,9 +340,6 @@ public class Reveil extends Activity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Config.mp.stop();
-                        //                            stopReveil();
-                        //                          killAlarme();
-
                         Config.flagDirectSavoir = 1;
 
                         Intent intent = new Intent(Reveil.this, Reveil.class);

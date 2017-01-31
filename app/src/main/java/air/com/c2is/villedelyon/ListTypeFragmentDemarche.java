@@ -49,6 +49,7 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
     public myAsyncTask2 myWebFetch;
     public ImageButton myAddFavoris;
     public int id_favoris;
+    public int flagIsFavoris;
     public DialogOk myDialOk;
     public ListTypeFragmentDemarche() {
         super();
@@ -111,6 +112,7 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
             myMenu1.setTextColor(getResources().getColor(R.color.blanc));
             myMenu1.setBackground(getResources().getDrawable(R.drawable.menu_actif));
         }
+
 
         myChargementText.setTypeface(myTypeface);
         myMenu1.setTypeface(myTypeface);
@@ -195,8 +197,7 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
             throw sqle;
         }
 
-
-        Log.d("myTag", "JE SUI DANS LE BON");
+        checkFavoris();
 
         myWebFetch = new myAsyncTask2();
         myWebFetch.execute();
@@ -222,7 +223,24 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         return rootView;
     }
 
+    public void majImgFavoris() {
+        if (id_favoris == 0) {
+            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_off));
+        } else {
+            myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
+        }
+    }
+    public void checkFavoris() {
+
+        if (Config.myDemarcheTitre.length()>0) {
+            id_favoris = myDbHelper.checkFavorisDemarche(Config.myDemarcheTitre.replace("'","''"));
+        }
+
+        majImgFavoris();
+    }
+
     public void addToFavoris() {
+        Log.d("myTag", "addToFavoris");
         ContentValues myValue = new ContentValues();
 
         myValue.put("libelle"           , Config.myDemarcheTitre);

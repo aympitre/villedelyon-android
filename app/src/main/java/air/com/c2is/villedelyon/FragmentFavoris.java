@@ -121,8 +121,7 @@ public class FragmentFavoris extends Fragment {
                     Config.myDemarcheDesc   = listItems.get(position).get("description").toString();
                     Config.str_demarche     = listItems.get(position).get("xml_equipement").toString();
 
-
-                    Log.d("myTag", "je sus dans le bon fragfavoris");
+                    Config.id_favoris = Integer.parseInt(listItems.get(position).get("id_favoris").toString());
 
                     Config.myFavoris.loadDemarche();
 

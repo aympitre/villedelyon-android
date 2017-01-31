@@ -45,6 +45,7 @@ public class Config {
 	public static int flagDirectDemarche= 0;
 	public static int flagDirectSavoir 	= 0;
 	public static int flag_tri_geoloc	= 0;
+	public static int id_favoris		= 0;
 	public static long reveilDiff		= 0;
 	public static int flag_is_playing	= 0;
 
