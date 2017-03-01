@@ -250,6 +250,9 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         myValue.put("description"       , Config.myDemarcheDesc);
         myValue.put("xml_equipement"    , Config.str_demarche);
         myValue.put("type"              , 4);
+        myValue.put("uid"               , Config.myDemarcheUid);
+        myValue.put("libelle_type"      , Config.myDemarcheLibelleType);
+        myValue.put("label"             , Config.myDemarcheLabel);
 
         id_favoris = (int) myDbHelper.insertFavorisActu(myValue);
     }

@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	 
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/air.com.c2is.villedelyon/databases/";
-    private static String DB_NAME = "lyon.sqlite";
+    private static String DB_NAME = "lyon2.sqlite";
 
     private SQLiteDatabase myDataBase; 
  
@@ -398,7 +398,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	public Cursor loadFavoris() {
 		Cursor c;
 
-		c = myDataBase.rawQuery("SELECT libelle, id_equipement, xml_equipement, type, type_principal, accroche, visuel, description, id_favoris, url FROM Favoris", null);
+		c = myDataBase.rawQuery("SELECT libelle, id_equipement, xml_equipement, type, type_principal, accroche, visuel, description, id_favoris, url, uid, libelle_type, label FROM Favoris", null);
 
 
 		return c;

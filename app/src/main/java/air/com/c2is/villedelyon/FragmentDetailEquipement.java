@@ -360,8 +360,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Config.mp.stop();
-                        //                            stopReveil();
-                        //                          killAlarme();
+                        Config.killLocalNotification(getBaseContext());
 
                         Config.flagDirectSavoir = 1;
 

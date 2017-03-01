@@ -336,9 +336,12 @@ public class ListTypeFragment extends Fragment {
 
                     } else if ((Config.CODE_DE_MON_ACTIVITE == 6) && (flagDirectEquipement==1)) {
 
-                        Config.flagForceRetour = 1;
-                        Config.myDemarcheTitre = listItems.get(position).get("titre").toString();
-                        Config.myDemarcheDesc  = listItems.get(position).get("complement_info").toString();
+                        Config.flagForceRetour       = 1;
+                        Config.myDemarcheTitre       = listItems.get(position).get("titre").toString();
+                        Config.myDemarcheDesc        = listItems.get(position).get("complement_info").toString();
+                        Config.myDemarcheUid         = listItems.get(position).get("type_associe").toString();
+                        Config.myDemarcheLibelleType = listItems.get(position).get("type").toString();
+                        Config.myDemarcheLabel       = listItems.get(position).get("label").toString();
 
                         try {
                             Config.myLabel  = listItems.get(position).get("label").toString();

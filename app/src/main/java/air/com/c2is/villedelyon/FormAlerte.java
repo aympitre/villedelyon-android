@@ -435,7 +435,6 @@ public class FormAlerte extends Activity {
         }
     }
 
-
     private Bitmap handleResultFromChooser(Intent data) {
         takenPictureData = null;
 
@@ -557,7 +556,6 @@ public class FormAlerte extends Activity {
                 actuBitmap = takenPictureData;
 
             } catch (Exception e) {
-                // AYMERIC
                 try {
                     myAsyncTask4 myWebFetch4 = new myAsyncTask4();
                     myWebFetch4.execute();
@@ -565,11 +563,9 @@ public class FormAlerte extends Activity {
                 } catch (Exception et) {
                     et.printStackTrace();
                 }
-
             }
 
             flagPhoto = 1;
-
 
         } else if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 10) {
@@ -932,6 +928,7 @@ public class FormAlerte extends Activity {
                     myUrl = myUrl + "&id="          + Config.myId;
                     myUrl = myUrl + "&type="        + Config.myType;
 
+                    Log.d("myTag", "mon url : " + myUrl);
 
                     DataOutputStream dos = null;
                     String lineEnd = "\r\n";

@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
@@ -56,11 +57,13 @@ public class Config {
 
 	public static int flagRelanceCompteur = 0;
 
-	public static int str_marche_arrondissement 	= 0;
-	public static String str_marche_theme 			= "";
-	public static String str_marche_jour 			= "";
-
-	public static String msg_notification			= "";
+	public static int str_marche_arrondissement = 0;
+	public static String str_marche_theme 		= "";
+	public static String str_marche_jour 		= "";
+	public static String msg_notification		= "";
+	public static String myDemarcheUid			= "";
+	public static String myDemarcheLibelleType	= "";
+	public static String myDemarcheLabel		= "";
 
 	public static MediaPlayer mp;
 
@@ -186,6 +189,11 @@ public class Config {
 
 		Log.d("myTag", "victory : " + next);
 		return Html.fromHtml(first.toUpperCase() + " <font color='#027BDA'>" + next.toUpperCase() + "</font>");
+	}
+
+	public static void killLocalNotification (Context myContext){
+		NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.cancelAll();
 	}
 
 	public static void showAlertNotif(Activity p_param) {

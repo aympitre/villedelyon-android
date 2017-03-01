@@ -173,8 +173,7 @@ public class ListType extends android.support.v4.app.FragmentActivity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Config.mp.stop();
-                        //                            stopReveil();
-                        //                          killAlarme();
+                        Config.killLocalNotification(getBaseContext());
 
                         Config.flagDirectSavoir = 1;
 
@@ -248,7 +247,8 @@ public class ListType extends android.support.v4.app.FragmentActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivityForResult(intent, 0);
 
-                } else if (p_param.equals("label-lyon-ville-equitable-et-durable-vie-quotidienne") && (Config.flagDirectMarche == 0)) {
+                } else if (p_param.equals("label-lyon-ville-equitable-et-durable-carto") && (Config.flagDirectMarche == 0)) {
+
                     Intent intent = new Intent(ListType.this, RechercheVieFragment.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivityForResult(intent, 0);

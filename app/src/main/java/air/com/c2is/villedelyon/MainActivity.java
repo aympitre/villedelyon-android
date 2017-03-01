@@ -147,11 +147,12 @@ public class MainActivity extends Activity {
 
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_notif)
-                    .setTitle("Réveil aymeric")
+                    .setTitle("Réveil")
                     .setMessage("Appuyer pour couper la sonnerie.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Config.mp.stop();
+                            Config.killLocalNotification(getBaseContext());
                             Config.flagDirectSavoir = 1;
                             Config.flag_is_playing = 0;
 
@@ -342,11 +343,12 @@ public class MainActivity extends Activity {
     public void goReveilOn() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_notif)
-                .setTitle("Réveil go on")
+                .setTitle("Réveil")
                 .setMessage("Appuyer pour couper la sonnerie.")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Config.mp.stop();
+                        Config.killLocalNotification(getBaseContext());
                         Config.flagDirectSavoir = 1;
                         Config.flag_is_playing = 0;
 
@@ -438,12 +440,12 @@ public class MainActivity extends Activity {
         try {
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_notif)
-                    .setTitle("Réveil dans playReveil")
+                    .setTitle("Réveil")
                     .setMessage("Appuyer pour couper la sonnerie.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             stopReveil();
-
+                            Config.killLocalNotification(getBaseContext());
                             finish();
 
                             Intent intent = new Intent(MainActivity.this, Reveil.class);
@@ -1285,11 +1287,12 @@ public class MainActivity extends Activity {
         if (Config.flag_is_playing==1) {
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_notif)
-                    .setTitle("Réveil on resume")
+                    .setTitle("Réveil")
                     .setMessage("Appuyer pour couper la sonnerie.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Config.mp.stop();
+                            Config.killLocalNotification(getBaseContext());
                             Config.flag_is_playing = 0;
                             Config.flagDirectSavoir = 1;
 
@@ -1317,11 +1320,12 @@ public class MainActivity extends Activity {
 
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.ic_notif)
-                        .setTitle("Réveil dans le case")
+                        .setTitle("Réveil")
                         .setMessage("Appuyer pour couper la sonnerie.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Config.mp.stop();
+                                Config.killLocalNotification(getBaseContext());
                                 Config.flagDirectSavoir = 1;
                                 Config.flag_is_playing = 0;
 

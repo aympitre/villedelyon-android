@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.os.SystemClock;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -73,6 +74,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
                 Config.mp.prepare();
                 Config.mp.setVolume(8, 8);
+//                Config.mp.setVolume(1, 1);
 
                 Config.mp.setLooping(true);
                 Config.mp.start();
@@ -83,11 +85,11 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
             notifyUser(context, intent);
 
-            //Release the lock
+             Log.d("myTag", "FIRE FIRE");
+
             wl.release();
 
             CancelAlarm(context);
-
             relanceCompteur(context);
 	}
 
@@ -101,8 +103,6 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
     public void relanceCompteur(Context context) {
         Config.flagRelanceCompteur = 1;
-        Calendar actu = Calendar.getInstance();
-        actu.set(Calendar.MILLISECOND, 0);
 
         SharedPreferences sharedPref = context.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
         SetAlarmRelance(context);
@@ -118,7 +118,6 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent2, 0); //PendingIntent.FLAG_UPDATE_CURRENT
 
-
         Config.flagOffReveil = 1;
 
         Notification.Builder notification = new Notification.Builder(context)
@@ -132,16 +131,17 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
     }
 
-    public  void SetAlarmRelance(Context context) {
+    public void SetAlarmRelance(Context context) {
         AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(ONE_TIME, Boolean.FALSE);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
 
 //      Relance au lendemain
+        //am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 86400000, pi);
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 86400000, pi);
-//        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pi);
 
+        Log.d("myTag", "Relance au lendemain");
 
         Config.flagAlarm = 1;
         Config.flagFirst = 1;
@@ -149,14 +149,17 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
 	public void SetAlarm(Context context)
     {
-        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
         intent.putExtra(ONE_TIME, Boolean.FALSE);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+        am.cancel(pi);
 
         SharedPreferences sharedPref = context.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
 
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + Config.reveilDiff, pi);
+
+        Log.d("myTag", "je set l'alarme");
 
         Config.flagFirst = 1;
     }

@@ -160,9 +160,7 @@ public class Reveil extends Activity {
                         c.set(Calendar.MINUTE, myTime.getCurrentMinute());
                         c.getTimeInMillis();
 
-                        SimpleDateFormat format1 = new SimpleDateFormat("hh   :   mm");
-                        String formatted = format1.format(c.getTime());
-                        formatted = myTime.getCurrentHour() + " : ";
+                        String formatted = myTime.getCurrentHour() + "   :   ";
                         if (myTime.getCurrentMinute() < 10) {
                             formatted = formatted + "0" + myTime.getCurrentMinute();
                         } else {
@@ -174,18 +172,19 @@ public class Reveil extends Activity {
                         }
 
                         Calendar actu = Calendar.getInstance();
-                        //Log.d("myTag", "pulco : " + actu.getTimeInMillis());
-
                         actu.set(Calendar.MILLISECOND, 0);
 
                         Calendar actu2 = Calendar.getInstance();
-
                         actu2.set(Calendar.YEAR, mYear);
                         actu2.set(Calendar.MONTH, mMonth);
                         actu2.set(Calendar.DAY_OF_MONTH, mDay);
                         actu2.set(Calendar.HOUR_OF_DAY, myTime.getCurrentHour());
                         actu2.set(Calendar.MINUTE, myTime.getCurrentMinute());
                         actu2.set(Calendar.MILLISECOND, 0);
+
+                        if (actu2.getTimeInMillis()<actu.getTimeInMillis()) {
+                            actu2.add(Calendar.DATE, 1);
+                        }
 
                         Config.reveilDiff = actu2.getTimeInMillis() - actu.getTimeInMillis();
                         Config.reveilDiff = Math.abs(Config.reveilDiff);
@@ -339,7 +338,9 @@ public class Reveil extends Activity {
                 .setMessage("Appuyer pour couper la sonnerie.")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+
                         Config.mp.stop();
+                        Config.killLocalNotification(getBaseContext());
                         Config.flagDirectSavoir = 1;
 
                         Intent intent = new Intent(Reveil.this, Reveil.class);
