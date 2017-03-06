@@ -298,6 +298,13 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
         return doc;
     }
 
+    @Override
+    public void onBackPressed() {
+        Config.sql_sous_type = "";
+        Config.flagForceRetour = 0;
+        finish();
+    }
+
     class myAsyncTask2 extends AsyncTask<Void, Void, Void> {
 
         myAsyncTask2()    {

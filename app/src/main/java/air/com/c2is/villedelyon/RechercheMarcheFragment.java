@@ -227,6 +227,12 @@ public class RechercheMarcheFragment extends android.support.v4.app.FragmentActi
             default:
                 return "";
         }
-
     }
+    @Override
+    public void onBackPressed() {
+        Config.sql_sous_type = "";
+        Config.flagForceRetour = 0;
+        finish();
+    }
+
 }

@@ -344,9 +344,9 @@ public class ListTypeFragment extends Fragment {
                         Config.myDemarcheLabel       = listItems.get(position).get("label").toString();
 
                         try {
-                            Config.myLabel  = listItems.get(position).get("label").toString();
-                            Config.myId     = listItems.get(position).get("id").toString();
-                            Config.myType   = listItems.get(position).get("type").toString();
+                            Config.myLabel          = listItems.get(position).get("label").toString();
+                            Config.myId             = listItems.get(position).get("id").toString();
+                            Config.myType           = listItems.get(position).get("type").toString();
 
                             Config.form_civilite	= listItems.get(position).get("form_civilite").toString();
                             Config.form_nom		    = listItems.get(position).get("form_nom").toString();
@@ -600,6 +600,10 @@ public class ListTypeFragment extends Fragment {
                         c = myDbHelper.loadEquipementFromType(Config.sql_type);
 
                     }else if (Config.sql_sous_type.length()>0) {
+
+
+                        Log.d("myTag", "je rentre dans le sous type");
+
                         flagEq = 1;
                         c = myDbHelper.loadEquipementFromType(Config.sql_sous_type);
                         Config.sql_sous_type = "";
@@ -736,11 +740,14 @@ public class ListTypeFragment extends Fragment {
                         }
 
                     } else {
+                        Log.d("myTag", "je rentre dans le else final");
+
                         flagTypeToEquip = 1;
                         c = myDbHelper.loadType(Config.sql_type);
                     }
                 }
                 int flagKo = 0;
+
                 if ((flagDemarcheXML==0)&&(flagDirectEquipement!=1)) {
                     try {
                         if (c != null) {
@@ -777,7 +784,7 @@ public class ListTypeFragment extends Fragment {
                                     if (Config.str_marche_arrondissement != 0) {
                                         try {
                                             if (c.getString(4).equals(String.valueOf(Config.str_marche_arrondissement))) {
-                                                //                                                Log.d("myTag", "t " + c.getString(4) + "/" + String.valueOf(Config.str_marche_arrondissement));
+                                                // Log.d("myTag", "t " + c.getString(4) + "/" + String.valueOf(Config.str_marche_arrondissement));
                                             } else {
                                                 flagKo = 1;
                                             }
@@ -800,19 +807,13 @@ public class ListTypeFragment extends Fragment {
 
                                     try {
                                         item.put("titre", c.getString(0));
-                                    } catch (Exception e) {
-                                        flagKo = 1;
-                                    }
+                                        } catch (Exception e) { flagKo = 1; }
                                     try {
                                         item.put("longitude", c.getDouble(1));
-                                    } catch (Exception e) {
-                                        flagKo = 1;
-                                    }
+                                        } catch (Exception e) { flagKo = 1; }
                                     try {
                                         item.put("latitude", c.getDouble(2));
-                                    } catch (Exception e) {
-                                        flagKo = 1;
-                                    }
+                                        } catch (Exception e) { flagKo = 1; }
 
                                     if (Config.flag_tri_geoloc==1) {
                                         if (gps.canGetLocation()) {
@@ -837,25 +838,16 @@ public class ListTypeFragment extends Fragment {
 
                                     try {
                                         item.put("id_equipement", c.getString(3));
-                                    } catch (Exception e) {
-                                        flagKo = 1;
-                                    }
+                                        } catch (Exception e) { flagKo = 1; }
                                     try {
                                         item.put("arrondissement", c.getString(4));
-                                    } catch (Exception e) {
-                                        flagKo = 1;
-                                    }
+                                        } catch (Exception e) { flagKo = 1; }
                                     try {
                                         item.put("jour", c.getString(5));
-                                    } catch (Exception e) {
-                                        flagKo = 1;
-                                    }
+                                        } catch (Exception e) { flagKo = 1; }
                                     try {
                                         item.put("type_associe", c.getString(6));
-                                    } catch (Exception e) {
-                                        Log.d("myTag", "erreur type_associe");
-
-                                    }
+                                        } catch (Exception e) { Log.d("myTag", "erreur type_associe"); }
                                     try {
                                         item.put("complement_info", c.getString(7));
                                     } catch (Exception e) {
@@ -957,8 +949,7 @@ public class ListTypeFragment extends Fragment {
             try {
                 val1 = Float.parseFloat(arg0.get("distance").toString());
                 val2 = Float.parseFloat(arg1.get("distance").toString());
-            } catch (Exception e) {
-            }
+            } catch (Exception e) { }
 
             if (val1==val2) {
                 return 0;

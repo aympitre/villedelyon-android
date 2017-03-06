@@ -89,6 +89,9 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         LinearLayout layLyonDirect = (LinearLayout) rootView.findViewById(R.id.layLyonDirect);
         LinearLayout layLyonAlerte = (LinearLayout) rootView.findViewById(R.id.layLyonAlerte);
 
+
+        Log.d("myTag", "mon id :" + Config.myId);
+
         if (Config.myId.length()>0) {
             layLyonAlerte.setVisibility(View.VISIBLE);
         }else{
@@ -112,7 +115,6 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
             myMenu1.setTextColor(getResources().getColor(R.color.blanc));
             myMenu1.setBackground(getResources().getDrawable(R.drawable.menu_actif));
         }
-
 
         myChargementText.setTypeface(myTypeface);
         myMenu1.setTypeface(myTypeface);
@@ -253,6 +255,7 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         myValue.put("uid"               , Config.myDemarcheUid);
         myValue.put("libelle_type"      , Config.myDemarcheLibelleType);
         myValue.put("label"             , Config.myDemarcheLabel);
+        myValue.put("id_demarche_serveur", Config.myId);
 
         id_favoris = (int) myDbHelper.insertFavorisActu(myValue);
     }

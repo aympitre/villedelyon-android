@@ -398,7 +398,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	public Cursor loadFavoris() {
 		Cursor c;
 
-		c = myDataBase.rawQuery("SELECT libelle, id_equipement, xml_equipement, type, type_principal, accroche, visuel, description, id_favoris, url, uid, libelle_type, label FROM Favoris", null);
+		c = myDataBase.rawQuery("SELECT libelle, id_equipement, xml_equipement, type, type_principal, accroche, visuel, description, id_favoris, url, uid, libelle_type, label, id_demarche_serveur FROM Favoris", null);
 
 
 		return c;

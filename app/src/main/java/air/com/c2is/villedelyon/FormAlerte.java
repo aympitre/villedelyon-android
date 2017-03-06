@@ -596,7 +596,6 @@ public class FormAlerte extends Activity {
         return uri.getPath();
     }
 
-
     public void goValider() {
         goAlertePhp();
     }

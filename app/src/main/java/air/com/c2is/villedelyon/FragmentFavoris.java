@@ -73,6 +73,8 @@ public class FragmentFavoris extends Fragment {
                     item.put("demarche_lib_type", c.getString(11));
                     item.put("demarche_label"   , c.getString(12));
 
+                    item.put("id_demarche_serveur" , c.getString(13));
+
                     listItems.add(item);
                     nbe++;
                 }
@@ -135,7 +137,7 @@ public class FragmentFavoris extends Fragment {
                     Config.form_loc      = "1";
 
                     Config.myLabel  = listItems.get(position).get("demarche_label").toString();
-                    Config.myId     = listItems.get(position).get("demarche_uid").toString();
+                    Config.myId     = listItems.get(position).get("id_demarche_serveur").toString();
                     Config.myType   = listItems.get(position).get("demarche_lib_type").toString();
 
                     Config.id_favoris = Integer.parseInt(listItems.get(position).get("id_favoris").toString());

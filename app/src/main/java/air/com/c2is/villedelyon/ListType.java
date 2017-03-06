@@ -48,10 +48,12 @@ public class ListType extends android.support.v4.app.FragmentActivity {
                 if (Config.codeInterne == 1) {
                     Log.d("myTag", "codeInterne 1 ");
                     loadFragment(getResources().getString(R.string.sqlType1_1));
+                    Config.sql_sous_type = "";
                     Config.sql_type = getResources().getString(R.string.sqlType1_1);
                 } else if (Config.codeInterne == 3) {
                     Log.d("myTag", "codeInterne 3 ");
                     loadFragment(getResources().getString(R.string.sqlType1_3));
+                    Config.sql_sous_type = "";
                     Config.sql_type = getResources().getString(R.string.sqlType1_3);
                 } else if (Config.codeInterne == 4) {
                     Log.d("myTag", "codeInterne 4 ");
@@ -335,39 +337,27 @@ public class ListType extends android.support.v4.app.FragmentActivity {
         if (Config.str_demarche.length()>0) {
             Config.flagRetourRecherche = 0;
 
-            if (Config.MENU_ACTIVITE == 1) {
-                if (Config.flagForceRetour==1) {
+            if (Config.flagForceRetour==1) {
+                if (Config.MENU_ACTIVITE == 1) {
                     Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
                     Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_1));
-                    Config.flagForceRetour = 0;
-                }else{
-                    Config.fragToReload = "";
-                    Config.flagForceRetour = 0;
-                    finish();
-                }
-
-            } else if (Config.MENU_ACTIVITE == 2) {
-                if (Config.flagForceRetour==1) {
+                }else if (Config.MENU_ACTIVITE == 2) {
                     Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_2);
                     Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_2));
-                    Config.flagForceRetour = 0;
+
                 }else{
-                    Config.fragToReload = "";
-                    Config.flagForceRetour = 0;
-                    finish();
-                }
-            } else {
-                if (Config.flagForceRetour==1) {
                     Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
                     Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_3));
                     Config.str_demarche = "";
-                    Config.flagForceRetour = 0;
-                }else{
-                    Config.fragToReload = "";
-                    Config.flagForceRetour = 0;
-                    finish();
                 }
+                Config.flagForceRetour = 0;
+            }else{
+                Config.sql_sous_type = "";
+                Config.fragToReload = "";
+                Config.flagForceRetour = 0;
+                finish();
             }
+
         }else if (Config.fragToReload.length()>0) {
             Log.d("myTag", "CODE_DE_fragToReload : " + Config.fragToReload);
 
