@@ -116,7 +116,7 @@ public class ListTypeFragment extends Fragment {
         Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");
 
         LinearLayout laySousMenu =  (LinearLayout) rootView.findViewById(R.id.laySousMenu);
-        if (1==Config.flagDirectDemarche) {
+        if (Config.flagDirectDemarche==1) {
             laySousMenu.setVisibility(View.GONE);
         }else{
             laySousMenu.setVisibility(View.VISIBLE);
@@ -209,54 +209,56 @@ public class ListTypeFragment extends Fragment {
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        myWebFetch.cancel(true);
+                        if (Config.MENU_ACTIVITE!=1) {
+                            myWebFetch.cancel(true);
 
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                            Config.resetVarNavigation();
 
-                        Config.MENU_ACTIVITE = 1;
-                        if (Config.CODE_DE_MON_ACTIVITE == 1) {
-                            Config.fragToReload = getResources().getString(R.string.sqlType1_1);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_1));
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                            Config.fragToReload  = getResources().getString(R.string.sqlType3_1);
-                            Config.flagShowCarto = 1;
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_1));
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
-                            Config.myFragment.loadEvenement();
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_1));
+                            Config.MENU_ACTIVITE = 1;
+                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
+                                Config.fragToReload = getResources().getString(R.string.sqlType1_1);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_1));
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
+                                Config.fragToReload = getResources().getString(R.string.sqlType3_1);
+                                Config.flagShowCarto = 1;
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_1));
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
+                                Config.myFragment.loadEvenement();
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_1));
+                            }
+                            Config.resetFragment();
                         }
-                        Config.resetFragment();
                     }
                 }
         );
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        myWebFetch.cancel(true);
+                        if (Config.MENU_ACTIVITE!=2) {
+                            myWebFetch.cancel(true);
 
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                            Config.resetVarNavigation();
 
-                        Config.MENU_ACTIVITE = 2;
-                        if (Config.CODE_DE_MON_ACTIVITE == 1) {
-                            Config.fragToReload = getResources().getString(R.string.sqlType1_2);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_2));
+                            Config.MENU_ACTIVITE = 2;
+                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
+                                Config.fragToReload = getResources().getString(R.string.sqlType1_2);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_2));
 
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                            Config.fragToReload = getResources().getString(R.string.sqlType3_2);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_2));
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
+                                Config.fragToReload = getResources().getString(R.string.sqlType3_2);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_2));
 
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
-                            Config.myFragment.loadRechercheEvenement();
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
+                                Config.myFragment.loadRechercheEvenement();
 
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_2);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_2));
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_2);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_2));
+                            }
+                            Config.resetFragment();
                         }
-                        Config.resetFragment();
                     }
                 }
         );
@@ -264,26 +266,27 @@ public class ListTypeFragment extends Fragment {
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        myWebFetch.cancel(true);
-                        Config.MENU_ACTIVITE = 3;
+                        if (Config.MENU_ACTIVITE!=3) {
+                            myWebFetch.cancel(true);
+                            Config.MENU_ACTIVITE = 3;
 
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                            Config.resetVarNavigation();
 
-                        if (Config.CODE_DE_MON_ACTIVITE==1) {
-                            Config.fragToReload = getResources().getString(R.string.sqlType1_3);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_3));
-                        }else if (Config.CODE_DE_MON_ACTIVITE==3) {
-                            Config.fragToReload = getResources().getString(R.string.sqlBalade);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlBalade));
-                        }else if (Config.CODE_DE_MON_ACTIVITE==5) {
-                            Config.fragToReload = getResources().getString(R.string.sqlIncontournable);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlIncontournable));
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
-                            Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_3));
+                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
+                                Config.fragToReload = getResources().getString(R.string.sqlType1_3);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_3));
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
+                                Config.fragToReload = getResources().getString(R.string.sqlBalade);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlBalade));
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
+                                Config.fragToReload = getResources().getString(R.string.sqlIncontournable);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlIncontournable));
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_3));
+                            }
+                            Config.resetFragment();
                         }
-                        Config.resetFragment();
                     }
                 }
         );

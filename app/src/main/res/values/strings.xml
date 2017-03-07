@@ -121,6 +121,8 @@
     <string name="libFormLancer">LANCER LA RECHERCHE</string>
     <string name="libFormDeroulante">À partir du :</string>
     <string name="libFormVie">LYON VILLE EQUITABLE ET DURABLE</string>
+    <string name="IntroFormVie">Le label « Lyon, Ville Equitable et Durable » créé par la Ville de Lyon identifie les entreprises, commerces, artisans et structures engagés dans une économie sociale et solidaire à travers une offre de consommation responsable et soucieuse des enjeux du développement durable.</string>
+
 
     <string-array name="arrondissement_tab">
         <item>Par arrondissement</item>

@@ -175,38 +175,36 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
                 }
         );
 
-
-        TextView myTitre    = (TextView) findViewById(R.id.titreDetailEvt);
-        myTitre.setTypeface(myTypeface);
-        myTitre.setText(Config.myContentValue.get("titre").toString());
-
+        TextView myTitre     = (TextView) findViewById(R.id.titreDetailEvt);
         TextView myTitre2    = (TextView) findViewById(R.id.typeEvt);
-        myTitre2.setTypeface(myTypeface);
-        myTitre2.setText(Config.myContentValue.get("type_principal").toString());
-
         TextView myTitre3    = (TextView) findViewById(R.id.dateDetailEvt);
+        myTitre.setTypeface (myTypeface);
+        myTitre2.setTypeface(myTypeface);
         myTitre3.setTypeface(myTypeface);
-        myTitre3.setText(Config.myContentValue.get("accroche").toString());
+        myTitre.setText     (Config.myContentValue.get("titre").toString());
+        myTitre2.setText    (Config.myContentValue.get("type_principal").toString());
+        myTitre3.setText    (Config.myContentValue.get("accroche").toString());
 
-        ImageView imgTetiaire = (ImageView) findViewById(R.id.imgVisuelEvt);
+        ImageView imgTetiaire     = (ImageView) findViewById(R.id.imgVisuelEvt);
         BitmapDownloaderTask task = new BitmapDownloaderTask(imgTetiaire);
 
-        if (Config.myContentValue.get("visuel").toString().length()>0) {
+        if (Config.myContentValue.get("visuel").toString().length()>0)
+        {
             task.execute(Config.myContentValue.get("visuel").toString());
         }
 
-/*        if (Config.flagEvtFromFav==1) {
-            Config.xml_id = ""; //Config.myContentValue.get("xml_equipement").toString();
-        }else {*/
-            Config.xml_id = Config.myContentValue.get("equipement").toString();
-        //}
+        Config.xml_id = Config.myContentValue.get("equipement").toString();
 
-        WebView myTexte2  = (WebView) findViewById(R.id.descriptionEvt);
+        WebView myTexte2     = (WebView) findViewById(R.id.descriptionEvt);
         WebSettings settings = myTexte2.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
         myTexte2.setBackgroundColor(Color.TRANSPARENT);
 
-        myTexte2.loadDataWithBaseURL(null, Config.myContentValue.get("description").toString(), "text/html", "UTF-8", null);
+        try {
+            myTexte2.loadDataWithBaseURL(null, Config.myContentValue.get("description").toString(), "text/html", "UTF-8", null);
+        }catch(SQLException sqle){
+            throw sqle;
+        }
 
         myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
         try {
@@ -220,11 +218,13 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
         myAddFavoris.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (id_favoris==0) {
+                        if (id_favoris==0)
+                        {
                             myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
                             addToFavoris();
-
-                        }else{
+                        }
+                        else
+                        {
                             myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_off));
                             myDbHelper.deleteFavorisActu(id_favoris);
                             id_favoris = 0;
@@ -300,15 +300,14 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                     finish();
+
                     }
                 }
         );
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                        Config.resetVarNavigation();
                         Config.codeInterne          = 2;
                         Config.MENU_ACTIVITE        = 1;
                         Config.CODE_DE_MON_ACTIVITE = 5;
@@ -321,8 +320,7 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                        Config.resetVarNavigation();
                         Config.codeInterne          = 3;
                         Config.MENU_ACTIVITE        = 1;
                         Config.CODE_DE_MON_ACTIVITE = 5;

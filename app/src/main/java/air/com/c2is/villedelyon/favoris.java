@@ -73,7 +73,6 @@ public class favoris extends android.support.v4.app.FragmentActivity {
         Config.MENU_ACTIVITE        = 1;
         Config.flagForceRetour      = 0;
         Config.CODE_DE_MON_ACTIVITE = 6;
-
         Config.flagDirectDemarche   = 1;
 
         Intent intent = new Intent(favoris.this, ListType.class);

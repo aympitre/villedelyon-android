@@ -191,6 +191,13 @@ public class Config {
 		return Html.fromHtml(first.toUpperCase() + " <font color='#027BDA'>" + next.toUpperCase() + "</font>");
 	}
 
+	public static void resetVarNavigation (){
+		Config.flagContentEquip = 0;
+		Config.str_demarche     = "";
+		Config.flagForceRetour  = 0;
+		Config.sql_sous_type	= "";
+	}
+
 	public static void killLocalNotification (Context myContext){
 		NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancelAll();

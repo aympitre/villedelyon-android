@@ -145,8 +145,7 @@ public class ResMarche extends Activity {
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.MENU_ACTIVITE = 2;
-                        Config.myHome.goVie();
+
                     }
                 }
         );

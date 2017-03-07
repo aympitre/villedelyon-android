@@ -138,8 +138,7 @@ public class FragmentDetailIncontournable extends android.support.v4.app.Fragmen
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                        Config.resetVarNavigation();
                         Config.codeInterne          = 1;
                         Config.MENU_ACTIVITE        = 1;
                         Config.CODE_DE_MON_ACTIVITE = 5;
@@ -151,8 +150,7 @@ public class FragmentDetailIncontournable extends android.support.v4.app.Fragmen
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                        Config.resetVarNavigation();
                         Config.codeInterne          = 2;
                         Config.MENU_ACTIVITE        = 1;
                         Config.CODE_DE_MON_ACTIVITE = 5;
@@ -165,7 +163,7 @@ public class FragmentDetailIncontournable extends android.support.v4.app.Fragmen
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                       finish();
+
                     }
                 }
         );

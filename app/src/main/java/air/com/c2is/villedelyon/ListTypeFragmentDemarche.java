@@ -86,11 +86,16 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         layBtCarto        =  (RelativeLayout) rootView.findViewById(R.id.layBtCarto);
         btCarto           =  (ImageButton) rootView.findViewById(R.id.btCarto);
 
+        LinearLayout laySousMenu =  (LinearLayout) rootView.findViewById(R.id.laySousMenu);
+        if (Config.flagDirectDemarche==1) {
+            laySousMenu.setVisibility(View.GONE);
+        }else{
+            laySousMenu.setVisibility(View.VISIBLE);
+        }
+
+
         LinearLayout layLyonDirect = (LinearLayout) rootView.findViewById(R.id.layLyonDirect);
         LinearLayout layLyonAlerte = (LinearLayout) rootView.findViewById(R.id.layLyonAlerte);
-
-
-        Log.d("myTag", "mon id :" + Config.myId);
 
         if (Config.myId.length()>0) {
             layLyonAlerte.setVisibility(View.VISIBLE);

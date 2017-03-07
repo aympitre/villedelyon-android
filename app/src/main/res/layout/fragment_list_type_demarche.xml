@@ -90,16 +90,17 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="200px">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_weight="7"
                     android:layout_height="fill_parent">
                     <TextView
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:paddingLeft="20dp"
                         android:id="@+id/titreEquipement"
+                        android:minLines="2"
                         android:textColor="@color/noir"
                         android:textSize="18sp"
                         android:layout_width="wrap_content"
@@ -107,6 +108,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
+                    android:layout_marginRight="10dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content">

@@ -58,22 +58,21 @@ public class FragmentFavoris extends Fragment {
                 while (c.moveToNext()) {
                     item = new HashMap<String, Object>();
 
-                    item.put("titre"            , c.getString(0));
-                    item.put("id_equipement"    , c.getInt(1));
-                    item.put("xml_equipement"   , c.getString(2));
-                    item.put("type"             , c.getInt(3));
-                    item.put("type_principal"   , c.getString(4));
-                    item.put("accroche"         , c.getString(5));
-                    item.put("visuel"           , c.getString(6));
-                    item.put("description"      , c.getString(7));
-                    item.put("equipement"       , c.getString(2));
-                    item.put("id_favoris"       , c.getInt(8));
-                    item.put("url"              , c.getString(9));
-                    item.put("demarche_uid"     , c.getString(10));
-                    item.put("demarche_lib_type", c.getString(11));
-                    item.put("demarche_label"   , c.getString(12));
-
-                    item.put("id_demarche_serveur" , c.getString(13));
+                    item.put("titre"              , c.getString(0));
+                    item.put("id_equipement"      , c.getInt(1));
+                    item.put("xml_equipement"     , c.getString(2));
+                    item.put("type"               , c.getInt(3));
+                    item.put("type_principal"     , c.getString(4));
+                    item.put("accroche"           , c.getString(5));
+                    item.put("visuel"             , c.getString(6));
+                    item.put("description"        , c.getString(7));
+                    item.put("equipement"         , c.getString(2));
+                    item.put("id_favoris"         , c.getInt(8));
+                    item.put("url"                , c.getString(9));
+                    item.put("demarche_uid"       , c.getString(10));
+                    item.put("demarche_lib_type"  , c.getString(11));
+                    item.put("demarche_label"     , c.getString(12));
+                    item.put("id_demarche_serveur", c.getString(13));
 
                     listItems.add(item);
                     nbe++;
@@ -114,7 +113,6 @@ public class FragmentFavoris extends Fragment {
 
                 }else if (listItems.get(position).get("type").toString().equalsIgnoreCase("1")) {       // load actualité
                     Config.titreActu = listItems.get(position).get("titre").toString();
-
                     Config.urlActu   = listItems.get(position).get("url").toString();
                     Config.myFavoris.loadActualite();
 
@@ -127,20 +125,18 @@ public class FragmentFavoris extends Fragment {
                     Config.myDemarcheLabel       = listItems.get(position).get("demarche_label").toString();
 
                     // force les champs du formulaire à visible
-                    Config.form_civilite = "1";
-                    Config.form_nom      = "1";
-                    Config.form_prenom   = "1";
-                    Config.form_tel      = "1";
-                    Config.form_email    = "1";
-                    Config.form_message  = "1";
-                    Config.form_image    = "1";
-                    Config.form_loc      = "1";
-
-                    Config.myLabel  = listItems.get(position).get("demarche_label").toString();
-                    Config.myId     = listItems.get(position).get("id_demarche_serveur").toString();
-                    Config.myType   = listItems.get(position).get("demarche_lib_type").toString();
-
-                    Config.id_favoris = Integer.parseInt(listItems.get(position).get("id_favoris").toString());
+                    Config.form_civilite= "1";
+                    Config.form_nom     = "1";
+                    Config.form_prenom  = "1";
+                    Config.form_tel     = "1";
+                    Config.form_email   = "1";
+                    Config.form_message = "1";
+                    Config.form_image   = "1";
+                    Config.form_loc     = "1";
+                    Config.myLabel      = listItems.get(position).get("demarche_label").toString();
+                    Config.myId         = listItems.get(position).get("id_demarche_serveur").toString();
+                    Config.myType       = listItems.get(position).get("demarche_lib_type").toString();
+                    Config.id_favoris   = Integer.parseInt(listItems.get(position).get("id_favoris").toString());
 
                     Config.myFavoris.loadDemarche();
 

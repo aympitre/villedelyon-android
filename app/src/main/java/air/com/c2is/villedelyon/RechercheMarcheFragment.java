@@ -124,7 +124,7 @@ public class RechercheMarcheFragment extends android.support.v4.app.FragmentActi
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        finish();
+
                     }
                 }
         );

@@ -212,75 +212,82 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.MENU_ACTIVITE        = 1;
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                        if (Config.MENU_ACTIVITE!=1) {
+                            Config.MENU_ACTIVITE = 1;
 
-                        if (Config.CODE_DE_MON_ACTIVITE == 1) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType1_1);
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                            Config.fragToReload = getResources().getString(R.string.sqlType3_1);
-                            Config.flagShowCarto = 1;
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
+                            Config.resetVarNavigation();
+
+                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
+
+                                Config.sql_type = Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType1_1);
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
+                                Config.sql_type = Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType3_1);
+                                Config.flagShowCarto = 1;
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
+                                Config.sql_type = Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
+                            }
+                            Config.resetFragment();
+
+                            Intent intent = new Intent(FragmentDetailEquipement.this, ListType.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivityForResult(intent, 0);
                         }
-                        Config.resetFragment();
-
-                        Intent intent = new Intent(FragmentDetailEquipement.this, ListType.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivityForResult(intent, 0);
                     }
                 }
         );
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.MENU_ACTIVITE        = 2;
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                        if (Config.MENU_ACTIVITE!=2) {
+                            Config.MENU_ACTIVITE = 2;
 
-                        if (Config.CODE_DE_MON_ACTIVITE == 1) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType1_2);
-                            Config.codeInterne = 5;
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                            Config.fragToReload = getResources().getString(R.string.sqlType3_2);
+                            Config.resetVarNavigation();
 
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_2);
+                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType1_2);
+                                Config.codeInterne = 5;
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
+                                Config.fragToReload = getResources().getString(R.string.sqlType3_2);
+
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_2);
+                            }
+                            Config.resetFragment();
+
+                            Intent intent = new Intent(FragmentDetailEquipement.this, ListType.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivityForResult(intent, 0);
                         }
-                        Config.resetFragment();
-
-                        Intent intent = new Intent(FragmentDetailEquipement.this, ListType.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivityForResult(intent, 0);
                     }
                 }
         );
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.MENU_ACTIVITE        = 3;
-                        Config.str_demarche         = "";
-                        Config.flagForceRetour      = 0;
+                        if (Config.MENU_ACTIVITE!=3) {
+                            Config.MENU_ACTIVITE = 3;
 
-                        if (Config.CODE_DE_MON_ACTIVITE == 1) {
-                            Config.codeInterne = 3;
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType1_3);
+                            Config.resetVarNavigation();
 
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                            Config.sql_sous_type = Config.fragToReload =  getResources().getString(R.string.sqlBalade);
+                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
+                                Config.codeInterne = 3;
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType1_3);
 
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlIncontournable);
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlBalade);
 
-                        } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                            Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlIncontournable);
+
+                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
+                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
+                            }
+                            Config.resetFragment();
+
+                            Intent intent = new Intent(FragmentDetailEquipement.this, ListType.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivityForResult(intent, 0);
                         }
-                        Config.resetFragment();
-
-                        Intent intent = new Intent(FragmentDetailEquipement.this, ListType.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivityForResult(intent, 0);
                     }
                 }
         );
@@ -486,6 +493,16 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     }
 
     public void loadMap() {
+        if (latitude==0)
+        {
+            btOpenCarte.setVisibility(View.INVISIBLE);
+            myCarte.setVisibility    (View.GONE);
+        }
+        else
+        {
+            btOpenCarte.setVisibility(View.VISIBLE);
+            myCarte.setVisibility    (View.VISIBLE);
+        }
 
         SupportMapFragment fragment2 = new SupportMapFragment() {
             @Override
