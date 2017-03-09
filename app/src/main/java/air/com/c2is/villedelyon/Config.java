@@ -192,6 +192,7 @@ public class Config {
 	}
 
 	public static void resetVarNavigation (){
+		Config.fragToReload		= "";
 		Config.flagContentEquip = 0;
 		Config.str_demarche     = "";
 		Config.flagForceRetour  = 0;
@@ -214,6 +215,14 @@ public class Config {
 
 
 		}
+	}
+
+	public static String formatCharFlux(String p_param) {
+		String retour = p_param.replace("Ã©","é");
+		retour	      = retour.replace("Ã¨","è");
+		retour	      = retour.replace("Ã´","ô");
+
+		return  ""+retour;
 	}
 
 	public static String killHtml(String p_param) {

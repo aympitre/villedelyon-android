@@ -104,8 +104,6 @@ public class SeDeplacer extends FragmentActivity {
     public JSONArray contactsParking = null;
     public JSONArray contactsPmr     = null;
 
-
-
     public DialogLoading myDialLoading;
 
     @Override
@@ -985,10 +983,8 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.title("Parc à vélo");
 
                     String s = new String(adresse.getBytes(), "UTF-8");
-                    s        = s.replace("Ã©","é");
-                    s        = s.replace("Ã¨","è");
 
-                    markerOptions.snippet(s);
+                    markerOptions.snippet(Config.formatCharFlux(s));
 
                     mMap.addMarker(markerOptions);
                 }
@@ -1065,6 +1061,9 @@ public class SeDeplacer extends FragmentActivity {
                     JSONObject c = contactsParking.getJSONObject(i);
 
                     JSONObject o = c.getJSONObject("properties");
+
+                    Log.d("myTag", ">> : " + o);
+
                     String nom = o.getString("nom");
                     String etat = o.getString("etat");
                     String nbeEmpl = o.getString("capacitevoiture");
@@ -1074,12 +1073,12 @@ public class SeDeplacer extends FragmentActivity {
 
                     markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
 
-
                     markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
-                    markerOptions.title(nom);
+                    Log.d("myTag", ">> : " + Config.formatCharFlux(nom));
+                    markerOptions.title(Config.formatCharFlux(nom));
+
                     markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
-                    //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
 
                     mMap.addMarker(markerOptions);
 
@@ -1301,8 +1300,8 @@ public class SeDeplacer extends FragmentActivity {
 
 
                             markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+                            markerOptions.title(Config.formatCharFlux(nom));
 
-                            markerOptions.title(nom);
                             markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
                             //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
 

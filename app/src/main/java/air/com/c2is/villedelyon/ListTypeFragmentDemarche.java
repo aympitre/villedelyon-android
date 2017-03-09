@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ListTypeFragmentDemarche extends ListTypeFragment {
     public myAsyncTask2 myWebFetch;
     public ImageButton myAddFavoris;
+    public ScrollView mainScroll;
     public int id_favoris;
     public int flagIsFavoris;
     public DialogOk myDialOk;
@@ -67,6 +69,7 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
 
         TextView myTitreEquipement = (TextView) rootView.findViewById(R.id.titreEquipement);
         myTitreEquipement.setTypeface(myTypeface);
+        mainScroll = (ScrollView) rootView.findViewById(R.id.mainScroll);
 
         myTitreEquipement.setText(Config.formatLastWord(Config.myDemarcheTitre));
 
@@ -297,6 +300,8 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         android.view.ViewGroup.LayoutParams lp = (android.view.ViewGroup.LayoutParams) mylistview.getLayoutParams();
         lp.height = (p_num*150);
         mylistview.setLayoutParams(lp);
+
+        mainScroll.fullScroll(View.FOCUS_UP);
     }
 
 
