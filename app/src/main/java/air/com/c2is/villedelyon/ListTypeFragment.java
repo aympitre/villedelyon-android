@@ -536,10 +536,12 @@ public class ListTypeFragment extends Fragment {
 
                     if (Config.CODE_DE_MON_ACTIVITE != 5) {
                         if ((Config.MENU_ACTIVITE == 1) || (Config.MENU_ACTIVITE == 3) || (Config.MENU_ACTIVITE == 6)) {
-                            Config.fragToReload = Config.wait_sous_type;
-                            Config.sql_sous_type = Config.wait_sous_type;
-                            Config.myFragment.loadFragment(Config.sql_sous_type);
-                            Config.resetFragment();
+                            if (Config.wait_sous_type!="") {
+                                Config.fragToReload = Config.wait_sous_type;
+                                Config.sql_sous_type = Config.wait_sous_type;
+                                Config.myFragment.loadFragment(Config.sql_sous_type);
+                                Config.resetFragment();
+                            }
                         }
                     }
 

@@ -133,7 +133,6 @@ public class MainActivity extends Activity {
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         alarm = new AlarmManagerBroadcastReceiver();
-
         super.onCreate(savedInstanceState);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -177,6 +176,7 @@ public class MainActivity extends Activity {
         }
 
         Config.myActu = this;
+        Config.resetVarNavigation();
 
         String regId = getRegistrationId(getApplicationContext());
         if (TextUtils.isEmpty(regId)) {

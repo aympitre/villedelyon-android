@@ -197,6 +197,8 @@ public class Config {
 		Config.str_demarche     = "";
 		Config.flagForceRetour  = 0;
 		Config.sql_sous_type	= "";
+		Config.wait_sous_type	= "";
+		Config.flagDirectMarche = 0;
 	}
 
 	public static void killLocalNotification (Context myContext){

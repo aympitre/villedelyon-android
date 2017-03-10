@@ -314,11 +314,6 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            for(int j=0; j<tabCategorie.size();j++) {
-                //Log.d("myTag", tabCategorie.get(j).get("categorie").toString());
-
-            }
-
             majTheme();
 
         }
