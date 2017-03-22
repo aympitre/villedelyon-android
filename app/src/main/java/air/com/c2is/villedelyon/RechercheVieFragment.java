@@ -138,6 +138,7 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        Config.resetVarNavigation();
                         Config.codeInterne          = 1;
                         Config.MENU_ACTIVITE        = 1;
                         Config.CODE_DE_MON_ACTIVITE = 1;
@@ -157,6 +158,7 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        Config.resetVarNavigation();
                         Config.codeInterne          = 3;
                         Config.MENU_ACTIVITE        = 3;
                         Config.CODE_DE_MON_ACTIVITE = 1;

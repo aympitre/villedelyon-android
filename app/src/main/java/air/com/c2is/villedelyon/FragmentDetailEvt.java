@@ -236,8 +236,10 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
         if (Config.flagEvtFromFav==1) {
             id_favoris = (int) Config.myContentValue.get("id_favoris");
         }else {
-            id_favoris = myDbHelper.checkFavorisEvt(Config.myContentValue.get("xml_id").toString());
+            id_favoris    = myDbHelper.checkFavorisEvt(Config.myContentValue.get("xml_id").toString());
         }
+
+//        Log.d("myTag", "ici : " + Config.myContentValue.get("xml_id").toString() + "/" + Config.myContentValue.get("equipement").toString());
 
         if (id_favoris!=0) {
             myAddFavoris.setImageDrawable(getResources().getDrawable(R.drawable.bt_favoris_on));
@@ -368,7 +370,10 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
             myValue.put("visuel", Config.myContentValue.get("visuel").toString());
         }
         myValue.put("description"       , Config.myContentValue.get("description").toString());
-        myValue.put("xml_equipement"    , Config.xml_id);
+        myValue.put("xml_equipement"    , Config.myContentValue.get("equipement").toString());
+        myValue.put("xml_id"            , Config.myContentValue.get("xml_id").toString());
+
+        Log.d("myTag", "avant insert : " + Config.myContentValue.get("equipement").toString() + "/" + Config.myContentValue.get("xml_id").toString());
 
         myValue.put("type"    , 2);
 

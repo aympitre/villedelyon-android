@@ -478,20 +478,9 @@ public class FormAlerte extends Activity {
     }
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
-
-        /*
-        File file = new File(uri.getPath());
-
-        if (file != null) {
-            Log.d("myTag", "toto toto");
-        }
-        */
-
-
         ParcelFileDescriptor parcelFileDescriptor =
                     getContentResolver().openFileDescriptor(uri, "r");
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-
 
         Bitmap image = null;
         if (fileDescriptor!=null) {

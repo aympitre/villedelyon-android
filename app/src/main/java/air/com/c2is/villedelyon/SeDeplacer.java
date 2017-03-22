@@ -1338,7 +1338,7 @@ public class SeDeplacer extends FragmentActivity {
                             markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
                             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
                             markerOptions.title("Stationnement PMR");
-                            markerOptions.snippet(nbeEmpl + " emplacements");
+                            markerOptions.snippet(nbeEmpl + " emplacement");
 
                             //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
 

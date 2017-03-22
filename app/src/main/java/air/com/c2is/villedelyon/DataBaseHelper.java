@@ -189,8 +189,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	public void insertFavoris(ContentValues p_param) {
 		Cursor c = myDataBase.rawQuery("SELECT count(*) as nbe FROM Favoris WHERE id_equipement=" + p_param.get("id_equipement"), null);
 
-		Log.d("myTag", "sql : " + "SELECT count(*) as nbe FROM Favoris WHERE id_equipement=" + p_param.get("id_equipement"));
-
 		if ( (p_param.get("xml_equipement").toString().length()>0) && (p_param.get("id_equipement").toString().equalsIgnoreCase("0")) ) {
 			c = myDataBase.rawQuery("SELECT count(*) as nbe FROM Favoris WHERE xml_equipement=" + p_param.get("xml_equipement"), null);
 		}
@@ -376,7 +374,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	public int checkFavorisXml() {
 		Cursor c;
 
-		c = myDataBase.rawQuery("SELECT libelle FROM Favoris WHERE xml_equipement='"+Config.xml_id+"'", null);
+		c = myDataBase.rawQuery("SELECT libelle FROM Favoris WHERE type!=2 AND xml_equipement='"+Config.xml_id+"'", null);
 
 		if (c.moveToFirst()) {
 			return 1;

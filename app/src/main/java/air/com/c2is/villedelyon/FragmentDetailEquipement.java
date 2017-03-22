@@ -525,6 +525,11 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         myValue.put("id_equipement" , idEquip);
         myValue.put("xml_equipement", Config.xml_id);
 
+
+        Log.d("myTag", "libEquip : " + libEquip);
+        Log.d("myTag", "idEquip : " + idEquip);
+        Log.d("myTag", "xml_equipement : " + Config.xml_id);
+
         myDbHelper.insertFavoris(myValue);
         flagIsFavoris = 1;
         majImgFavoris();
@@ -815,11 +820,9 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
             }else {
                 Cursor c;
                 int flagTemp = 0;
+                idEquip      = 0;
 
-                idEquip = 0;
-
-
-                Log.d("myTag", "aymeric : " + Config.xml_id + "/" + Config.sql_type);
+//                Log.d("myTag", "aymeric : " + Config.xml_id + "/" + Config.sql_type);
 
                 if (Config.xml_id.length() > 0) {
                     c = myDbHelper.loadEquipementFromXML(Config.xml_id);
