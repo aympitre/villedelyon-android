@@ -137,6 +137,7 @@ public class ResMarche extends Activity {
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        Config.resetVarNavigation();
                         Config.MENU_ACTIVITE = 1;
                         Config.myHome.goInfo();
                     }
@@ -153,6 +154,7 @@ public class ResMarche extends Activity {
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        Config.resetVarNavigation();
                         Config.MENU_ACTIVITE = 3;
                         Config.myHome.goLoisir();
                     }

@@ -119,11 +119,6 @@
     </LinearLayout>
 
 
-
-
-
-
-
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent" android:id="@+id/map"
@@ -139,81 +134,6 @@
             android:background="@color/transparent"
             android:src="@drawable/legende"/>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/layMenuPicto"
-            android:gravity="left|center_vertical"
-            android:layout_marginTop="-290dp"
-            android:background="@drawable/fond_grand_normal">
-
-            <LinearLayout
-                android:id="@+id/layFondMenu"
-                android:layout_marginTop="0dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageButton
-                    android:id="@+id/btPicto1"
-                    android:layout_marginRight="5dp"
-                    android:padding="10dp"
-                    android:paddingLeft="15dp"
-                    android:background="@color/transparent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/picto_tramway_on"/>
-
-                <ImageButton
-                    android:id="@+id/btPicto2"
-                    android:layout_marginRight="5dp"
-                    android:padding="10dp"
-                    android:paddingLeft="15dp"
-
-                    android:background="@color/transparent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/picto_metro_off"/>
-
-                <ImageButton
-                    android:id="@+id/btPicto3"
-                    android:layout_marginRight="5dp"
-                    android:padding="10dp"
-                    android:paddingLeft="15dp"
-
-                    android:background="@color/transparent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/picto_taxi_off"/>
-
-                <ImageButton
-                    android:id="@+id/btPicto4"
-                    android:background="@color/transparent"
-                    android:layout_marginRight="5dp"
-                    android:padding="10dp"
-                    android:paddingLeft="15dp"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/picto_train_off"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:orientation="vertical">
-                <ImageButton
-                    android:id="@+id/btMenuLayer"
-                    android:paddingRight="5dp"
-                    android:paddingTop="50dp"
-                    android:paddingBottom="50dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:src="@drawable/double_barre"/>
-            </LinearLayout>
-        </RelativeLayout>
 
         <ImageButton
             android:id="@+id/btMenuLayerPetit"
@@ -257,6 +177,90 @@
                 tools:ignore="WebViewLayout"
                 ></WebView>
 
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layMenuPicto"
+            android:gravity="left|center_vertical"
+            android:layout_marginTop="-750dp"
+            android:background="@drawable/fond_grand">
+
+            <LinearLayout
+                android:id="@+id/layFondMenu"
+                android:layout_marginTop="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/btPicto1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="5dp"
+                    android:padding="10dp"
+                    android:paddingLeft="15dp"
+                    android:background="@color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/picto_tramway_grand_on"/>
+
+                <ImageButton
+                    android:id="@+id/btPicto2"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="5dp"
+                    android:padding="10dp"
+                    android:paddingLeft="15dp"
+
+                    android:background="@color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/picto_metro_grand_off"/>
+
+                <ImageButton
+                    android:id="@+id/btPicto3"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="5dp"
+                    android:padding="10dp"
+                    android:paddingLeft="15dp"
+
+                    android:background="@color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/picto_taxi_grand_off"/>
+
+                <ImageButton
+                    android:id="@+id/btPicto4"
+                    android:background="@color/transparent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="5dp"
+                    android:padding="10dp"
+                    android:paddingLeft="15dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/picto_train_grand_off"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="140dp"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/btMenuLayer"
+                    android:paddingRight="5dp"
+                    android:paddingTop="100dp"
+                    android:paddingBottom="50dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:src="@drawable/double_barre"/>
+            </LinearLayout>
         </RelativeLayout>
 
     </LinearLayout>

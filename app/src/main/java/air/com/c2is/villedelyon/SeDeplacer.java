@@ -384,7 +384,7 @@ public class SeDeplacer extends FragmentActivity {
             params.setMargins(0, 200, 0, 0);
             layFondMenu.setLayoutParams(params);
 
-            if (Config.checkDevice()==2) {
+            if (Config.checkDevice()>=2) {
                 btPicto1.setImageResource(R.drawable.picto_velov_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_velo_grand_off);
             }else {
@@ -401,7 +401,7 @@ public class SeDeplacer extends FragmentActivity {
             params.setMargins(0, 0, 0, 0);
             layFondMenu.setLayoutParams(params);
 
-            if (Config.checkDevice()==2) {
+            if (Config.checkDevice()>=2) {
                 btPicto1.setImageResource(R.drawable.picto_parking_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_pmr_grand_off);
                 btPicto3.setImageResource(R.drawable.picto_autolib_grand_off);
@@ -424,7 +424,7 @@ public class SeDeplacer extends FragmentActivity {
             params.setMargins(0, 0, 0, 0);
             layFondMenu.setLayoutParams(params);
 
-            if (Config.checkDevice()==2) {
+            if (Config.checkDevice()>=2) {
                 btPicto1.setImageResource(R.drawable.picto_tramway_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_metro_grand_off);
                 btPicto3.setImageResource(R.drawable.picto_taxi_grand_off);
@@ -487,7 +487,7 @@ public class SeDeplacer extends FragmentActivity {
                         if (flagPicto1==0) {
                             btPicto1.setAlpha(255);
 
-                            if (Config.checkDevice()==2) {
+                            if (Config.checkDevice()>=2) {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto1.setImageResource(R.drawable.picto_velov_grand_on);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -508,7 +508,7 @@ public class SeDeplacer extends FragmentActivity {
                             flagPicto1 = 1;
                         }else{
                             btPicto1.setAlpha(128);
-                            if (Config.checkDevice()==2) {
+                            if (Config.checkDevice()>=2) {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto1.setImageResource(R.drawable.picto_velov_grand_off);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -544,7 +544,7 @@ public class SeDeplacer extends FragmentActivity {
                         if (flagPicto2==0) {
                             btPicto2.setAlpha(255);
 
-                            if (Config.checkDevice()==2) {
+                            if (Config.checkDevice()>=2) {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto2.setImageResource(R.drawable.picto_velo_grand_on);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -566,7 +566,7 @@ public class SeDeplacer extends FragmentActivity {
                         }else{
                             btPicto2.setAlpha(128);
 
-                            if (Config.checkDevice()==2) {
+                            if (Config.checkDevice()>=2) {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto2.setImageResource(R.drawable.picto_velo_grand_off);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -605,7 +605,7 @@ public class SeDeplacer extends FragmentActivity {
                         if (flagPicto3==0) {
                             btPicto3.setAlpha(255);
 
-                            if (Config.checkDevice()==2) {
+                            if (Config.checkDevice()>=2) {
                                 if (Config.MENU_ACTIVITE == 3) {
                                     btPicto3.setImageResource(R.drawable.picto_autolib_grand_on);
                                 } else {
@@ -622,7 +622,7 @@ public class SeDeplacer extends FragmentActivity {
                             flagPicto3 = 1;
                         }else{
                             btPicto3.setAlpha(128);
-                            if (Config.checkDevice()==2) {
+                            if (Config.checkDevice()>=2) {
                                 if (Config.MENU_ACTIVITE == 3) {
                                     btPicto3.setImageResource(R.drawable.picto_autolib_grand_off);
                                 } else {
@@ -652,13 +652,13 @@ public class SeDeplacer extends FragmentActivity {
                             btPicto4.setAlpha(255);
 
                             if (Config.MENU_ACTIVITE==3) {
-                                if (Config.checkDevice() == 2) {
+                                if (Config.checkDevice() >= 2) {
                                     btPicto4.setImageResource(R.drawable.picto_bluely_grand_on);
                                 } else {
                                     btPicto4.setImageResource(R.drawable.picto_bluely_on);
                                 }
                             }else {
-                                if (Config.checkDevice() == 2) {
+                                if (Config.checkDevice() >= 2) {
                                     btPicto4.setImageResource(R.drawable.picto_train_grand_on);
                                 } else {
                                     btPicto4.setImageResource(R.drawable.picto_train_on);
@@ -668,13 +668,13 @@ public class SeDeplacer extends FragmentActivity {
                         }else{
                             btPicto4.setAlpha(128);
                             if (Config.MENU_ACTIVITE==3) {
-                                if (Config.checkDevice() == 2) {
+                                if (Config.checkDevice() >= 2) {
                                     btPicto4.setImageResource(R.drawable.picto_bluely_grand_off);
                                 } else {
                                     btPicto4.setImageResource(R.drawable.picto_bluely_off);
                                 }
                             }else {
-                                if (Config.checkDevice() == 2) {
+                                if (Config.checkDevice() >= 2) {
                                     btPicto4.setImageResource(R.drawable.picto_train_grand_off);
                                 } else {
                                     btPicto4.setImageResource(R.drawable.picto_train_off);
@@ -1041,7 +1041,7 @@ public class SeDeplacer extends FragmentActivity {
                         markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
                         markerOptions.title(type);
-                        markerOptions.snippet(nbeEmpl + " emplacements");
+                        markerOptions.snippet(nbeEmpl + " emplacement(s)");
 
                         mMap.addMarker(markerOptions);
                     }
@@ -1106,9 +1106,7 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
                     markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
                     markerOptions.title("Stationnement PMR");
-                    markerOptions.snippet(nbeEmpl + " emplacements");
-
-                    //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
+                    markerOptions.snippet(nbeEmpl + " emplacement");
 
                     mMap.addMarker(markerOptions);
                 }
@@ -1263,7 +1261,7 @@ public class SeDeplacer extends FragmentActivity {
                             markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
                             markerOptions.title(type);
-                            markerOptions.snippet(nbeEmpl + " emplacements");
+                            markerOptions.snippet(nbeEmpl + " emplacement(s)");
 
                             mMap.addMarker(markerOptions);
 

@@ -668,7 +668,6 @@ public class FormAlerte extends Activity {
 
         final String EMAIL_PATTERN = "^[_'-A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@['-A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-//        if (!strEmail.matches(EMAIL_PATTERN)) {
         if (checkFormatMail(strEmail)==0) {
             flag=2;
             chpEmail.setBackgroundColor(getResources().getColor(R.color.rouge));

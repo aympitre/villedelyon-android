@@ -178,17 +178,20 @@ public class Config {
 		return pixels;
 	}
 	public static Spanned formatLastWord(String p_param) {
-		String first    = p_param;
-		String next     = "";
+		if (!p_param.isEmpty()) {
+			String first = p_param;
+			String next = "";
 
-		String tab[] =  p_param.split(" ");
-		if (tab.length>1) {
-			next  = tab[tab.length-1];
-			first = first.replace(next,"");
+			String tab[] = p_param.split(" ");
+			if (tab.length > 1) {
+				next = tab[tab.length - 1];
+				first = first.replace(next, "");
+			}
+
+			Log.d("myTag", "victory : " + next);
+			return Html.fromHtml(first.toUpperCase() + " <font color='#027BDA'>" + next.toUpperCase() + "</font>");
 		}
-
-		Log.d("myTag", "victory : " + next);
-		return Html.fromHtml(first.toUpperCase() + " <font color='#027BDA'>" + next.toUpperCase() + "</font>");
+		return Html.fromHtml("<font color='#027BDA'></font>");
 	}
 
 	public static void resetVarNavigation (){
