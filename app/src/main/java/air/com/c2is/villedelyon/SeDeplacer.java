@@ -717,11 +717,13 @@ public class SeDeplacer extends FragmentActivity {
     }
 
     public void openLegende () {
+        layMenuPicto.setVisibility(View.GONE);
         layLegende.setVisibility(View.VISIBLE);
         loadLegende(Config.MENU_ACTIVITE);
         flagLegende = 1;
     }
     public void closeLegende () {
+        layMenuPicto.setVisibility(View.VISIBLE);
         layLegende.setVisibility(View.GONE);
         flagLegende = 0;
     }

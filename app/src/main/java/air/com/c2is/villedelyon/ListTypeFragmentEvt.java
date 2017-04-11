@@ -118,7 +118,7 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
         myMenu2.setTypeface(myTypeface);
         myMenu3.setTypeface(myTypeface);
 
-
+        showBtSuite();
 
         // *** Bouton du menu
         myMenu1.setOnClickListener(
@@ -160,7 +160,7 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
                         showBtSuite();
                     }
                 }else{
-                    hideBtSuite();
+                    //hideBtSuite();
                 }
 
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
