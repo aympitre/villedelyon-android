@@ -1,4 +1,8 @@
 <resources>
+    <string name="location_permission_denied">La géolocalisation n\'est pas autorisée.</string>
+    <string name="permission_required_toast">Pour une meilleure précision veuillez autoriser la géolocalisation</string>
+    <string name="permission_rationale_location">Pour une meilleure précision veuillez autoriser la géolocalisation</string>
+
     <string name="app_name">Ville de Lyon</string>
     <string name="facebook_app_id">154365064735937</string>
     <string name="google_analytics_id">UA-39619680-1</string>

@@ -334,8 +334,9 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-//                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version="+Config.VERSION_API+"&type=label-lyon-ville-equitable-et-durable-vie-quotidienne");
-                    URL url = new URL("http://prep.c2is.fr/appvilledelyon/current/types.php?annuaire=label-lyon-ville-equitable-et-durable");
+                    URL url = new URL(Config.urlDomaine + "types.php?annuaire=label-lyon-ville-equitable-et-durable");
+
+                    //  URL url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/types.php?annuaire=label-lyon-ville-equitable-et-durable");
 
                     URLConnection connection = url.openConnection();
 

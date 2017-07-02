@@ -301,7 +301,7 @@ public class Reveil extends Activity {
 
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
 
-        sharedPref = this.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        sharedPref = this.getSharedPreferences("vdl", Context.MODE_PRIVATE);
         long flag_actif = sharedPref.getLong("flag_alarm", 0);
 
         if (flag_actif==1) {
@@ -354,7 +354,7 @@ public class Reveil extends Activity {
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();
@@ -412,7 +412,7 @@ public class Reveil extends Activity {
             StrictMode.setThreadPolicy(policy);
 
             try {
-                URL url = new URL("http://appvilledelyon.c2is.fr/savoir.php?limit=1&version="+Config.VERSION_API);
+                URL url = new URL(Config.urlDomaine+"savoir.php?limit=1&version="+Config.VERSION_API);
                 URLConnection connection = url.openConnection();
 
                 Document doc        = parseXML(connection.getInputStream());

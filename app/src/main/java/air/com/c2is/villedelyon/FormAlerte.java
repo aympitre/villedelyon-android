@@ -1,5 +1,6 @@
 package air.com.c2is.villedelyon;
 
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -19,8 +20,9 @@ import android.graphics.Typeface;
 import android.location.Location;
 import java.net.URLEncoder;
 import android.opengl.Matrix;
-import org.apache.http.NameValuePair;
 
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 import java.io.FileInputStream;
 import java.util.List;
@@ -32,7 +34,6 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import org.apache.http.HttpStatus;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
@@ -85,7 +86,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class FormAlerte extends Activity {
+public class FormAlerte extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
     public Switch myGeoloc;
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
@@ -109,10 +110,10 @@ public class FormAlerte extends Activity {
     public EditText chpVille;
     public EditText chpTelephone;
 
-
-    public String monImage = "";
+    public int flagAuthor   = 0;
+    public String monImage  = "";
     public int    flagPhoto = 0;
-    public int    flagCiv = 1;
+    public int    flagCiv   = 1;
     public String strNom;
     public String strPrenom;
     public String strEmail;
@@ -182,6 +183,8 @@ public class FormAlerte extends Activity {
         radio_monsieur.setTypeface(myTypeface);
         RadioButton radio_madame    = (RadioButton) findViewById(R.id.radio_madame);
         radio_madame.setTypeface(myTypeface);
+
+        Log.d("myTag", ">> je suis créer");
 
         chpNom      = (EditText) findViewById(R.id.chpNom);
         chpPrenom   = (EditText) findViewById(R.id.chpPrenom);
@@ -296,7 +299,8 @@ public class FormAlerte extends Activity {
         btPhoto1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        dispatchTakePictureIntent();
+                        checkPermission();
+                        //dispatchTakePictureIntent();
                     }
                 }
         );
@@ -324,14 +328,18 @@ public class FormAlerte extends Activity {
         //myLayConfOk     = (LinearLayout) findViewById(R.id.myLayConfOk);
         myScrollForm    = (ScrollView) findViewById(R.id.myScrollForm);
 
-        sharedPref      = this.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        sharedPref      = this.getSharedPreferences("vdl", Context.MODE_PRIVATE);
 
         int flag_geoloc = sharedPref.getInt("flag_geoloc", 1);
+
         if (flag_geoloc==1) {
+            Log.wtf("myTag", ">> je suis dans le geocodeur : " + flag_geoloc);
+
             geocoder = new Geocoder(this, Locale.getDefault());
 
             GPSTracker tracker = new GPSTracker(this);
             if (!tracker.canGetLocation()) {
+                Log.wtf("myTag", ">> je ne peux pas tracker psotions");
                 tracker.showSettingsAlert();
             } else {
                 latitude = tracker.getLatitude();
@@ -586,7 +594,8 @@ public class FormAlerte extends Activity {
     }
 
     public void goValider() {
-        goAlertePhp();
+        checkPermissionLecture();
+        //goAlertePhp();
     }
 
     public void showOk() {
@@ -610,6 +619,41 @@ public class FormAlerte extends Activity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            if (flagAuthor==1) {
+                dispatchTakePictureIntent();
+            }else{
+                goAlertePhp();
+            }
+        }
+    }
+
+    private void checkPermission(){
+        flagAuthor = 1;
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        } else {
+            dispatchTakePictureIntent();
+        }
+    }
+    private void checkPermissionLecture(){
+        flagAuthor = 2;
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        } else {
+            goAlertePhp();
+        }
+    }
+
 
     public int checkFormatMail(String p_param) {
         int flag = 0;
@@ -662,7 +706,6 @@ public class FormAlerte extends Activity {
             imgPreview.setBackgroundColor(getResources().getColor(R.color.rouge));
             flag=0;
         }
-
 
         String strEmail = chpEmail.getText().toString();
 
@@ -845,7 +888,7 @@ public class FormAlerte extends Activity {
         return path;
     }
 
-    class myAsyncTask2 extends AsyncTask<List<NameValuePair>, Integer, String> {
+    class myAsyncTask2 extends AsyncTask<Void, Void, Void> {
         myAsyncTask2()    {
 
         }
@@ -853,9 +896,8 @@ public class FormAlerte extends Activity {
         int flagOk;
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
             myDialLoading.hide();
 
             if (flagOk==1) {
@@ -873,7 +915,7 @@ public class FormAlerte extends Activity {
 
 
         @Override
-        protected String doInBackground(List<NameValuePair>... nameValuePairs) {
+        protected Void doInBackground(Void... params) {
             try {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
@@ -1034,7 +1076,6 @@ public class FormAlerte extends Activity {
 
                         FileInputStream fileInputStream = new FileInputStream(monImage);
 
-
                         dos.writeBytes(twoHyphens + boundary + lineEnd);
                         dos.writeBytes("Content-Disposition: form-data; name=\"userfile\";filename=\"image.jpeg\"" + lineEnd);
                         dos.writeBytes(lineEnd);
@@ -1093,8 +1134,7 @@ public class FormAlerte extends Activity {
                 Log.d("myTag", "exep : " + e.toString());
                 //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
             }
-
-            return "";
+            return null;
         }
     }
 
@@ -1120,7 +1160,6 @@ public class FormAlerte extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
             String errorMessage = "";
-
             List<Address> addresses = null;
 
             try {
@@ -1130,25 +1169,26 @@ public class FormAlerte extends Activity {
                         1);
             } catch (IOException ioException) {
                 // Catch network or other I/O problems.
-                Log.d("myTag", "This is my ioException");
+                Log.wtf("myTag", "This is my ioException");
+
 
             } catch (IllegalArgumentException illegalArgumentException) {
                 // Catch invalid latitude or longitude values.
-                Log.d("myTag", "This is invalid latitude or longitude");
+                Log.wtf("myTag", "This is invalid latitude or longitude");
             }
 
             // Handle case where no address was found.
             if (addresses == null || addresses.size()  == 0) {
                 if (errorMessage.isEmpty()) {
-                    Log.d("myTag", "pas trouvé l'adresse");
+                    Log.wtf("myTag", "pas trouvé l'adresse");
                 }
                //deliverResultToReceiver(Constants.FAILURE_RESULT, errorMessage);
             } else {
                 Address address  = addresses.get(0);
                 addressFragments = new ArrayList<String>();
+                strCp            = address.getPostalCode();
+                strVille         = address.getLocality();
 
-                // Fetch the address lines using getAddressLine,
-                // join them, and send them to the thread.
                 for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                     addressFragments.add(address.getAddressLine(i));
 
@@ -1156,14 +1196,8 @@ public class FormAlerte extends Activity {
                     if (i==0) {
                         strNumero = separated[0];
                         strRue    = address.getAddressLine(i).replace(separated[0], "");
-                    }else{
-                        strCp    = separated[0];
-                        strVille = address.getAddressLine(i).replace(separated[0], "");
                     }
-
-
                 }
-
             }
 
             return null;

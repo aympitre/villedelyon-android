@@ -1,5 +1,9 @@
 package air.com.c2is.villedelyon;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.ViewGroup;
 import java.net.URLDecoder;
 import org.apache.http.NameValuePair;
@@ -42,6 +46,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -51,7 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.Handler;
 
-public class SeDeplacer extends FragmentActivity {
+public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private DataBaseHelper myDbHelper;
@@ -69,6 +74,7 @@ public class SeDeplacer extends FragmentActivity {
     public ImageButton btPicto4;
     public RelativeLayout layMenuPicto;
     public LinearLayout layFondMenu;
+    MarkerOptions markerActu;
 
     public int flagPicto1;
     public int flagPicto2;
@@ -105,6 +111,18 @@ public class SeDeplacer extends FragmentActivity {
     public JSONArray contactsPmr     = null;
 
     public DialogLoading myDialLoading;
+    private static final int MY_LOCATION_REQUEST_CODE = 1;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == MY_LOCATION_REQUEST_CODE) {
+            if (permissions.length == 1 &&
+                    permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -375,6 +393,17 @@ public class SeDeplacer extends FragmentActivity {
 
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
         setUpMapIfNeeded();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        setUpMap();
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            public void onMapLoaded() {
+                zoomTheMap();
+            }
+        });
     }
 
     public void initBtMenu(){
@@ -751,7 +780,7 @@ public class SeDeplacer extends FragmentActivity {
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();
@@ -868,6 +897,7 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
                     markerOptions.title(c.getString(2));
                     mMap.addMarker(markerOptions);
+                    markerActu = markerOptions;
                 }
             }
         } catch (SQLException sqle) {
@@ -883,6 +913,7 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
                     markerOptions.title("Station Autolib");
                     mMap.addMarker(markerOptions);
+                    markerActu = markerOptions;
                 }
             }
         } catch (SQLException sqle) {
@@ -905,6 +936,7 @@ public class SeDeplacer extends FragmentActivity {
                         markerOptions.snippet(c.getString(2) + " " + c.getString(3));
 
                         mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
                 }
             } catch (SQLException sqle) {
@@ -914,21 +946,13 @@ public class SeDeplacer extends FragmentActivity {
     }
 
     public void zoomTheMap() {
-        Location location = mMap.getMyLocation();
-
-        if (location != null) {
-            LatLng myLocation = new LatLng(location.getLatitude(),
-                    location.getLongitude());
-
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
+        if (markerActu!=null) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerActu.getPosition(), 15));
         }
-
     }
 
     public void killPmr() {
         if (flagMap==3) {
-
-
 
         }
     }
@@ -960,6 +984,7 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.title("Station Velo'v");
                     markerOptions.snippet(nbeEmpl + "/" + (nbeEmpl + nbeEmplRestant) + " vélos disponibles");
                     mMap.addMarker(markerOptions);
+                    markerActu = markerOptions;
                 }
             }
         } catch (Exception e) {
@@ -987,8 +1012,8 @@ public class SeDeplacer extends FragmentActivity {
                     String s = new String(adresse.getBytes(), "UTF-8");
 
                     markerOptions.snippet(Config.formatCharFlux(s));
-
                     mMap.addMarker(markerOptions);
+                    markerActu = markerOptions;
                 }
             }
         } catch (Exception e) {
@@ -1046,6 +1071,7 @@ public class SeDeplacer extends FragmentActivity {
                         markerOptions.snippet(nbeEmpl + " emplacement(s)");
 
                         mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
 
                 }
@@ -1061,10 +1087,7 @@ public class SeDeplacer extends FragmentActivity {
                 for (int i = 0; i < contactsParking.length(); i++) {
 
                     JSONObject c = contactsParking.getJSONObject(i);
-
                     JSONObject o = c.getJSONObject("properties");
-
-                    Log.d("myTag", ">> : " + o);
 
                     String nom = o.getString("nom");
                     String etat = o.getString("etat");
@@ -1077,13 +1100,12 @@ public class SeDeplacer extends FragmentActivity {
 
                     markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
-                    Log.d("myTag", ">> : " + Config.formatCharFlux(nom));
                     markerOptions.title(Config.formatCharFlux(nom));
 
                     markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
 
                     mMap.addMarker(markerOptions);
-
+                    markerActu = markerOptions;
                 }
             } catch (Exception e) {
                 Log.d("myTag", "mon erreur : " + e.getMessage());
@@ -1111,6 +1133,7 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.snippet(nbeEmpl + " emplacement");
 
                     mMap.addMarker(markerOptions);
+                    markerActu = markerOptions;
                 }
 
             } catch (Exception e) {
@@ -1143,7 +1166,6 @@ public class SeDeplacer extends FragmentActivity {
                         int nbeEmpl = o.getInt("available_bikes");
                         int nbeEmplRestant = o.getInt("available_bike_stands");
 
-                        //   Log.d("myTag", "velo : " + nbeEmpl + "/" + (nbeEmpl+nbeEmplRestant) + " vélos disponibles");
 
                         MarkerOptions markerOptions = new MarkerOptions();
 
@@ -1154,7 +1176,7 @@ public class SeDeplacer extends FragmentActivity {
                         markerOptions.title("Station Velo'v");
                         markerOptions.snippet(nbeEmpl + "/" + (nbeEmpl + nbeEmplRestant) + " vélos disponibles");
                         mMap.addMarker(markerOptions);
-
+                        markerActu = markerOptions;
                     }
                 }
             } catch (JSONException e) {
@@ -1187,6 +1209,7 @@ public class SeDeplacer extends FragmentActivity {
                         markerOptions.snippet(new String(adresse.getBytes("ISO-8859-1")));
 
                         mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
                 }
             } catch (JSONException e) {
@@ -1196,7 +1219,6 @@ public class SeDeplacer extends FragmentActivity {
 
         } catch (Exception e) {
             Log.d("myTag", "mon Exception : " + e.getMessage());
-            //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -1212,6 +1234,7 @@ public class SeDeplacer extends FragmentActivity {
                     markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
                     markerOptions.title("Station Velov");
                     mMap.addMarker(markerOptions);
+                    markerActu = markerOptions;
                 }
             }
         } catch (SQLException sqle) {
@@ -1266,7 +1289,7 @@ public class SeDeplacer extends FragmentActivity {
                             markerOptions.snippet(nbeEmpl + " emplacement(s)");
 
                             mMap.addMarker(markerOptions);
-
+                            markerActu = markerOptions;
                         }
                     }
                 } catch (JSONException e) {
@@ -1306,6 +1329,7 @@ public class SeDeplacer extends FragmentActivity {
                             //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
 
                             mMap.addMarker(markerOptions);
+                            markerActu = markerOptions;
                         }
                     }
                 } catch (JSONException e) {
@@ -1343,6 +1367,7 @@ public class SeDeplacer extends FragmentActivity {
                             //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
 
                             mMap.addMarker(markerOptions);
+                            markerActu = markerOptions;
                         }
                     }
 
@@ -1374,6 +1399,7 @@ public class SeDeplacer extends FragmentActivity {
                         Log.d("myTag", "ligne");
                         markerOptions.snippet(c.getString(1));
                         mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
                 }
             } catch (SQLException sqle) {
@@ -1392,6 +1418,7 @@ public class SeDeplacer extends FragmentActivity {
                         markerOptions.title("Station de taxi");
 
                         mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
                 }
             } catch (SQLException sqle) {
@@ -1408,9 +1435,9 @@ public class SeDeplacer extends FragmentActivity {
                         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_tramway));
                         markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
                         markerOptions.title("Ligne " + c.getString(2));
-                        //Log.d("myTag", "tram");
                         markerOptions.snippet(c.getString(3));
                         mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
                 }
             } catch (SQLException sqle) {
@@ -1427,8 +1454,8 @@ public class SeDeplacer extends FragmentActivity {
                         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_train));
                         markerOptions.position(new LatLng(c.getFloat(0), c.getFloat(1)));
                         markerOptions.title(c.getString(2));
-                        Log.d("myTag", "gare");
                         mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
                 }
             } catch (SQLException sqle) {
@@ -1438,7 +1465,15 @@ public class SeDeplacer extends FragmentActivity {
     }
 
     private void setUpMap() {
-        mMap.setMyLocationEnabled(true);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            // Permission to access the location is missing.
+
+            PermissionUtils.requestPermission(this, MY_LOCATION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        }
 
         flagMap = 1;
 

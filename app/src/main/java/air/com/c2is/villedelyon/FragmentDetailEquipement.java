@@ -218,11 +218,9 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                             Config.resetVarNavigation();
 
                             if (Config.CODE_DE_MON_ACTIVITE == 1) {
-
                                 Config.sql_type = Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType1_1);
                             } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
                                 Config.sql_type = Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType3_1);
-                                Config.flagShowCarto = 1;
                             } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
                                 Config.sql_type = Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
                             }
@@ -382,7 +380,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();
@@ -504,6 +502,8 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
             myCarte.setVisibility    (View.VISIBLE);
         }
 
+        centerTheMap();
+        /*
         SupportMapFragment fragment2 = new SupportMapFragment() {
             @Override
             public void onActivityCreated(Bundle savedInstanceState) {
@@ -514,7 +514,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         };
 
         getSupportFragmentManager().beginTransaction().replace(R.id.map, fragment2).commit();
-
+        */
 
     }
 
@@ -597,7 +597,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
             try {
                 URL url;
 
-                url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=" + Config.VERSION_API + "&ids=" + Config.xml_id);
+                url = new URL(Config.urlDomaine+"equipements.php?version=" + Config.VERSION_API + "&ids=" + Config.xml_id);
 
                 URLConnection connection = url.openConnection();
 
@@ -812,8 +812,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                 } catch (Exception e) {
                 }
 
-                Log.d("myTag", "je suis dans le mauvais");
-
                 return null;
 
 
@@ -822,7 +820,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                 int flagTemp = 0;
                 idEquip      = 0;
 
-//                Log.d("myTag", "aymeric : " + Config.xml_id + "/" + Config.sql_type);
 
                 if (Config.xml_id.length() > 0) {
                     c = myDbHelper.loadEquipementFromXML(Config.xml_id);
@@ -883,7 +880,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                             try {
                                 Config.xml_id = c.getString(15);
 
-                                Log.d("myTag", "Config.xml_id : " + Config.xml_id);
 
                             } catch (Exception e) {
                             }

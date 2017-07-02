@@ -245,8 +245,7 @@ public class ResVie extends Activity {
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://prep.c2is.fr/appvilledelyon/current/equipements.php?version=5&type=label-lyon-ville-equitable-et-durable");
-//                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=2&type=label-lyon-ville-equitable-et-durable-vie-quotidienne");
+                    URL url = new URL(Config.urlDomaine+"equipements.php?version=5&type=label-lyon-ville-equitable-et-durable");
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());

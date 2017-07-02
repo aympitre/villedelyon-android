@@ -13,56 +13,7 @@
         android:background="@color/grisFond"
         android:gravity="top|center_horizontal">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/rouge"
-            android:gravity="top|center_horizontal">
 
-            <Button
-                android:id="@+id/bt_menu1"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/rouge"
-                android:background="@drawable/menu"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:text="@string/libHomeBt6"
-                android:textSize="14sp"
-                android:textAllCaps="true"/>
-
-            <Button
-                android:id="@+id/bt_menu2"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/rouge"
-                android:background="@drawable/menu"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:text="@string/libHomeBt7"
-                android:textSize="14sp"
-                android:textAllCaps="true"/>
-
-            <Button
-                android:id="@+id/bt_menu3"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/rouge"
-                android:background="@drawable/menu"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:text="@string/libHomeBt7"
-                android:textSize="14sp"
-                android:textAllCaps="true"/>
-
-        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"

@@ -163,7 +163,7 @@ public class FragmentCarte extends FragmentActivity {
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();

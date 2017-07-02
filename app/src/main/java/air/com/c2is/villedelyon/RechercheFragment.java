@@ -82,9 +82,6 @@ public class RechercheFragment extends Fragment {
 
         txtTitre          = (EditText) rootView.findViewById(R.id.txtTitre);
         myDate            = (DatePicker) rootView.findViewById(R.id.dpResult);
-        Button myMenu1    = (Button) rootView.findViewById(R.id.bt_menu1);
-        Button myMenu2    = (Button) rootView.findViewById(R.id.bt_menu2);
-        Button myMenu3    = (Button) rootView.findViewById(R.id.bt_menu3);
 
         myLayerTitre      = (LinearLayout) rootView.findViewById(R.id.titrePageRecherche);
         myLayerDatePicker = (LinearLayout) rootView.findViewById(R.id.layerDatePicker);
@@ -146,16 +143,6 @@ public class RechercheFragment extends Fragment {
         TextView titreFrom1 = (TextView) rootView.findViewById(R.id.titreFrom1);
         TextView titreFrom2 = (TextView) rootView.findViewById(R.id.titreFrom2);
 
-        myMenu1.setText(getResources().getString(R.string.libMenu5_1));
-        myMenu2.setText(getResources().getString(R.string.libMenu5_2));
-        myMenu3.setText(getResources().getString(R.string.libMenu5_3));
-
-        myMenu2.setTextColor(getResources().getColor(R.color.blanc));
-        myMenu2.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-
-        myMenu1.setTypeface(myTypeface);
-        myMenu2.setTypeface(myTypeface);
-        myMenu3.setTypeface(myTypeface);
 
         titreFrom1.setTypeface(myTypeface);
         titreFrom2.setTypeface(myTypeface);
@@ -186,31 +173,6 @@ public class RechercheFragment extends Fragment {
                 }
         );
 
-        // *** Bouton du menu
-        myMenu1.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.flagRetourRecherche  = 0;
-                        Config.myFragment.loadEvenement();
-                    }
-                }
-        );
-        myMenu2.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-
-                    }
-                }
-        );
-        myMenu3.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.MENU_ACTIVITE = 3;
-                        Config.flagRetourRecherche  = 0;
-                        Config.myFragment.loadFragment(getResources().getString(R.string.sqlIncontournable));
-                    }
-                }
-        );
 
         myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
         try {

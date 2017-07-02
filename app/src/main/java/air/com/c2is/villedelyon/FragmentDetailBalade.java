@@ -48,20 +48,6 @@ public class FragmentDetailBalade extends Fragment {
 
         Config.myDetailBalade = this;
 
-        Button myMenu1    = (Button) rootView.findViewById(R.id.bt_menu1);
-        Button myMenu2    = (Button) rootView.findViewById(R.id.bt_menu2);
-        Button myMenu3    = (Button) rootView.findViewById(R.id.bt_menu3);
-
-        myMenu1.setText(getResources().getString(R.string.libMenu3_1));
-        myMenu2.setText(getResources().getString(R.string.libMenu3_2));
-        myMenu3.setText(getResources().getString(R.string.libMenu3_3));
-        myMenu3.setTextColor(getResources().getColor(R.color.blanc));
-        myMenu3.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-
-        myMenu1.setTypeface(myTypeface);
-        myMenu2.setTypeface(myTypeface);
-        myMenu3.setTypeface(myTypeface);
-
         TextView myTitre    = (TextView) rootView.findViewById(R.id.titrebalade);
         myTitre.setTypeface(myTypeface);
         myTitre.setText(Config.formatLastWord(Config.myContentValue.get("titre").toString()));
@@ -96,32 +82,6 @@ public class FragmentDetailBalade extends Fragment {
         myTexte.setBackgroundColor(Color.TRANSPARENT);
 
         myTexte.loadDataWithBaseURL(null, Config.myContentValue.get("content").toString(), "text/html", "UTF-8", null);
-
-        // *** Bouton du menu
-        myMenu1.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.str_demarche     = "";
-                        Config.flagForceRetour  = 0;
-                        Config.MENU_ACTIVITE    = 1;
-                        Config.flagShowCarto    = 1;
-                        Config.fragToReload     = getResources().getString(R.string.sqlType3_1);
-                        Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_1));
-                    }
-                }
-        );
-        myMenu2.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.str_demarche     = "";
-                        Config.flagForceRetour  = 0;
-                        Config.MENU_ACTIVITE    = 2;
-                        Config.fragToReload     = getResources().getString(R.string.sqlType3_2);
-                        Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_2));
-                    }
-                }
-        );
-
 
         return rootView;
     }

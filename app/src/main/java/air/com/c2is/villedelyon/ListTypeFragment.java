@@ -28,6 +28,14 @@ import android.widget.TextView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -52,8 +60,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ListTypeFragment extends Fragment {
     protected DataBaseHelper    myDbHelper;
     public LinearLayout         myChargement;
-    public RelativeLayout       layBtCarto;
-    public ImageButton          btCarto;
     public TextView             myChargementText;
     public ListView             mylistview;
     public ArrayList<HashMap<String, Object>> listItems;
@@ -66,6 +72,7 @@ public class ListTypeFragment extends Fragment {
 
     public ListTypeFragment() {
     }
+
 
     public void setGoogleAnalytics() {
         analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
@@ -115,49 +122,12 @@ public class ListTypeFragment extends Fragment {
         View rootView       = inflater.inflate(R.layout.fragment_list_type, container, false);
         Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");
 
-        LinearLayout laySousMenu =  (LinearLayout) rootView.findViewById(R.id.laySousMenu);
-        if (Config.flagDirectDemarche==1) {
-            laySousMenu.setVisibility(View.GONE);
-        }else{
-            laySousMenu.setVisibility(View.VISIBLE);
-        }
-
         myChargement        =  (LinearLayout) rootView.findViewById(R.id.myChargement);
         myChargementText    =  (TextView) rootView.findViewById(R.id.myChargementText);
-        Button myMenu1      = (Button) rootView.findViewById(R.id.bt_menu1);
-        Button myMenu2      = (Button) rootView.findViewById(R.id.bt_menu2);
-        Button myMenu3      = (Button) rootView.findViewById(R.id.bt_menu3);
-
-        layBtCarto          =  (RelativeLayout) rootView.findViewById(R.id.layBtCarto);
-        btCarto             =  (ImageButton) rootView.findViewById(R.id.btCarto);
 
         LinearLayout layLyonDirect = (LinearLayout) rootView.findViewById(R.id.layLyonDirect);
 
-        if (Config.CODE_DE_MON_ACTIVITE==1) {
-            myMenu1.setText(getResources().getString(R.string.libMenu1_1));
-            myMenu2.setText(getResources().getString(R.string.libMenu1_2));
-            myMenu3.setText(getResources().getString(R.string.libMenu1_3));
-
-        }else if (Config.CODE_DE_MON_ACTIVITE==3) {
-            myMenu1.setText(getResources().getString(R.string.libMenu3_1));
-            myMenu2.setText(getResources().getString(R.string.libMenu3_2));
-            myMenu3.setText(getResources().getString(R.string.libMenu3_3));
-
-        }else if (Config.CODE_DE_MON_ACTIVITE==4) {
-            myMenu1.setText(getResources().getString(R.string.libMenu4_1));
-            myMenu2.setText(getResources().getString(R.string.libMenu4_2));
-            myMenu3.setText(getResources().getString(R.string.libMenu4_3));
-
-        }else if (Config.CODE_DE_MON_ACTIVITE==5) {
-            myMenu1.setText(getResources().getString(R.string.libMenu5_1));
-            myMenu2.setText(getResources().getString(R.string.libMenu5_2));
-            myMenu3.setText(getResources().getString(R.string.libMenu5_3));
-
-        }else if (Config.CODE_DE_MON_ACTIVITE==6) {
-            myMenu1.setText(getResources().getString(R.string.libMenu6_1));
-            myMenu2.setText(getResources().getString(R.string.libMenu6_2));
-            myMenu3.setText(getResources().getString(R.string.libMenu6_3));
-
+        if (Config.CODE_DE_MON_ACTIVITE==6) {
             if (Config.MENU_ACTIVITE==1) {
                 Button btLyonDirect = (Button) rootView.findViewById(R.id.btLyonDirect);
                 btLyonDirect.setTypeface(myTypeface);
@@ -174,122 +144,9 @@ public class ListTypeFragment extends Fragment {
             }
         }
 
-        if (Config.MENU_ACTIVITE==2) {
-            myMenu2.setTextColor(getResources().getColor(R.color.blanc));
-            myMenu2.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else if (Config.MENU_ACTIVITE==3) {
-            myMenu3.setTextColor(getResources().getColor(R.color.blanc));
-            myMenu3.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else{
-            myMenu1.setTextColor(getResources().getColor(R.color.blanc));
-            myMenu1.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }
-
         myChargementText.setTypeface(myTypeface);
-        myMenu1.setTypeface(myTypeface);
-        myMenu2.setTypeface(myTypeface);
-        myMenu3.setTypeface(myTypeface);
 
-        if (Config.flagShowCarto==1) {
-            showBtCarto();
-            Config.flagShowCarto = 0;
-        }else {
-            hideBtCarto();
-        }
 
-        btCarto.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.myFragment.loadCarto();
-                    }
-                }
-        );
-
-        // *** Bouton du menu
-        myMenu1.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=1) {
-                            myWebFetch.cancel(true);
-
-                            Config.resetVarNavigation();
-
-                            Config.MENU_ACTIVITE = 1;
-                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
-                                Config.fragToReload = getResources().getString(R.string.sqlType1_1);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_1));
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                                Config.fragToReload = getResources().getString(R.string.sqlType3_1);
-                                Config.flagShowCarto = 1;
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_1));
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
-                                Config.myFragment.loadEvenement();
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_1));
-                            }
-                            Config.resetFragment();
-                        }
-                    }
-                }
-        );
-        myMenu2.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=2) {
-                            myWebFetch.cancel(true);
-
-                            Config.resetVarNavigation();
-
-                            Config.MENU_ACTIVITE = 2;
-                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
-                                Config.fragToReload = getResources().getString(R.string.sqlType1_2);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_2));
-
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                                Config.fragToReload = getResources().getString(R.string.sqlType3_2);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_2));
-
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
-                                Config.myFragment.loadRechercheEvenement();
-
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_2);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_2));
-                            }
-                            Config.resetFragment();
-                        }
-                    }
-                }
-        );
-
-        myMenu3.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=3) {
-                            myWebFetch.cancel(true);
-                            Config.MENU_ACTIVITE = 3;
-
-                            Config.resetVarNavigation();
-
-                            if (Config.CODE_DE_MON_ACTIVITE == 1) {
-                                Config.fragToReload = getResources().getString(R.string.sqlType1_3);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_3));
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                                Config.fragToReload = getResources().getString(R.string.sqlBalade);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlBalade));
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
-                                Config.fragToReload = getResources().getString(R.string.sqlIncontournable);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlIncontournable));
-                            } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
-                                Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_3));
-                            }
-                            Config.resetFragment();
-                        }
-                    }
-                }
-        );
 
         mylistview = (ListView) rootView.findViewById(R.id.mylistview);
 
@@ -297,13 +154,13 @@ public class ListTypeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
+
                 if (flagTypeToEquip==1) {
-                    Config.flagShowCarto = 1;
                     Config.sql_sous_type = listItems.get(position).get("slug").toString();
                     Config.myFragment.loadFragment(listItems.get(position).get("slug").toString());
+                    Config.myFragment.setModeListe(listItems.get(position).get("mode_liste").toString());
 
                     Config.flagForceRetour      = 1;
-
 
                     if (Config.flagBisRetour==1) {
                         Config.fragToReload = getResources().getString(R.string.sqlType1_2);
@@ -394,9 +251,7 @@ public class ListTypeFragment extends Fragment {
         myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
         try {
             myDbHelper.openDataBase();
-            // Log.d("myTag", "ouverture bdd ok");
         }catch(SQLException sqle){
-            // Log.d("myTag", "ouverture bdd KO");
             throw sqle;
         }
 
@@ -404,6 +259,7 @@ public class ListTypeFragment extends Fragment {
 
         if (Config.flagDirectDemarche!=1) {
             myWebFetch = new myAsyncTask2();
+            Config.myWebFetch = myWebFetch;
             myWebFetch.execute();
         }
 
@@ -411,10 +267,10 @@ public class ListTypeFragment extends Fragment {
     }
 
     public void showBtCarto() {
-        layBtCarto.setVisibility(View.VISIBLE);
+        Config.myFragment.showBtCarto(0);
     }
     public void hideBtCarto() {
-        layBtCarto.setVisibility(View.GONE);
+        Config.myFragment.hideBtCarto();
     }
 
     public void showNoResult() {
@@ -523,8 +379,13 @@ public class ListTypeFragment extends Fragment {
         myAsyncTask2()    {
         }
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Void result)
+        {
             super.onPostExecute(result);
+
+            Log.d("myTag", "onPostExecute listtypefrag");
+
+            Config.myFragment.majEtatBtCarto();
 
             mylistview.setAdapter(null);
             mylistview.setAdapter(mSchedule);
@@ -541,6 +402,7 @@ public class ListTypeFragment extends Fragment {
                                 Config.sql_sous_type = Config.wait_sous_type;
                                 Config.myFragment.loadFragment(Config.sql_sous_type);
                                 Config.resetFragment();
+                                Log.d("myTag", "je suis dans le reloader");
                             }
                         }
                     }
@@ -549,6 +411,9 @@ public class ListTypeFragment extends Fragment {
 
                 } else {
                     hideChargement();
+                    if (Config.sql_type.equals("lieu-frais")) {
+                        Config.myFragment.loadCarto();
+                    }
                 }
 
                 resetRechercheMarche();
@@ -560,7 +425,7 @@ public class ListTypeFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-
+            Log.d("myTag", "onPreExecute");
             super.onPreExecute();
             flag    = 0;
             kill3G  = 0;
@@ -570,6 +435,9 @@ public class ListTypeFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             listItems = new ArrayList<HashMap<String, Object>>();
+
+            Log.d("myTag", "doInBackground");
+
 
             try {
                 HashMap<String, Object> item;
@@ -586,12 +454,17 @@ public class ListTypeFragment extends Fragment {
                     Config.wait_sous_type = Config.sql_sous_type;
                 }
 
+                Log.d("myTag", "code type : " + Config.CODE_DE_MON_ACTIVITE);
+
                 // >> numéro d'urgence
                 if ((Config.CODE_DE_MON_ACTIVITE==1)&&(Config.MENU_ACTIVITE==1)) {
                     c           = myDbHelper.loadUrgence();
                     flagUrgence = 1;
 
                 }else {
+
+                    //if ((Config.CODE_DE_MON_ACTIVITE==5)&&(Config.MENU_ACTIVITE==1)) {      // EVTS
+
                     if (Config.sql_type.equals(getResources().getString(R.string.sqlBalade))) {
                         flagBalade = 1;
                         c = myDbHelper.loadBalade();
@@ -606,9 +479,6 @@ public class ListTypeFragment extends Fragment {
 
                     }else if (Config.sql_sous_type.length()>0) {
 
-
-                        Log.d("myTag", "je rentre dans le sous type");
-
                         flagEq = 1;
                         c = myDbHelper.loadEquipementFromType(Config.sql_sous_type);
                         Config.sql_sous_type = "";
@@ -618,9 +488,9 @@ public class ListTypeFragment extends Fragment {
                         StrictMode.setThreadPolicy(policy);
 
                         try {
-//                            String str_url = "http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/equipements.php?version="+Config.VERSION_API+"&type="+Config.sql_type;
+                            String str_url = Config.urlDomaine+"equipements.php?version="+Config.VERSION_API+"&type="+Config.sql_type;
 
-                            String str_url = "http://appvilledelyon.c2is.fr/equipements.php?version="+Config.VERSION_API+"&type="+Config.sql_type;
+                            Log.d("myTag", "je rentre dans le sous type : " + str_url);
 
                             URL url = new URL(str_url);
                             URLConnection connection = url.openConnection();
@@ -860,23 +730,25 @@ public class ListTypeFragment extends Fragment {
                                     }
 
                                 } else if (flagInc == 1) {
-                                    item.put("titre", c.getString(0));
-                                    item.put("visuel", c.getString(1));
-                                    item.put("description", c.getString(3));
-                                    item.put("tetiaire", c.getString(7));
-                                    item.put("tetiaire_hd", c.getString(8));
-                                    item.put("accroche", c.getString(2));
+                                    item.put("titre"        , c.getString(0));
+                                    item.put("visuel"       , c.getString(1));
+                                    item.put("description"  , c.getString(3));
+                                    item.put("tetiaire"     , c.getString(7));
+                                    item.put("tetiaire_hd"  , c.getString(8));
+                                    item.put("accroche"     , c.getString(2));
                                     item.put("type_principal", c.getString(9));
 
                                 } else {
-                                    item.put("libelle", c.getString(0));
-                                    item.put("slug", c.getString(1));
+                                    item.put("libelle"      , c.getString(0));
+                                    item.put("slug"         , c.getString(1));
+                                    item.put("mode_liste"   , c.getInt(2));
+
+                                    Log.d("myTag", "mode_liste :" + c.getInt(2));
                                 }
 
                                 if (flagKo == 0) {
                                     listItems.add(item);
                                 }
-
                             }
                         }
                     } catch (SQLException sqle) {
@@ -940,6 +812,8 @@ public class ListTypeFragment extends Fragment {
             }
 
             resetRechercheMarche();
+
+
             return null;
         }
     }

@@ -43,7 +43,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
             Config.flag_is_playing = 1;
 
-            SharedPreferences sharedPref  = context.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+            SharedPreferences sharedPref  = context.getSharedPreferences("vdl", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("alert_vdl", "aymeric");
             editor.commit();
@@ -104,7 +104,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
     public void relanceCompteur(Context context) {
         Config.flagRelanceCompteur = 1;
 
-        SharedPreferences sharedPref = context.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = context.getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SetAlarmRelance(context);
     }
 
@@ -155,7 +155,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
         am.cancel(pi);
 
-        SharedPreferences sharedPref = context.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = context.getSharedPreferences("vdl", Context.MODE_PRIVATE);
 
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + Config.reveilDiff, pi);
 

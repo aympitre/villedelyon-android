@@ -168,7 +168,7 @@ public class MainActivity extends Activity {
                     .show();
 
 
-            SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+            SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("alert_vdl", "");
             editor.commit();
@@ -303,6 +303,9 @@ public class MainActivity extends Activity {
         Config.myHome = this;
         setup();
 
+
+        Log.d("myTag", "depart");
+
         myDbHelper = new DataBaseHelper(this.getBaseContext());
 
         try {
@@ -328,7 +331,7 @@ public class MainActivity extends Activity {
 
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
 
-        sharedPref             = this.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        sharedPref             = this.getSharedPreferences("vdl", Context.MODE_PRIVATE);
         Config.flag_tri_geoloc = sharedPref.getInt("flag_geoloc", 1);
 
         resetRetour();
@@ -365,7 +368,7 @@ public class MainActivity extends Activity {
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();
@@ -373,33 +376,22 @@ public class MainActivity extends Activity {
 
     public void checkMajBdd() {
         final SharedPreferences prefs = getSharedPreferences(
-                MainActivity.class.getSimpleName(), Context.MODE_WORLD_WRITEABLE);
+                MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
         String tempo = prefs.getString("time_maj_vdl", "");
 
         Calendar actu   = Calendar.getInstance();
         long actu_long  = actu.getTimeInMillis();
         String str_temp = "" + actu_long;
 
-        if (tempo.isEmpty()) {
-            goMajDonnee(str_temp, prefs);
-
-        }else{
-            /*
-            long time = Long.valueOf(tempo).longValue() ;
-
-            int semaine = (7*24*60*60*1000);
-            if ((actu_long - time)>semaine) {
-            */
-                goMajDonnee(str_temp, prefs);
-            /*}else{
-                hideChargement();
-            }*/
-        }
+        goMajDonnee(str_temp, prefs);
 
         hideChargement();
     }
 
     public void goMajDonnee(String p_time, SharedPreferences p_pref) {
+
+        Log.d("myTag", "goMajDonnee");
+
         SharedPreferences.Editor editor = p_pref.edit();
         editor.putString("time_maj_vdl", p_time);
         editor.commit();
@@ -496,7 +488,7 @@ public class MainActivity extends Activity {
 
         notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND;
 
-        notification.setLatestEventInfo(this, "Ville de Lyon", "Réveil", contentIntent);
+        //notification.setLatestEventInfo(this, "Ville de Lyon", "Réveil", contentIntent);
         //10 is a random number I chose to act as the id for this notification
         notification.number += 1;
         notificationManager.notify(10, notification);
@@ -564,6 +556,7 @@ public class MainActivity extends Activity {
             Config.flagForceRetour      = 0;
             Config.MENU_ACTIVITE        = 1;
             Config.CODE_DE_MON_ACTIVITE = 3;
+
             Intent intent = new Intent(MainActivity.this, ListType.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivityForResult(intent, 0);
@@ -734,11 +727,11 @@ public class MainActivity extends Activity {
                 // *** Les sous types
                 if (this.flag==2) {
                     try {
-
                         myDbHelper.deleteSousType();
 
                         String tmp_type = getResources().getString(R.string.sqlType1_2);
-                        URL url = new URL("http://appvilledelyon.c2is.fr/soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine+"soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
+
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -757,6 +750,8 @@ public class MainActivity extends Activity {
                                     myValue.put("slug", listNode.item(j).getTextContent());
                                 }else if(listNode.item(j).getNodeName().equals("name")){
                                     myValue.put("libelle", listNode.item(j).getTextContent());
+                                }else if(listNode.item(j).getNodeName().equals("mode_liste")){
+                                    myValue.put("mode_liste", listNode.item(j).getTextContent());
                                 }
                             }
                             myValue.put("ordre",i);
@@ -776,7 +771,7 @@ public class MainActivity extends Activity {
                 }else if (this.flag==3) {
                     try {
                         String tmp_type = getResources().getString(R.string.sqlType1_3);
-                        URL url = new URL("http://appvilledelyon.c2is.fr/soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine+"soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -795,6 +790,8 @@ public class MainActivity extends Activity {
                                     myValue.put("slug", listNode.item(j).getTextContent());
                                 }else if(listNode.item(j).getNodeName().equals("name")){
                                     myValue.put("libelle", listNode.item(j).getTextContent());
+                                }else if(listNode.item(j).getNodeName().equals("mode_liste")){
+                                    myValue.put("mode_liste", listNode.item(j).getTextContent());
                                 }
                             }
                             myValue.put("ordre",i);
@@ -815,11 +812,7 @@ public class MainActivity extends Activity {
                 }else if (this.flag==4) {
 
                     try {
-                        URL url = new URL("http://appvilledelyon.c2is.fr/balades.php?version="+Config.VERSION_API);
-
-                        if (Config.flagActivePreprod==1) {
-                            url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/balades.php?version="+Config.VERSION_API);
-                        }
+                        URL url = new URL(Config.urlDomaine+"balades.php?version="+Config.VERSION_API);
 
                         URLConnection connection = url.openConnection();
 
@@ -872,7 +865,7 @@ public class MainActivity extends Activity {
                     // les urgences
                 }else if (this.flag==77) {
                     try {
-                        URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?type=urgence&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine+"equipements.php?type=urgence&version="+Config.VERSION_API);
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -916,7 +909,7 @@ public class MainActivity extends Activity {
 
                     try {
 
-                        URL url = new URL("http://appvilledelyon.c2is.fr/evenements.php?inc=1&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine+"evenements.php?inc=1&version="+Config.VERSION_API);
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -979,9 +972,7 @@ public class MainActivity extends Activity {
                     try {
                         String tmp_type = getResources().getString(R.string.sqlType3_2);
 
-
-//                        URL url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current//soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
-                        URL url = new URL("http://appvilledelyon.c2is.fr/soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine+"soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -1021,9 +1012,7 @@ public class MainActivity extends Activity {
                     try {
                         String str_type = getResources().getString(R.string.sqlType3_1);
 
-//                        URL url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/equipements.php?type="+str_type+"&version="+Config.VERSION_API);
-
-                        URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?type="+str_type+"&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine+"equipements.php?type="+str_type+"&version="+Config.VERSION_API);
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -1109,9 +1098,7 @@ public class MainActivity extends Activity {
 
                                 try {
 
-//                                    URL url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/equipements.php?type="+str_type+"&version="+Config.VERSION_API);
-
-                                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?type="+str_type+"&version="+Config.VERSION_API);
+                                    URL url = new URL(Config.urlDomaine+"equipements.php?type="+str_type+"&version="+Config.VERSION_API);
                                     URLConnection connection = url.openConnection();
 
                                     Document doc = parseXML(connection.getInputStream());
@@ -1195,8 +1182,7 @@ public class MainActivity extends Activity {
 
                         try {
 
-                            URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?type=" + str_type + "&version="+Config.VERSION_API);
-                            //URL url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/equipements.php?type=" + str_type + "&version="+Config.VERSION_API);
+                            URL url = new URL(Config.urlDomaine+"equipements.php?type=" + str_type + "&version="+Config.VERSION_API);
                             URLConnection connection = url.openConnection();
 
                             Document doc = parseXML(connection.getInputStream());
@@ -1307,7 +1293,7 @@ public class MainActivity extends Activity {
                     .show();
 
 
-            SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+            SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("alert_vdl", "");
             editor.commit();
@@ -1340,7 +1326,7 @@ public class MainActivity extends Activity {
                         .show();
 
 
-                SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+                SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("alert_vdl", "");
                 editor.commit();

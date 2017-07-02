@@ -139,9 +139,7 @@ public class SplashScreen extends Activity {
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://appvilledelyon.c2is.fr/splashscreen.php");
-
-//                    URL url = new URL("http://prep.c2is.fr/appvilledelyon/current/splashscreen.php");
+                    URL url = new URL(Config.urlDomaine+"splashscreen.php");
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());

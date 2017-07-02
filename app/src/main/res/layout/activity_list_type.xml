@@ -61,12 +61,100 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:id="@+id/laySousMenu"
+            android:layout_height="wrap_content"
+            android:background="@color/blanc"
+            android:gravity="top|center_horizontal">
+
+            <Button
+                android:id="@+id/bt_menu1"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt6"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+            <Button
+                android:id="@+id/bt_menu2"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt7"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+            <Button
+                android:id="@+id/bt_menu3"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/rouge"
+                android:background="@drawable/menu"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/libHomeBt7"
+                android:textSize="12sp"
+                android:textAllCaps="true"/>
+
+        </LinearLayout>
+
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/fragment"
-            android:name="air.com.c2is.villedelyon.ListTypeFragment"
-            tools:layout="@layout/fragment_list_type"
+            android:name="air.com.c2is.villedelyon.FragmentVide"
+            tools:layout="@layout/fragment_vide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/layCarto"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/map"
+                tools:context="air.com.c2is.villedelyon.ListType"
+                android:name="com.google.android.gms.maps.SupportMapFragment" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layBtCarto"
+            android:layout_marginTop="-78dp"
+            android:gravity="right"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/btCarto"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:background="@color/transparent"
+                android:src="@drawable/picto_liste"/>
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/btListe"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:background="@color/transparent"
+                android:src="@drawable/picto_retour_liste"/>
+        </RelativeLayout>
 
     </LinearLayout>
 

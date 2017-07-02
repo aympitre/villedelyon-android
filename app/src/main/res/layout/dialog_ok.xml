@@ -18,25 +18,33 @@
             android:id="@+id/myLay"
             android:orientation="vertical">
 
-            <ImageButton
-                android:layout_gravity="right"
-                android:id="@+id/btFermerOk"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@drawable/bt_femer"
-                android:layout_marginBottom="-10dp"/>
-
-            <TextView
-                android:id="@+id/titreConfOk"
-                android:textColor="@color/noir"
-                android:text="@string/libFormAlerteTitreOk"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingLeft="15dp"
-                android:textSize="20sp"
-                android:textAllCaps="true"/>
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/titreConfOk"
+                    android:textColor="@color/noir"
+                    android:text="@string/libFormAlerteTitreOk"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:textSize="20sp"
+                    android:textAllCaps="true"/>
+                <RelativeLayout
+                    android:layout_marginTop="-60dp"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:id="@+id/btFermerOk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:src="@drawable/bt_femer" />
+                </RelativeLayout>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/texteConfOk"

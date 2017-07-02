@@ -35,13 +35,13 @@ public class Config {
 	public static favoris 		myFavoris;
 	public static Parametre 	myParam;
 	public static String tabImage[];
-	public static String sql_type;
-	public static String sql_sous_type = "";
+	public static String sql_type		= "";
+	public static String sql_sous_type 	= "";
 	public static String wait_sous_type = "";
-	public static String xml_id = "";
+	public static String xml_id 		= "";
 	public static int flagRetourRecherche = 0;
 	public static int flagFragment 		= 0;
-	public static int flagShowCarto 	= 0;
+	//public static int flagShowCarto 	= 0;
 	public static int flagDirectMarche 	= 0;
 	public static int flagDirectDemarche= 0;
 	public static int flagDirectSavoir 	= 0;
@@ -86,11 +86,15 @@ public class Config {
 	public static FragmentDetailBalade 			myDetailBalade;
 
 	public static String fragToReload 	= "";
-	public static ArrayList<HashMap<String, Object>> pointCarto;
+	public static ArrayList<HashMap<String, Object>> pointCarto = new ArrayList<HashMap<String, Object>>();
 
 	public static HashMap<String, Object> myContentValue;
 
 	public static String urlMeteo = "http://www.meteorologic.net/webmaster/xml/xml_file_27595.xml";
+
+	public static String urlDomaine = "http://appvilledelyon.c2is.fr/";
+	//public static String urlDomaine	   = "http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/";
+	public static String urlDomaineEvt = "http://appvilledelyon.c2is.fr/";
 
 	public static  int flagOffReveil		= 0;
 	public static  int flagFromRecherche	= 0;
@@ -136,6 +140,7 @@ public class Config {
 
 	public static ContentValues myContentEquip;
 	public static HashMap<String, Object> myCourant;
+	public static ListTypeFragment.myAsyncTask2 myWebFetch;
 
 	public static void resetFragment() {
 		Config.flagFragment = 0;

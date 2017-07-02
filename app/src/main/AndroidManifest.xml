@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="3"
-    android:versionName="2.5"
+    android:versionCode="4"
+    android:versionName="2.6"
     package="air.com.c2is.villedelyon" >
 
-    <permission
-        android:name="my.package.name.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature"/>
-
-    <uses-permission android:name="my.package.name.permission.MAPS_RECEIVE"/>
+    <permission android:name="android.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
+    <permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -17,14 +16,12 @@
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
-    <uses-feature android:name="android.hardware.telephony" android:required="false"></uses-feature>
-
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+    <uses-permission android:name="my.package.name.permission.MAPS_RECEIVE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="air.com.c2is.villedelyon.permission.C2D_MESSAGE" />
@@ -74,6 +71,7 @@
             android:label="@string/title_activity_list_type"
             android:screenOrientation="portrait">
         </activity>
+
         <activity
             android:name="air.com.c2is.villedelyon.FormAlerte"
             android:label="@string/title_activity_form_alerte"
@@ -157,9 +155,10 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDOz1UxQBvr8HucHkFjAZHbQ-QucYuXkv8" />
 -->
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDOz1UxQBvr8HucHkFjAZHbQ-QucYuXkv8" />
+            android:value="@string/google_maps_key" />
 
         <activity
             android:name="air.com.c2is.villedelyon.SeDeplacer"

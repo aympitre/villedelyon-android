@@ -247,7 +247,7 @@ public class ResMarche extends Activity {
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=2&type=marches");
+                    URL url = new URL(Config.urlDomaine+"equipements.php?version=2&type=marches");
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());

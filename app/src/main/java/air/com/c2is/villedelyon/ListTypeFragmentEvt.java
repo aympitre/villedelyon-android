@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,19 +40,19 @@ import javax.xml.parsers.DocumentBuilderFactory;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ListTypeFragmentEvt extends ListTypeFragment {
+public class ListTypeFragmentEvt extends Fragment {
     private DataBaseHelper myDbHelper;
     public LinearLayout     myChargement;
     public LinearLayout     layBtAvant;
     public LinearLayout     layBtSuite;
     public TextView         myChargementText;
     public ListView         mylistview;
-    public RelativeLayout   layBtCarto;
     public ArrayList<HashMap<String, Object>> listItems;
     public int flagTypeToEquip;
     public int flagDirectEquipement;
     public int debutLimit;
-    public SimpleAdapter mSchedule;
+    public SimpleAdapter mSchedule3;
+    public myAsyncTask3 myWebFetch3;
 
     public ListTypeFragmentEvt() {
     }
@@ -94,57 +95,7 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
 
         myChargement      =  (LinearLayout) rootView.findViewById(R.id.myChargement);
         myChargementText  =  (TextView) rootView.findViewById(R.id.myChargementText);
-        Button myMenu1    = (Button) rootView.findViewById(R.id.bt_menu1);
-        Button myMenu2    = (Button) rootView.findViewById(R.id.bt_menu2);
-        Button myMenu3    = (Button) rootView.findViewById(R.id.bt_menu3);
-
-        layBtCarto        =  (RelativeLayout) rootView.findViewById(R.id.layBtCarto);
-        layBtCarto.setVisibility(View.GONE);
-
-        myMenu1.setText(getResources().getString(R.string.libMenu5_1));
-        myMenu2.setText(getResources().getString(R.string.libMenu5_2));
-        myMenu3.setText(getResources().getString(R.string.libMenu5_3));
-
-        if (checkModeRecherche()==1) {
-            myMenu2.setTextColor(getResources().getColor(R.color.blanc));
-            myMenu2.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else{
-            myMenu1.setTextColor(getResources().getColor(R.color.blanc));
-            myMenu1.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }
-
         myChargementText.setTypeface(myTypeface);
-        myMenu1.setTypeface(myTypeface);
-        myMenu2.setTypeface(myTypeface);
-        myMenu3.setTypeface(myTypeface);
-
-        showBtSuite();
-
-        // *** Bouton du menu
-        myMenu1.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.MENU_ACTIVITE = 1;
-                        Config.myFragment.loadEvenement();
-                    }
-                }
-        );
-        myMenu2.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.MENU_ACTIVITE = 2;
-                        Config.myFragment.loadRechercheEvenement();
-                    }
-                }
-        );
-        myMenu3.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Config.MENU_ACTIVITE = 3;
-                        Config.myFragment.loadFragment(getResources().getString(R.string.sqlIncontournable));
-                    }
-                }
-        );
 
         mylistview = (ListView) rootView.findViewById(R.id.mylistview);
 
@@ -154,7 +105,7 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
                         && (mylistview.getLastVisiblePosition() - mylistview.getHeaderViewsCount() -
-                        mylistview.getFooterViewsCount()) >= (mSchedule.getCount() - 1)) {
+                        mylistview.getFooterViewsCount()) >= (mSchedule3.getCount() - 1)) {
 
                     if (Config.flagFromRecherche==0) {
                         showBtSuite();
@@ -192,11 +143,12 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
         listItems = new ArrayList<HashMap<String, Object>>();
 
         // lancement du chargement HTTP
-        myAsyncTask2 myWebFetch = new myAsyncTask2();
-        myWebFetch.execute();
+        myWebFetch3 = new myAsyncTask3();
+        myWebFetch3.execute();
 
         return rootView;
     }
+
 
     public void showBtSuite() {
         layBtSuite.setVisibility(View.VISIBLE);
@@ -255,8 +207,7 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
 
         debutLimit = debutLimit - 1;
 
-        myAsyncTask2 myWebFetch = new myAsyncTask2();
-        myWebFetch.execute();
+        myWebFetch3.execute();
     }
 
     public void loadNextEvent() {
@@ -269,13 +220,12 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
 
         debutLimit = debutLimit + 1;
 
-        myAsyncTask2 myWebFetch = new myAsyncTask2();
-        myWebFetch.execute();
+        myWebFetch3.execute();
     }
 
-    class myAsyncTask2 extends AsyncTask<Void, Void, Void> {
+    class myAsyncTask3 extends AsyncTask<Void, Void, Void> {
 
-        myAsyncTask2()    {
+        myAsyncTask3()    {
 
         }
 
@@ -283,41 +233,44 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            mSchedule = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itemevt,
-                    new String[]{"titre",  "accroche", "type_principal", "visuel"},
-                    new int[]{R.id.titreEvtListe,  R.id.accroche, R.id.type, R.id.imgactualite});
-
-            mSchedule.setViewBinder(new MyViewBinderActu());
+            mylistview.setAdapter(null);
 
             if (listItems.size()==0) {
                 myChargementText.setText(R.string.libAucun);
             }else {
-                mylistview.setAdapter(mSchedule);
+                mylistview.setAdapter(mSchedule3);
                 myChargement.setVisibility(View.GONE);
                 mylistview.setVisibility(View.VISIBLE);
             }
+
+            myWebFetch3.cancel(true);
+            Log.d("myTag", "onPostExecute evt");
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Log.d("myTag", "onPreExecute evt");
+
         }
 
         @Override
         protected Void doInBackground(Void... params) {
+            Log.d("myTag", "doInBackground evt");
             listItems = new ArrayList<HashMap<String, Object>>();
+
             try {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    String str_url = "http://appvilledelyon.c2is.fr/evenements.php?version="+Config.VERSION_API+"&limit="+Config.LIMIT_EVENT;
+                    String str_url = Config.urlDomaineEvt+"evenements.php?version="+Config.VERSION_API+"&limit="+Config.LIMIT_EVENT;
                     if (debutLimit!=0) {
-                        str_url = "http://appvilledelyon.c2is.fr/evenements.php?version="+Config.VERSION_API+"&limit="+Config.LIMIT_EVENT+"&page="+debutLimit;
+                        str_url = Config.urlDomaineEvt+"evenements.php?version="+Config.VERSION_API+"&limit="+Config.LIMIT_EVENT+"&page="+debutLimit;
                     }
 
                     if (Config.flagRechercheEvt==1) {
-                        str_url = "http://appvilledelyon.c2is.fr/evenements.php?version="+Config.VERSION_API;
+                        str_url = Config.urlDomaineEvt+"evenements.php?version="+Config.VERSION_API;
 
                         if (Config.str_titre_evt.length()>0) {
                             str_url = str_url + "&title=" + Config.str_titre_evt;
@@ -403,13 +356,21 @@ public class ListTypeFragmentEvt extends ListTypeFragment {
                 Config.str_titre_evt = "";
                 Config.date_evt      = null;
 
-                return null;
 
             } catch (Exception e) {
                 //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
             }
 
+            Log.d("myTag", "doInBackground evt termine");
+
+            mSchedule3 = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itemevt,
+                    new String[]{"titre",  "accroche", "type_principal", "visuel"},
+                    new int[]{R.id.titreEvtListe,  R.id.accroche, R.id.type, R.id.imgactualite});
+
+            mSchedule3.setViewBinder(new MyViewBinderActu());
+
             return null;
+
         }
     }
 }

@@ -48,6 +48,8 @@ public class MyViewBinderActu implements ViewBinder {
 			ImageView iv  = (ImageView) view;
 			String urlImg = (String) data;
 
+			Log.d("myTag", "je loadl image : " + urlImg);
+
 			BitmapDownloaderTask task = new BitmapDownloaderTask(iv);
 			task.execute(urlImg);
 			iv.setTag(urlImg);

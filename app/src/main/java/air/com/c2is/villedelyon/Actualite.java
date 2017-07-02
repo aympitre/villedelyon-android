@@ -203,7 +203,7 @@ public class Actualite extends Activity {
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();
@@ -267,7 +267,7 @@ public class Actualite extends Activity {
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://appvilledelyon.c2is.fr/actualites.php?limit="+Config.LIMIT_ACTU+"&version="+Config.VERSION_API);
+                    URL url = new URL(Config.urlDomaine+"actualites.php?limit="+Config.LIMIT_ACTU+"&version="+Config.VERSION_API);
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());
@@ -321,7 +321,7 @@ public class Actualite extends Activity {
 
 
             try {
-                URL url = new URL("http://appvilledelyon.c2is.fr/bannieres.php");
+                URL url = new URL(Config.urlDomaine+"bannieres.php");
                 URLConnection connection = url.openConnection();
 
                 Document doc = parseXML(connection.getInputStream());

@@ -206,7 +206,7 @@ public class LeSaviezVous extends Activity {
                 StrictMode.setThreadPolicy(policy);
 
                 try {
-                    URL url = new URL("http://appvilledelyon.c2is.fr/savoir.php?limit=-1&version="+Config.VERSION_API);
+                    URL url = new URL(Config.urlDomaine+"savoir.php?limit=-1&version="+Config.VERSION_API);
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());
@@ -280,7 +280,7 @@ public class LeSaviezVous extends Activity {
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();

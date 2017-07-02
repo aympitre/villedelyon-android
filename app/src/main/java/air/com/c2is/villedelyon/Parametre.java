@@ -81,7 +81,7 @@ public class Parametre extends Activity {
                     }
                 }
         );
-        sharedPref = this.getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        sharedPref = this.getSharedPreferences("vdl", Context.MODE_PRIVATE);
 
         int flag_geoloc = sharedPref.getInt("flag_geoloc", 1);
 
@@ -150,7 +150,7 @@ public class Parametre extends Activity {
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();

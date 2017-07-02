@@ -88,7 +88,7 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
                 .show();
 
 
-        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("alert_vdl", "");
         editor.commit();
@@ -426,7 +426,7 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
                 StrictMode.setThreadPolicy(policy);
 
                     try {
-                        URL url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=3&ids="+Config.xml_id);
+                        URL url = new URL(Config.urlDomaine+"equipements.php?version=3&ids="+Config.xml_id);
 
                         //Log.d("myTag", "http://appvilledelyon.c2is.fr/equipements.php?version=3&ids="+Config.xml_id);
 

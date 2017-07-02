@@ -82,20 +82,6 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
 
         myChargement      = (LinearLayout) rootView.findViewById(R.id.myChargement);
         myChargementText  = (TextView) rootView.findViewById(R.id.myChargementText);
-        Button myMenu1    = (Button) rootView.findViewById(R.id.bt_menu1);
-        Button myMenu2    = (Button) rootView.findViewById(R.id.bt_menu2);
-        Button myMenu3    = (Button) rootView.findViewById(R.id.bt_menu3);
-
-        layBtCarto        =  (RelativeLayout) rootView.findViewById(R.id.layBtCarto);
-        btCarto           =  (ImageButton) rootView.findViewById(R.id.btCarto);
-
-        LinearLayout laySousMenu =  (LinearLayout) rootView.findViewById(R.id.laySousMenu);
-        if (Config.flagDirectDemarche==1) {
-            laySousMenu.setVisibility(View.GONE);
-        }else{
-            laySousMenu.setVisibility(View.VISIBLE);
-        }
-
 
         LinearLayout layLyonDirect = (LinearLayout) rootView.findViewById(R.id.layLyonDirect);
         LinearLayout layLyonAlerte = (LinearLayout) rootView.findViewById(R.id.layLyonAlerte);
@@ -109,63 +95,8 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
         Button btLyonTelephone  = (Button) rootView.findViewById(R.id.btLyonTelephone);
         Button btLyonMail       = (Button) rootView.findViewById(R.id.btLyonMail);
 
-        myMenu1.setText(getResources().getString(R.string.libMenu6_1));
-        myMenu2.setText(getResources().getString(R.string.libMenu6_2));
-        myMenu3.setText(getResources().getString(R.string.libMenu6_3));
-
-        if (Config.MENU_ACTIVITE==2) {
-            myMenu2.setTextColor(getResources().getColor(R.color.blanc));
-            myMenu2.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else if (Config.MENU_ACTIVITE==3) {
-            myMenu3.setTextColor(getResources().getColor(R.color.blanc));
-            myMenu3.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else{
-            myMenu1.setTextColor(getResources().getColor(R.color.blanc));
-            myMenu1.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }
-
         myChargementText.setTypeface(myTypeface);
-        myMenu1.setTypeface(myTypeface);
-        myMenu2.setTypeface(myTypeface);
-        myMenu3.setTypeface(myTypeface);
 
-        hideBtCarto();
-
-        // *** Bouton du menu
-        myMenu1.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        myWebFetch.cancel(true);
-                        Config.MENU_ACTIVITE = 1;
-                        Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
-                        Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_1));
-                        Config.resetFragment();
-                    }
-                }
-        );
-        myMenu2.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        myWebFetch.cancel(true);
-                        Config.MENU_ACTIVITE = 2;
-                        Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_2);
-                        Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_2));
-                        Config.resetFragment();
-                    }
-                }
-        );
-
-        myMenu3.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        myWebFetch.cancel(true);
-                        Config.MENU_ACTIVITE = 3;
-                        Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
-                        Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_3));
-                        Config.resetFragment();
-                    }
-                }
-        );
 
         mylistview = (ListView) rootView.findViewById(R.id.mylistview);
 
@@ -250,7 +181,6 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
     }
 
     public void addToFavoris() {
-        Log.d("myTag", "addToFavoris");
         ContentValues myValue = new ContentValues();
 
         myValue.put("libelle"           , Config.myDemarcheTitre);
@@ -384,13 +314,9 @@ public class ListTypeFragmentDemarche extends ListTypeFragment {
                     try {
                         URL url;
                         if (Config.isInteger(Config.str_demarche)) {
-                            url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=" + Config.VERSION_API + "&ids=" + Config.str_demarche);
-//                            url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/equipements.php?version=" + Config.VERSION_API + "&ids=" + Config.str_demarche);
-
+                            url = new URL(Config.urlDomaine+"equipements.php?version=" + Config.VERSION_API + "&ids=" + Config.str_demarche);
                         }else {
-
-//                            url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/equipements.php?version=" + Config.VERSION_API + "&type=" + Config.str_demarche);
-                            url = new URL("http://appvilledelyon.c2is.fr/equipements.php?version=" + Config.VERSION_API + "&type=" + Config.str_demarche);
+                            url = new URL(Config.urlDomaine+"equipements.php?version=" + Config.VERSION_API + "&type=" + Config.str_demarche);
                         }
 
                         URLConnection connection = url.openConnection();
