@@ -130,29 +130,36 @@
                     android:background="@color/grisFond"
                     android:gravity="top|center_horizontal">
 
-                    <RelativeLayout
-                        android:id="@+id/layBtFermerCarte"
-                        android:gravity="right"
-                        android:padding="10dp"
-                        android:visibility="gone"
+
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <ImageButton
-                            android:background="@color/transparent"
-                            android:src="@drawable/bt_femer"
-                            android:id="@+id/btFermer"
-                            android:layout_gravity="right"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </RelativeLayout>
-
-                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/map"
-                        android:name="air.com.c2is.villedelyon.FragmentVide"
-                        tools:layout="@layout/fragment_vide"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        />
+                        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:id="@+id/map"
+                            tools:context="air.com.c2is.villedelyon.FragmentCarte"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            />
+                        <RelativeLayout
+                            android:id="@+id/layBtFermerCarte"
+                            android:gravity="right"
+                            android:layout_marginTop="-810dp"
+                            android:padding="10dp"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageButton
+                                android:background="@color/transparent"
+                                android:src="@drawable/bt_femer"
+                                android:id="@+id/btFermer"
+                                android:layout_gravity="right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            </RelativeLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:orientation="vertical"

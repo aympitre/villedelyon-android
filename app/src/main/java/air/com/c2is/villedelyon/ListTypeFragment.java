@@ -411,7 +411,8 @@ public class ListTypeFragment extends Fragment {
 
                 } else {
                     hideChargement();
-                    if (Config.sql_type.equals("lieu-frais")) {
+
+                    if (Config.sql_type.equals("lieux-frais-en-cas-de-fortes-chaleurs")) {
                         Config.myFragment.loadCarto();
                     }
                 }
@@ -490,7 +491,7 @@ public class ListTypeFragment extends Fragment {
                         try {
                             String str_url = Config.urlDomaine+"equipements.php?version="+Config.VERSION_API+"&type="+Config.sql_type;
 
-                            Log.d("myTag", "je rentre dans le sous type : " + str_url);
+                            Log.wtf("myTag", "je rentre dans le sous type : " + str_url);
 
                             URL url = new URL(str_url);
                             URLConnection connection = url.openConnection();

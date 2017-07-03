@@ -1,14 +1,19 @@
 package air.com.c2is.villedelyon;
 
+import android.*;
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +35,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class ListType extends android.support.v4.app.FragmentActivity implements OnMapReadyCallback {
+public class ListType extends android.support.v4.app.FragmentActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     protected GoogleMap mMap;
     public String tempMarker;
@@ -44,6 +49,18 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     public ImageButton     btCarto;
     public ImageButton     btListe;
     public int flagNoResume = 0;
+    private static final int MY_LOCATION_REQUEST_CODE = 1;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == MY_LOCATION_REQUEST_CODE) {
+            if (permissions.length == 1 &&
+                    permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+    }
 
     public void changeBtCarto(int p_param) {
         if (p_param==0) {
@@ -479,7 +496,14 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
 
 
     private void setUpMap() {
-        mMap.setMyLocationEnabled(true);
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            PermissionUtils.requestPermission(this, MY_LOCATION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        }
 
        for (int i=0;i<Config.pointCarto.size();i++) {
             String temp = "" + Config.pointCarto.get(i).get("latitude");
@@ -565,44 +589,46 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     }
 
     public void zoomTheMap() {
-        Location location = mMap.getMyLocation();
+        try {
+            Location location = mMap.getMyLocation();
 
-        if (location != null) {
-            if (location.getLatitude()!=0) {
-                LatLng myLocation = new LatLng(location.getLatitude(),
-                        location.getLongitude());
+            if (location != null) {
+                if (location.getLatitude() != 0) {
+                    LatLng myLocation = new LatLng(location.getLatitude(),
+                            location.getLongitude());
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
-            }
-        }else{
-            if (Config.pointCarto.size()>0) {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
+                }
+            } else {
+                if (Config.pointCarto.size() > 0) {
 
-                String temp  = "" + Config.pointCarto.get(0).get("latitude");
-                String temp2 = "" + Config.pointCarto.get(0).get("longitude");
+                    String temp = "" + Config.pointCarto.get(0).get("latitude");
+                    String temp2 = "" + Config.pointCarto.get(0).get("longitude");
 
-                if ((temp.length()>0)&&(temp2.length()>0)&&(!temp.equals("null"))) {
-                    if (!temp.equalsIgnoreCase("0.0")) {
-                        Double tempdbl1 = 0.0;
-                        try {
-                            tempdbl1 = Double.valueOf(temp);
-                        } catch (Exception ex) {
-                            throw ex;
+                    if ((temp.length() > 0) && (temp2.length() > 0) && (!temp.equals("null"))) {
+                        if (!temp.equalsIgnoreCase("0.0")) {
+                            Double tempdbl1 = 0.0;
+                            try {
+                                tempdbl1 = Double.valueOf(temp);
+                            } catch (Exception ex) {
+                                throw ex;
+                            }
+
+                            Double tempdbl2 = 0.0;
+                            try {
+                                tempdbl2 = Double.valueOf(temp2);
+                            } catch (Exception ex) {
+                                throw ex;
+                            }
+
+                            LatLng myLocation = new LatLng(tempdbl1, tempdbl2);
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
                         }
-
-                        Double tempdbl2 = 0.0;
-                        try {
-                            tempdbl2 = Double.valueOf(temp2);
-                        } catch (Exception ex) {
-                            throw ex;
-                        }
-
-                        LatLng myLocation = new LatLng(tempdbl1, tempdbl2);
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
                     }
                 }
             }
+        } catch (Exception e) {
         }
-
     }
 
 
@@ -694,12 +720,10 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     }
 
     public void setModeListe(String p_param) {
-        Log.d("myTag", "setModeListe : " +p_param);
-
         if (p_param.equals("1")) {
-            flagCarto = 0;
-        }else{
             flagCarto = 1;
+        }else{
+            flagCarto = 0;
         }
     }
 
@@ -766,7 +790,7 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
 
     @Override
     public void onBackPressed(){
-        Config.myFragment.setModeListe("1");
+        Config.myFragment.setModeListe("0");
         Config.myFragment.majEtatBtCarto();
 
         if (Config.str_demarche.length()>0) {
