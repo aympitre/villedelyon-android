@@ -18,278 +18,290 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Config {
-	public static int 	 VERSION_API			= 4;
-	public static int 	 LIMIT_EVENT			= 50;
-	public static int 	 LIMIT_ACTU				= 100;
-	public static int 	 CODE_DE_MON_ACTIVITE 	= 1;
-	public static int 	 MENU_ACTIVITE 			= 1;
-	public static String NBE_ANNONCE 			= "";
-	public static int 	 FLAG_REVEIL_SAVOIR 	= 0;
+    public static int VERSION_API = 6;
+    public static int LIMIT_EVENT = 50;
+    public static int LIMIT_ACTU = 100;
+    public static int CODE_DE_MON_ACTIVITE = 1;
+    public static int MENU_ACTIVITE = 1;
+    public static String NBE_ANNONCE = "";
+    public static int FLAG_REVEIL_SAVOIR = 0;
 
 
-	public static ListTypeFragmentDemarche myFragDemarche;
-	public static Activity		myActu;
-	public static MainActivity 	myHome;
-	public static ListType 		myFragment;
-	public static favoris 		myFavoris;
-	public static Parametre 	myParam;
-	public static String tabImage[];
-	public static String sql_type		= "";
-	public static String sql_sous_type 	= "";
-	public static String wait_sous_type = "";
-	public static String xml_id 		= "";
-	public static int flagRetourRecherche = 0;
-	public static int flagFragment 		= 0;
-	//public static int flagShowCarto 	= 0;
-	public static int flagDirectMarche 	= 0;
-	public static int flagDirectDemarche= 0;
-	public static int flagDirectSavoir 	= 0;
-	public static int flag_tri_geoloc	= 0;
-	public static int id_favoris		= 0;
-	public static long reveilDiff		= 0;
-	public static int flag_is_playing	= 0;
+    public static ListTypeFragmentDemarche myFragDemarche;
+    public static Activity myActu;
+    public static MainActivity myHome;
+    public static ListType myFragment;
+    public static favoris myFavoris;
+    public static Parametre myParam;
+    public static String tabImage[];
+    public static String sql_type = "";
+    public static String sql_sous_type = "";
+    public static String wait_sous_type = "";
+    public static String xml_id = "";
+    public static int flagRetourRecherche = 0;
+    public static int flagFragment = 0;
+    //public static int flagShowCarto 	= 0;
+    public static int flagDirectMarche = 0;
+    public static int flagDirectDemarche = 0;
+    public static int flagDirectSavoir = 0;
+    public static int flag_tri_geoloc = 0;
+    public static int id_favoris = 0;
+    public static long reveilDiff = 0;
+    public static int flag_is_playing = 0;
 
-	public static String visuel_pub;
-	public static String url_pub;
-	public static String id_pub ="";
-	public static int    time_pub;
+    public static String visuel_pub;
+    public static String url_pub;
+    public static String id_pub = "";
+    public static String list_picto = "carto_bleu_clair;carto_bleu1;carto_bleu2;carto_fushia;carto_gris_clair;carto_jaune;carto_marron_clair;carto_marron_fonce;carto_marron_glace;carto_mauve;carto_orange;carto_rose_bonbon;carto_rose_pastel;carto_rose;carto_vert_fonce;carto_vert_marron;carto_vert1;carto_vert2;carto_vert3;carto_violet";
 
-	public static int flagRelanceCompteur = 0;
+    public static LatLng gpsTeteOr = new LatLng(45.7774, 4.8552);
+    public static LatLng gpsBlandan = new LatLng(45.7456, 4.8544);
+    public static LatLng gpsGerland = new LatLng(45.7222, 4.8231);
 
-	public static int str_marche_arrondissement = 0;
-	public static String str_marche_theme 		= "";
-	public static String str_marche_jour 		= "";
-	public static String msg_notification		= "";
-	public static String myDemarcheUid			= "";
-	public static String myDemarcheLibelleType	= "";
-	public static String myDemarcheLabel		= "";
+    public static int time_pub;
 
-	public static MediaPlayer mp;
+    public static int flagRelanceCompteur = 0;
 
-	public static Reveil myReveil;
-	public static Actualite myActualite;
-	public static Parametre myParametre;
-	public static ResMarche myResMarche;
-	public static SeDeplacer mySeDeplacer;
+    public static int str_marche_arrondissement = 0;
+    public static String str_marche_theme = "";
+    public static String str_marche_jour = "";
+    public static String msg_notification = "";
+    public static String myDemarcheUid = "";
+    public static String myDemarcheLibelleType = "";
+    public static String myDemarcheLabel = "";
 
-	public static String titreActu = "";
-	public static String urlActu   = "";
+    public static MediaPlayer mp;
 
-	public static FragmentCarte 				myFragCarte;
-	public static FragmentDetailEquipement 		myDetailEquip;
-	public static FragmentCarteBalade 			myCarteBalade;
-	public static FragmentDetailEvt 			myDetailEvt;
-	public static FragmentDetailIncontournable 	myDetailIncontournable;
-	public static LeSaviezVousDetail 			mySaviezDetail;
-	public static LeSaviezVous 					mySaviezVous;
-	public static FragmentDetailBalade 			myDetailBalade;
+    public static Reveil myReveil;
+    public static Actualite myActualite;
+    public static Parametre myParametre;
+    public static ResMarche myResMarche;
+    public static SeDeplacer mySeDeplacer;
 
-	public static String fragToReload 	= "";
-	public static ArrayList<HashMap<String, Object>> pointCarto = new ArrayList<HashMap<String, Object>>();
+    public static String titreActu = "";
+    public static String urlActu = "";
 
-	public static HashMap<String, Object> myContentValue;
+    public static FragmentCarte myFragCarte;
+    public static FragmentDetailEquipement myDetailEquip;
+    public static FragmentCarteBalade myCarteBalade;
+    public static FragmentDetailEvt myDetailEvt;
+    public static FragmentDetailIncontournable myDetailIncontournable;
+    public static LeSaviezVousDetail mySaviezDetail;
+    public static LeSaviezVous mySaviezVous;
+    public static FragmentDetailBalade myDetailBalade;
 
-	public static String urlMeteo = "http://www.meteorologic.net/webmaster/xml/xml_file_27595.xml";
+    public static String fragToReload = "";
+    public static ArrayList<HashMap<String, Object>> pointCarto = new ArrayList<HashMap<String, Object>>();
 
-	public static String urlDomaine = "http://appvilledelyon.c2is.fr/";
-	//public static String urlDomaine	   = "http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/";
-	public static String urlDomaineEvt = "http://appvilledelyon.c2is.fr/";
+    public static HashMap<String, Object> myContentValue;
 
-	public static  int flagOffReveil		= 0;
-	public static  int flagFromRecherche	= 0;
-	public static  int flagAlarm 			= 0;
-	public static  int flagFirst 			= 0;
-	public static  int flagBddExist 		= 0;
-	public static  int flagDemarche 		= 0;
-	public static  int flagForceRetour 		= 0;
-	public static  int flagActivePreprod	= 1;
-	public static  String str_demarche 		= "";
+    public static String urlMeteo = "http://www.meteorologic.net/webmaster/xml/xml_file_27595.xml";
 
-	public static  int 		codeInterne		 = 1;
-	public static  int 		flagRechercheEvt = 0;
-	public static  int 		flagBisRetour	 = 0;
-	public static  String 	str_titre_evt 	 = "";
-	public static  Date 	date_evt;
-	public static  String 	str_date_evt 	 = "";
+    //public static String urlDomaine = "http://appvilledelyon.c2is.fr/";
+    public static String urlDomaine = "http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/";
+    public static String urlDomaineEvt = "http://appvilledelyon.c2is.fr/";
 
-	public static String actu_titre;
-	public static String actu_telephone;
-	public static String titre_savoir;
-	public static String texte_savoir;
+    public static String slugTeteOr = "tete-or";
+    public static String slugBlandan = "blandan";
+    public static String slugGerland = "gerland";
 
-	public static String myLabel 		 = "";
-	public static String myId 			 = "";
-	public static String myType 		 = "";
+    public static int flagOffReveil = 0;
+    public static int flagFromRecherche = 0;
+    public static int flagAlarm = 0;
+    public static int flagFirst = 0;
+    public static int flagBddExist = 0;
+    public static int flagDemarche = 0;
+    public static int flagForceRetour = 0;
+    public static int flagActivePreprod = 1;
+    public static String str_demarche = "";
 
-	public static String form_civilite	= "";
-	public static String form_nom		= "";
-	public static String form_prenom	= "";
-	public static String form_tel		= "";
-	public static String form_email		= "";
-	public static String form_message	= "";
-	public static String form_image		= "";
-	public static String form_loc		= "";
+    public static int codeInterne = 1;
+    public static int flagRechercheEvt = 0;
+    public static int flagBisRetour = 0;
+    public static String str_titre_evt = "";
+    public static Date date_evt;
+    public static String str_date_evt = "";
 
-	public static String myDemarcheTitre = "";
-	public static String myDemarcheDesc  = "";
+    public static String actu_titre;
+    public static String actu_telephone;
+    public static String titre_savoir;
+    public static String texte_savoir;
 
-	public static int flagContentEquip 	= 0;
-	public static int flagEvtFromFav	= 0;
-	public static int flagFromFavoris	= 0;
+    public static String myLabel = "";
+    public static String myId = "";
+    public static String myType = "";
 
-	public static ContentValues myContentEquip;
-	public static HashMap<String, Object> myCourant;
-	public static ListTypeFragment.myAsyncTask2 myWebFetch;
+    public static String form_civilite = "";
+    public static String form_nom = "";
+    public static String form_prenom = "";
+    public static String form_tel = "";
+    public static String form_email = "";
+    public static String form_message = "";
+    public static String form_image = "";
+    public static String form_loc = "";
 
-	public static void resetFragment() {
-		Config.flagFragment = 0;
-	}
+    public static String myDemarcheTitre = "";
+    public static String myDemarcheDesc = "";
 
-	public static void majNbeFav(TextView p_param, Context myContext) {
-		try {
-			DataBaseHelper myDbHelperTemp = new DataBaseHelper(myContext);
+    public static int flagContentEquip = 0;
+    public static int flagEvtFromFav = 0;
+    public static int flagFromFavoris = 0;
 
-			try {
-				myDbHelperTemp.createDataBase();
-			} catch (IOException ioe) {
-				Log.d("myTag", "creation bdd favoris  KO");
-			}
-			try {
-				myDbHelperTemp.openDataBase();
-			}catch(SQLException sqle){
-				Log.d("myTag", "ouverture bdd favoris KO");
-				throw sqle;
-			}
+    public static ContentValues myContentEquip;
+    public static HashMap<String, Object> myCourant;
+    public static ListTypeFragment.myAsyncTask2 myWebFetch;
 
-			int nbe = myDbHelperTemp.getNumFavoris();
-			if (nbe==0) {
-				p_param.setText("");
-			}else {
-				p_param.setText(String.valueOf(nbe));
-			}
-			// ici pour virer le favoris numero dans le header
-			p_param.setText("");
+    public static void resetFragment() {
+        Config.flagFragment = 0;
+    }
 
-			myDbHelperTemp.close();
-		}catch(Exception e){
-		}
-	}
+    public static void majNbeFav(TextView p_param, Context myContext) {
+        try {
+            DataBaseHelper myDbHelperTemp = new DataBaseHelper(myContext);
 
-	public static int paddingToPixel(int p_padding, Activity p_activite) {
-		final float scale = p_activite.getResources().getDisplayMetrics().density;
-		int pixels = (int) (p_padding * scale + 0.5f);
+            try {
+                myDbHelperTemp.createDataBase();
+            } catch (IOException ioe) {
+                Log.d("myTag", "creation bdd favoris  KO");
+            }
+            try {
+                myDbHelperTemp.openDataBase();
+            } catch (SQLException sqle) {
+                Log.d("myTag", "ouverture bdd favoris KO");
+                throw sqle;
+            }
 
-		return pixels;
-	}
-	public static Spanned formatLastWord(String p_param) {
-		if (!p_param.isEmpty()) {
-			String first = p_param;
-			String next = "";
+            int nbe = myDbHelperTemp.getNumFavoris();
+            if (nbe == 0) {
+                p_param.setText("");
+            } else {
+                p_param.setText(String.valueOf(nbe));
+            }
+            // ici pour virer le favoris numero dans le header
+            p_param.setText("");
 
-			String tab[] = p_param.split(" ");
-			if (tab.length > 1) {
-				next = tab[tab.length - 1];
-				first = first.replace(next, "");
-			}
+            myDbHelperTemp.close();
+        } catch (Exception e) {
+        }
+    }
 
-			Log.d("myTag", "victory : " + next);
-			return Html.fromHtml(first.toUpperCase() + " <font color='#027BDA'>" + next.toUpperCase() + "</font>");
-		}
-		return Html.fromHtml("<font color='#027BDA'></font>");
-	}
+    public static int paddingToPixel(int p_padding, Activity p_activite) {
+        final float scale = p_activite.getResources().getDisplayMetrics().density;
+        int pixels = (int) (p_padding * scale + 0.5f);
 
-	public static void resetVarNavigation (){
-		Config.fragToReload		= "";
-		Config.flagContentEquip = 0;
-		Config.str_demarche     = "";
-		Config.flagForceRetour  = 0;
-		Config.sql_sous_type	= "";
-		Config.wait_sous_type	= "";
-		Config.flagDirectMarche = 0;
-	}
+        return pixels;
+    }
 
-	public static void killLocalNotification (Context myContext){
-		NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.cancelAll();
-	}
+    public static Spanned formatLastWord(String p_param) {
+        if (!p_param.isEmpty()) {
+            String first = p_param;
+            String next = "";
 
-	public static void showAlertNotif(Activity p_param) {
-		if (Config.msg_notification.length()>0) {
-			new AlertDialog.Builder(p_param)
-					.setIcon(R.drawable.ic_notif)
-					.setTitle("Notification Ville de Lyon")
-					.setMessage(Config.msg_notification)
-					.show();
-			Config.msg_notification = "";
+            String tab[] = p_param.split(" ");
+            if (tab.length > 1) {
+                next = tab[tab.length - 1];
+                first = first.replace(next, "");
+            }
 
+            Log.d("myTag", "victory : " + next);
+            return Html.fromHtml(first.toUpperCase() + " <font color='#027BDA'>" + next.toUpperCase() + "</font>");
+        }
+        return Html.fromHtml("<font color='#027BDA'></font>");
+    }
 
-		}
-	}
+    public static void resetVarNavigation() {
+        Config.fragToReload = "";
+        Config.flagContentEquip = 0;
+        Config.str_demarche = "";
+        Config.flagForceRetour = 0;
+        Config.sql_sous_type = "";
+        Config.wait_sous_type = "";
+        Config.flagDirectMarche = 0;
+    }
 
-	public static String formatCharFlux(String p_param) {
-		String retour = p_param.replace("Ã©","é");
-		retour	      = retour.replace("Ã¨","è");
-		retour	      = retour.replace("Ã´","ô");
+    public static void killLocalNotification(Context myContext) {
+        NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
 
-		return  ""+retour;
-	}
-
-	public static String killHtml(String p_param) {
-		String retour = p_param.replace("<br />","");
-		retour = retour.replace("<br />","");
-		retour = retour.replace("<strong>","");
-		retour = retour.replace("</strong>","");
-		retour = retour.replace("<b>","");
-		retour = retour.replace("</b>","");
-		retour = retour.replace("<i>","");
-		retour = retour.replace("</i>","");
-		retour = retour.replace("<p>","");
-		retour = retour.replace("</p>","");
-
-		return retour;
-	}
-
-	public static boolean isInteger(String s) {
-		return isInteger(s,10);
-	}
-
-	public static boolean isInteger(String s, int radix) {
-		if(s.isEmpty()) return false;
-
-		for(int i = 0; i < s.length(); i++) {
-			if(i == 0 && s.charAt(i) == '-') {
-				if(s.length() == 1) return false;
-				else continue;
-			}
-			if(Character.digit(s.charAt(i),radix) < 0) return false;
-		}
-		return true;
-	}
-
-	public static int checkDevice() {
-		DisplayMetrics metrics = new DisplayMetrics();
-		Config.myHome.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		float widthDpi = metrics.xdpi;
-		float heightDpi = metrics.ydpi;
-		int widthPixels = metrics.widthPixels;
-		int heightPixels = metrics.heightPixels;
-		float widthInches = widthPixels / widthDpi;
-		float heightInches = heightPixels / heightDpi;
-		double diagonalInches = Math.sqrt(
-				(widthInches * widthInches)
-						+ (heightInches * heightInches));
+    public static void showAlertNotif(Activity p_param) {
+        if (Config.msg_notification.length() > 0) {
+            new AlertDialog.Builder(p_param)
+                    .setIcon(R.drawable.ic_notif)
+                    .setTitle("Notification Ville de Lyon")
+                    .setMessage(Config.msg_notification)
+                    .show();
+            Config.msg_notification = "";
 
 
-		if (diagonalInches >= 9) {
-			//Device is a 10" tablet
-			return 3;
-		}
-		else if (diagonalInches >= 5) {
-			//Device is a 7" tablet
-			return 2;
-		}else{
-			return 1;
-		}
-	}
+        }
+    }
+
+    public static String formatCharFlux(String p_param) {
+        String retour = p_param.replace("Ã©", "é");
+        retour = retour.replace("Ã¨", "è");
+        retour = retour.replace("Ã´", "ô");
+
+        return "" + retour;
+    }
+
+    public static String killHtml(String p_param) {
+        String retour = p_param.replace("<br />", "");
+        retour = retour.replace("<br />", "");
+        retour = retour.replace("<strong>", "");
+        retour = retour.replace("</strong>", "");
+        retour = retour.replace("<b>", "");
+        retour = retour.replace("</b>", "");
+        retour = retour.replace("<i>", "");
+        retour = retour.replace("</i>", "");
+        retour = retour.replace("<p>", "");
+        retour = retour.replace("</p>", "");
+
+        return retour;
+    }
+
+    public static boolean isInteger(String s) {
+        return isInteger(s, 10);
+    }
+
+    public static boolean isInteger(String s, int radix) {
+        if (s.isEmpty()) return false;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (i == 0 && s.charAt(i) == '-') {
+                if (s.length() == 1) return false;
+                else continue;
+            }
+            if (Character.digit(s.charAt(i), radix) < 0) return false;
+        }
+        return true;
+    }
+
+    public static int checkDevice() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        Config.myHome.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        float widthDpi = metrics.xdpi;
+        float heightDpi = metrics.ydpi;
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+        float widthInches = widthPixels / widthDpi;
+        float heightInches = heightPixels / heightDpi;
+        double diagonalInches = Math.sqrt(
+                (widthInches * widthInches)
+                        + (heightInches * heightInches));
+
+
+        if (diagonalInches >= 9) {
+            //Device is a 10" tablet
+            return 3;
+        } else if (diagonalInches >= 5) {
+            //Device is a 7" tablet
+            return 2;
+        } else {
+            return 1;
+        }
+    }
 }

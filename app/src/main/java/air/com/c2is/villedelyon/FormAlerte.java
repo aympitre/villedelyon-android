@@ -184,8 +184,6 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
         RadioButton radio_madame    = (RadioButton) findViewById(R.id.radio_madame);
         radio_madame.setTypeface(myTypeface);
 
-        Log.d("myTag", ">> je suis créer");
-
         chpNom      = (EditText) findViewById(R.id.chpNom);
         chpPrenom   = (EditText) findViewById(R.id.chpPrenom);
         chpEmail    = (EditText) findViewById(R.id.chpEmail);

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,6 +35,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class ListType extends android.support.v4.app.FragmentActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -46,8 +51,8 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     public Button myMenu3;
     public int flagCarto = 0;
     public RelativeLayout layBtCarto;
-    public ImageButton     btCarto;
-    public ImageButton     btListe;
+    public ImageButton btCarto;
+    public ImageButton btListe;
     public int flagNoResume = 0;
     private static final int MY_LOCATION_REQUEST_CODE = 1;
 
@@ -63,10 +68,10 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     }
 
     public void changeBtCarto(int p_param) {
-        if (p_param==0) {
+        if (p_param == 0) {
             btCarto.setVisibility(View.GONE);
             btListe.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             btCarto.setVisibility(View.VISIBLE);
             btListe.setVisibility(View.GONE);
         }
@@ -82,53 +87,53 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     }
 
     protected void createActionMenu() {
-        LinearLayout laySousMenu =  (LinearLayout) findViewById(R.id.laySousMenu);
-        if (Config.flagDirectDemarche==1) {
+        LinearLayout laySousMenu = (LinearLayout) findViewById(R.id.laySousMenu);
+        if (Config.flagDirectDemarche == 1) {
             laySousMenu.setVisibility(View.GONE);
-        }else{
+        } else {
             laySousMenu.setVisibility(View.VISIBLE);
         }
 
         Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");
 
-        myMenu1      = (Button) findViewById(R.id.bt_menu1);
-        myMenu2      = (Button) findViewById(R.id.bt_menu2);
-        myMenu3      = (Button) findViewById(R.id.bt_menu3);
+        myMenu1 = (Button) findViewById(R.id.bt_menu1);
+        myMenu2 = (Button) findViewById(R.id.bt_menu2);
+        myMenu3 = (Button) findViewById(R.id.bt_menu3);
 
 
-        if (Config.CODE_DE_MON_ACTIVITE==1) {
+        if (Config.CODE_DE_MON_ACTIVITE == 1) {
             myMenu1.setText(getResources().getString(R.string.libMenu1_1));
             myMenu2.setText(getResources().getString(R.string.libMenu1_2));
             myMenu3.setText(getResources().getString(R.string.libMenu1_3));
 
-        }else if (Config.CODE_DE_MON_ACTIVITE==3) {
+        } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
             myMenu1.setText(getResources().getString(R.string.libMenu3_1));
             myMenu2.setText(getResources().getString(R.string.libMenu3_2));
             myMenu3.setText(getResources().getString(R.string.libMenu3_3));
 
-        }else if (Config.CODE_DE_MON_ACTIVITE==4) {
+        } else if (Config.CODE_DE_MON_ACTIVITE == 4) {
             myMenu1.setText(getResources().getString(R.string.libMenu4_1));
             myMenu2.setText(getResources().getString(R.string.libMenu4_2));
             myMenu3.setText(getResources().getString(R.string.libMenu4_3));
 
-        }else if (Config.CODE_DE_MON_ACTIVITE==5) {
+        } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
             myMenu1.setText(getResources().getString(R.string.libMenu5_1));
             myMenu2.setText(getResources().getString(R.string.libMenu5_2));
             myMenu3.setText(getResources().getString(R.string.libMenu5_3));
 
-        }else if (Config.CODE_DE_MON_ACTIVITE==6) {
+        } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
             myMenu1.setText(getResources().getString(R.string.libMenu6_1));
             myMenu2.setText(getResources().getString(R.string.libMenu6_2));
             myMenu3.setText(getResources().getString(R.string.libMenu6_3));
         }
 
-        if (Config.MENU_ACTIVITE==2) {
+        if (Config.MENU_ACTIVITE == 2) {
             myMenu2.setTextColor(getResources().getColor(R.color.blanc));
             myMenu2.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else if (Config.MENU_ACTIVITE==3) {
+        } else if (Config.MENU_ACTIVITE == 3) {
             myMenu3.setTextColor(getResources().getColor(R.color.blanc));
             myMenu3.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else{
+        } else {
             myMenu1.setTextColor(getResources().getColor(R.color.blanc));
             myMenu1.setBackground(getResources().getDrawable(R.drawable.menu_actif));
         }
@@ -140,12 +145,13 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=1) {
+                        if (Config.MENU_ACTIVITE != 1) {
                             hideCarto();
                             offAllMenu();
                             try {
                                 Config.myWebFetch.cancel(true);
-                            } catch (Exception e) {}
+                            } catch (Exception e) {
+                            }
 
                             myMenu1.setTextColor(getResources().getColor(R.color.blanc));
                             myMenu1.setBackground(getResources().getDrawable(R.drawable.menu_actif));
@@ -177,12 +183,13 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=2) {
+                        if (Config.MENU_ACTIVITE != 2) {
                             hideCarto();
                             offAllMenu();
                             try {
                                 Config.myWebFetch.cancel(true);
-                            } catch (Exception e) {}
+                            } catch (Exception e) {
+                            }
 
 
                             myMenu2.setTextColor(getResources().getColor(R.color.blanc));
@@ -200,7 +207,7 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
                                 Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_2));
 
                             } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
-                                Config.flagRetourRecherche  = 1;
+                                Config.flagRetourRecherche = 1;
                                 Config.myFragment.loadRechercheEvenement();
 
                             } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
@@ -217,14 +224,15 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=3) {
+                        if (Config.MENU_ACTIVITE != 3) {
                             Config.MENU_ACTIVITE = 3;
                             hideCarto();
                             offAllMenu();
                             flagCarto = 0;
                             try {
                                 Config.myWebFetch.cancel(true);
-                            } catch (Exception e) {}
+                            } catch (Exception e) {
+                            }
 
 
                             myMenu3.setTextColor(getResources().getColor(R.color.blanc));
@@ -236,12 +244,12 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
                                 Config.fragToReload = getResources().getString(R.string.sqlType1_3);
                                 Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_3));
                             } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
-                                Config.fragToReload = getResources().getString(R.string.sqlBalade);
-                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlBalade));
+                                Config.fragToReload = getResources().getString(R.string.sqlType3_3);
+                                Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_3));
                             } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
                                 Config.fragToReload = getResources().getString(R.string.sqlIncontournable);
                                 Config.myFragment.loadFragment(getResources().getString(R.string.sqlIncontournable));
-                                Config.flagRetourRecherche  = 0;
+                                Config.flagRetourRecherche = 0;
                             } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
                                 Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
                                 Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_3));
@@ -265,21 +273,21 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
 
         Log.d("myTag", "CODE_DE_MON_ACTIVITE : " + Config.CODE_DE_MON_ACTIVITE);
 
-        Config.myActu       = this;
-        Config.myFragment   = this;
+        Config.myActu = this;
+        Config.myFragment = this;
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "Oswald-Regular.ttf");
-        TextView myTitre    = (TextView) findViewById(R.id.titre);
-        layCarto            =  (LinearLayout) findViewById(R.id.layCarto);
-        layFragment         =  (View) findViewById(R.id.fragment);
+        TextView myTitre = (TextView) findViewById(R.id.titre);
+        layCarto = (LinearLayout) findViewById(R.id.layCarto);
+        layFragment = (View) findViewById(R.id.fragment);
 
-        if ((Config.MENU_ACTIVITE==1)&&(Config.CODE_DE_MON_ACTIVITE==3)) {  // Cas particulier des parcs et jardin on force la carto
+        if ((Config.MENU_ACTIVITE == 1) && (Config.CODE_DE_MON_ACTIVITE == 3)) {  // Cas particulier des parcs et jardin on force la carto
             flagCarto = 1;
         }
 
         createActionMenu();
 
-        layBtCarto          =  (RelativeLayout) findViewById(R.id.layBtCarto);
-        btCarto             =  (ImageButton) findViewById(R.id.btCarto);
+        layBtCarto = (RelativeLayout) findViewById(R.id.layBtCarto);
+        btCarto = (ImageButton) findViewById(R.id.btCarto);
         btCarto.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -288,7 +296,7 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
                     }
                 }
         );
-        btListe             =  (ImageButton) findViewById(R.id.btListe);
+        btListe = (ImageButton) findViewById(R.id.btListe);
         btListe.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -303,21 +311,21 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
 
         String myChaine = "";
 
-        if (Config.flagDirectDemarche==1) {
+        if (Config.flagDirectDemarche == 1) {
 
             loadDemarche(Config.str_demarche);
 
-        }else {
+        } else {
             if (Config.CODE_DE_MON_ACTIVITE == 1) {
                 myChaine = getResources().getString(R.string.libHomeBt1);
                 if (Config.codeInterne == 1) {
                     loadFragment(getResources().getString(R.string.sqlType1_1));
                     Config.sql_sous_type = "";
-                    Config.sql_type      = getResources().getString(R.string.sqlType1_1);
+                    Config.sql_type = getResources().getString(R.string.sqlType1_1);
                 } else if (Config.codeInterne == 3) {
                     loadFragment(getResources().getString(R.string.sqlType1_3));
                     Config.sql_sous_type = "";
-                    Config.sql_type      = getResources().getString(R.string.sqlType1_3);
+                    Config.sql_type = getResources().getString(R.string.sqlType1_3);
                 } else if (Config.codeInterne == 4) {
                     Config.sql_type = "marches";
                 } else if (Config.MENU_ACTIVITE == 2) {
@@ -371,9 +379,9 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
             }
         }
 
-        if (Config.flagDirectDemarche==1) {
+        if (Config.flagDirectDemarche == 1) {
             myTitre.setText("FAVORIS");
-        }else {
+        } else {
             myTitre.setText(myChaine);
         }
         myTitre.setTypeface(myTypeface);
@@ -384,7 +392,7 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
         myLogo.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.flagRetourRecherche  = 0;
+                        Config.flagRetourRecherche = 0;
                         startActivity(new Intent(ListType.this, MainActivity.class));
                     }
                 }
@@ -394,18 +402,18 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
         myBtMenu.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.flagRetourRecherche  = 0;
+                        Config.flagRetourRecherche = 0;
                         startActivity(new Intent(ListType.this, MainActivity.class));
                     }
                 }
         );
 
-        ImageButton myBtParam   = (ImageButton) findViewById(R.id.bt_param);
+        ImageButton myBtParam = (ImageButton) findViewById(R.id.bt_param);
         ImageButton myBtFavoris = (ImageButton) findViewById(R.id.bt_favoris);
         myBtParam.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.flagRetourRecherche  = 0;
+                        Config.flagRetourRecherche = 0;
                         Intent intent = new Intent(ListType.this, Parametre.class);
                         startActivityForResult(intent, 2);
                     }
@@ -414,7 +422,7 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
         myBtFavoris.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Config.flagRetourRecherche  = 0;
+                        Config.flagRetourRecherche = 0;
                         Intent intent = new Intent(ListType.this, favoris.class);
                         startActivityForResult(intent, 2);
 
@@ -458,6 +466,7 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
         layBtCarto.setVisibility(View.VISIBLE);
         changeBtCarto(p_param);
     }
+
     public void hideBtCarto() {
         layBtCarto.setVisibility(View.GONE);
     }
@@ -489,13 +498,16 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
         layFragment.setVisibility(View.GONE);
         showBtCarto(0);
     }
+
     public void hideCarto() {
         layCarto.setVisibility(View.GONE);
         layFragment.setVisibility(View.VISIBLE);
     }
 
 
-    private void setUpMap() {
+    public void setUpMap() {
+
+        mMap.clear();
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -505,13 +517,18 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
 
-       for (int i=0;i<Config.pointCarto.size();i++) {
+        for (int i = 0; i < Config.pointCarto.size(); i++) {
             String temp = "" + Config.pointCarto.get(i).get("latitude");
             String temp2 = "" + Config.pointCarto.get(i).get("longitude");
+            String tmpPicto = "" + (String) Config.pointCarto.get(i).get("picto");
 
-            if ((temp.length()>0)&&(temp2.length()>0)&&(!temp.equals("null"))) {
+            if ((temp.length() > 0) && (temp2.length() > 0) && (!temp.equals("null"))) {
                 if (!temp.equalsIgnoreCase("0.0")) {
+
                     MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_map));
+                    if (Config.list_picto.contains(tmpPicto)) {
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("picto_carto/" + tmpPicto + ".png"));
+                    }
 
                     Double tempdbl1 = 0.0;
                     try {
@@ -565,21 +582,21 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     }
 
     public void gotoEquipement(String p_titre) {
-        for (int i=0;i<Config.pointCarto.size();i++) {
+        for (int i = 0; i < Config.pointCarto.size(); i++) {
 
             String temp = "" + Config.pointCarto.get(i).get("titre");
 
             if (temp.equals(p_titre)) {
                 String temp2 = "" + Config.pointCarto.get(i).get("id_equipement").toString();
 
-                if (temp2.length()>0) {
+                if (temp2.length() > 0) {
                     Config.flagContentEquip = 0;
-                }else {
+                } else {
                     Config.flagContentEquip = 1;
                 }
-                Config.myContentValue   = Config.pointCarto.get(i);
-                Config.sql_type         = temp2.toString();
-                Config.xml_id           = "";
+                Config.myContentValue = Config.pointCarto.get(i);
+                Config.sql_type = temp2.toString();
+                Config.xml_id = "";
 
                 Intent intent = new Intent(ListType.this, FragmentDetailEquipement.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -589,45 +606,50 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     }
 
     public void zoomTheMap() {
-        try {
-            Location location = mMap.getMyLocation();
+        if (Config.sql_type.equals(Config.slugTeteOr)) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Config.gpsTeteOr, 15));
+        }else if (Config.sql_type.equals(Config.slugBlandan)) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Config.gpsBlandan, 15));
+        }else if (Config.sql_type.equals(Config.slugGerland)) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Config.gpsGerland, 15));
+        }else {
+            try {
+                Location location = mMap.getMyLocation();
 
-            if (location != null) {
-                if (location.getLatitude() != 0) {
-                    LatLng myLocation = new LatLng(location.getLatitude(),
-                            location.getLongitude());
+                if (location != null) {
+                    if (location.getLatitude() != 0) {
+                        LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
+                    }
+                } else {
+                    if (Config.pointCarto.size() > 0) {
+                        String temp = "" + Config.pointCarto.get(0).get("latitude");
+                        String temp2 = "" + Config.pointCarto.get(0).get("longitude");
 
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
-                }
-            } else {
-                if (Config.pointCarto.size() > 0) {
+                        if ((temp.length() > 0) && (temp2.length() > 0) && (!temp.equals("null"))) {
+                            if (!temp.equalsIgnoreCase("0.0")) {
+                                Double tempdbl1 = 0.0;
+                                try {
+                                    tempdbl1 = Double.valueOf(temp);
+                                } catch (Exception ex) {
+                                    throw ex;
+                                }
 
-                    String temp = "" + Config.pointCarto.get(0).get("latitude");
-                    String temp2 = "" + Config.pointCarto.get(0).get("longitude");
+                                Double tempdbl2 = 0.0;
+                                try {
+                                    tempdbl2 = Double.valueOf(temp2);
+                                } catch (Exception ex) {
+                                    throw ex;
+                                }
 
-                    if ((temp.length() > 0) && (temp2.length() > 0) && (!temp.equals("null"))) {
-                        if (!temp.equalsIgnoreCase("0.0")) {
-                            Double tempdbl1 = 0.0;
-                            try {
-                                tempdbl1 = Double.valueOf(temp);
-                            } catch (Exception ex) {
-                                throw ex;
+                                LatLng myLocation = new LatLng(tempdbl1, tempdbl2);
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
                             }
-
-                            Double tempdbl2 = 0.0;
-                            try {
-                                tempdbl2 = Double.valueOf(temp2);
-                            } catch (Exception ex) {
-                                throw ex;
-                            }
-
-                            LatLng myLocation = new LatLng(tempdbl1, tempdbl2);
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
                         }
                     }
                 }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
         }
     }
 
@@ -644,24 +666,22 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     public void onResume() {
         super.onResume();  // Always call the superclass method first
         AppEventsLogger.activateApp(this);
-        Config.myActu  =this;
+        Config.myActu = this;
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
         Config.showAlertNotif(this);
         setUpMapIfNeeded();
 
-        if (flagNoResume==1) {
+        if (flagNoResume == 1) {
             flagNoResume = 0;
-        }else{
+        } else {
             majEtatBtCarto();
         }
     }
 
     public void majEtatBtCarto() {
-        Log.d("myTag", "majEtatBtCarto");
-
-        if (flagCarto==1) {
-            showBtCarto(1);
-        }else {
+        if (flagCarto == 1) {
+            showBtCarto(0);
+        } else {
             hideBtCarto();
         }
     }
@@ -682,47 +702,45 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     }
 
     public void loadFragment(String p_param) {
-        Log.d("myTag", "loadFragment : " + p_param);
+        Log.wtf("myTag", "loadFragment : " + p_param);
 
-//        if (p_param.length()>0) {
-            Config.flagFragment = 0;
+        Config.flagFragment = 0;
 
-            try {
-                if (p_param.length() > 0) {
-                    Config.sql_type = p_param;
-                    Config.flagFragment = 1;
-                } else {
-                    if (Config.fragToReload.length() > 0) {
-                        Config.sql_type = Config.fragToReload;
-                    }
+        try {
+            if (p_param.length() > 0) {
+                Config.sql_type = p_param;
+                Config.flagFragment = 1;
+            } else {
+                if (Config.fragToReload.length() > 0) {
+                    Config.sql_type = Config.fragToReload;
                 }
-
-                if (p_param.equals("marches") && (Config.flagDirectMarche == 0)) {
-                    Intent intent = new Intent(ListType.this, RechercheMarcheFragment.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivityForResult(intent, 0);
-
-                } else if (p_param.equals("label-lyon-ville-equitable-et-durable-carto") && (Config.flagDirectMarche == 0)) {
-
-                    Intent intent = new Intent(ListType.this, RechercheVieFragment.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivityForResult(intent, 0);
-
-                } else {
-                    Config.flagDirectMarche = 0;
-                    ListTypeFragment fragment2 = new ListTypeFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment2).commit();
-                }
-            } catch (Exception e) {
             }
-  //      }
+
+            if (p_param.equals("marches") && (Config.flagDirectMarche == 0)) {
+                Intent intent = new Intent(ListType.this, RechercheMarcheFragment.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivityForResult(intent, 0);
+
+            } else if (p_param.equals("label-lyon-ville-equitable-et-durable-carto") && (Config.flagDirectMarche == 0)) {
+                Intent intent = new Intent(ListType.this, RechercheVieFragment.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivityForResult(intent, 0);
+
+            } else {
+                Config.flagDirectMarche = 0;
+                ListTypeFragment fragment2 = new ListTypeFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment2).commit();
+            }
+        } catch (Exception e) {
+        }
+        //      }
 
     }
 
     public void setModeListe(String p_param) {
         if (p_param.equals("1")) {
             flagCarto = 1;
-        }else{
+        } else {
             flagCarto = 0;
         }
     }
@@ -789,84 +807,77 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
 
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Config.myFragment.setModeListe("0");
         Config.myFragment.majEtatBtCarto();
 
-        if (Config.str_demarche.length()>0) {
+        if (Config.str_demarche.length() > 0) {
             Config.flagRetourRecherche = 0;
 
-            if (Config.flagForceRetour==1) {
+            if (Config.flagForceRetour == 1) {
                 if (Config.MENU_ACTIVITE == 1) {
                     Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_1);
                     Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_1));
-                }else if (Config.MENU_ACTIVITE == 2) {
+                } else if (Config.MENU_ACTIVITE == 2) {
                     Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_2);
                     Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_2));
 
-                }else{
+                } else {
                     Config.sql_sous_type = Config.fragToReload = getResources().getString(R.string.sqlType6_3);
                     Config.myFragment.loadFragment(getResources().getString(R.string.sqlType6_3));
                     Config.str_demarche = "";
                 }
                 Config.flagForceRetour = 0;
-            }else{
+            } else {
                 Config.sql_sous_type = "";
                 Config.fragToReload = "";
                 Config.flagForceRetour = 0;
                 finish();
             }
 
-        }else if (Config.fragToReload.length()>0) {
+        } else if (Config.fragToReload.length() > 0) {
             Config.flagRetourRecherche = 0;
 
-            if ((Config.fragToReload.equals(getResources().getString(R.string.sqlType3_2))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlBalade))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlType1_2))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlType1_3)))) {
-                if (Config.flagForceRetour==1) {
+            Log.wtf("myTag", "fragToReload");
+
+            if ((Config.fragToReload.equals(getResources().getString(R.string.sqlType3_2))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlType3_3))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlType1_2))) || (Config.fragToReload.equals(getResources().getString(R.string.sqlType1_3)))) {
+                if (Config.flagForceRetour == 1) {
                     Config.myFragment.loadFragment(Config.fragToReload);
+                    hideCarto();
                     Config.fragToReload = "";
                     Config.flagForceRetour = 0;
-                }else{
+                } else {
                     Config.fragToReload = "";
                     Config.flagForceRetour = 0;
                     finish();
                 }
 
-            }else{
+            } else {
                 finish();
             }
-        }else {
+        } else {
+            Log.wtf("myTag", "le else");
 
-
-            if (Config.flagBisRetour==1) {
+            if ((Config.flagBisRetour == 1) || (Config.flagBisRetour == 2)) {
                 Config.flagBisRetour = 0;
 
                 finish();
-                //Config.myFragment.loadFragment(getResources().getString(R.string.sqlType1_2));
-                Config.fragToReload         = "";
-                Config.flagForceRetour      = 0;
-                Config.flagRetourRecherche  = 0;
+                Config.fragToReload = "";
+                Config.flagForceRetour = 0;
+                Config.flagRetourRecherche = 0;
 
-            }else if (Config.flagBisRetour==2) {
-                Config.flagBisRetour=0;
-
-                finish();
-
-                Config.fragToReload         = "";
-                Config.flagForceRetour      = 0;
-                Config.flagRetourRecherche  = 0;
-
-            }else if (Config.flagBisRetour==3) {
-                Config.flagBisRetour=0;
+            } else if (Config.flagBisRetour == 3) {
+                Config.flagBisRetour = 0;
 
                 Config.myFragment.loadFragment(getResources().getString(R.string.sqlType3_2));
-                Config.fragToReload         = "";
-                Config.flagForceRetour      = 0;
-                Config.flagRetourRecherche  = 0;
+                Config.fragToReload = "";
+                Config.flagForceRetour = 0;
+                Config.flagRetourRecherche = 0;
 
-            }else if (Config.flagRetourRecherche==1) {
+            } else if (Config.flagRetourRecherche == 1) {
                 Config.flagRetourRecherche = 0;
                 loadRechercheEvenement();
-            }else {
+            } else {
                 Config.flagRetourRecherche = 0;
                 finish();
             }

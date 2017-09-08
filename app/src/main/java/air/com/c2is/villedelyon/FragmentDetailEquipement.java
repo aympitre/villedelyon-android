@@ -87,7 +87,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     public String myAdresse;
     public String myVille;
     public String myCp;
-
+    public String myPicto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,16 +107,16 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         Button myMenu2 = (Button) findViewById(R.id.bt_menu2);
         Button myMenu3 = (Button) findViewById(R.id.bt_menu3);
 
-        if (Config.flagFromFavoris==1) {
+        if (Config.flagFromFavoris == 1) {
             LinearLayout layMenu = (LinearLayout) findViewById(R.id.layMenu);
             layMenu.setVisibility(View.GONE);
         }
 
-        layBtFermerCarte    = (RelativeLayout) findViewById(R.id.layBtFermerCarte);
-        myTitreEquipement   = (TextView) findViewById(R.id.titreEquipement);
+        layBtFermerCarte = (RelativeLayout) findViewById(R.id.layBtFermerCarte);
+        myTitreEquipement = (TextView) findViewById(R.id.titreEquipement);
 
-        btAddFavoris         = (ImageButton) findViewById(R.id.btAddFavoris);
-        btOpenCarte          = (ImageButton) findViewById(R.id.btOpenCarte);
+        btAddFavoris = (ImageButton) findViewById(R.id.btAddFavoris);
+        btOpenCarte = (ImageButton) findViewById(R.id.btOpenCarte);
         ImageButton btFermer = (ImageButton) findViewById(R.id.btFermer);
 
         btFermer.setOnClickListener(
@@ -128,7 +128,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                     }
                 }
         );
-
         btOpenCarte.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -142,7 +141,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         );
 
         ImageButton myBtMenu = (ImageButton) findViewById(R.id.bt_menu);
-        ImageView myLogo     = (ImageView) findViewById(R.id.logo);
+        ImageView myLogo = (ImageView) findViewById(R.id.logo);
         // ACTION DES BOUTONS DE LA HOME
         myLogo.setOnClickListener(
                 new View.OnClickListener() {
@@ -212,9 +211,8 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         myMenu1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=1) {
+                        if (Config.MENU_ACTIVITE != 1) {
                             Config.MENU_ACTIVITE = 1;
-
                             Config.resetVarNavigation();
 
                             if (Config.CODE_DE_MON_ACTIVITE == 1) {
@@ -236,7 +234,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         myMenu2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=2) {
+                        if (Config.MENU_ACTIVITE != 2) {
                             Config.MENU_ACTIVITE = 2;
 
                             Config.resetVarNavigation();
@@ -262,7 +260,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         myMenu3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (Config.MENU_ACTIVITE!=3) {
+                        if (Config.MENU_ACTIVITE != 3) {
                             Config.MENU_ACTIVITE = 3;
 
                             Config.resetVarNavigation();
@@ -298,19 +296,17 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                         } else {
                             addFavoris();
                         }
-
                     }
                 }
         );
 
-            myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
-            try {
-                myDbHelper.openDataBase();
-                Log.d("myTag", "ouverture bdd ok");
-            } catch (SQLException sqle) {
-                Log.d("myTag", "ouverture bdd KO");
-                throw sqle;
-            }
+        myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
+        try {
+            myDbHelper.openDataBase();
+        } catch (SQLException sqle) {
+            Log.wtf("myTag", "ouverture bdd KO");
+            throw sqle;
+        }
 
         ImageButton myBtParam = (ImageButton) findViewById(R.id.bt_param);
         ImageButton myBtFavoris = (ImageButton) findViewById(R.id.bt_favoris);
@@ -327,7 +323,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                     public void onClick(View v) {
                         Intent intent = new Intent(FragmentDetailEquipement.this, favoris.class);
                         startActivityForResult(intent, 2);
-
                     }
                 }
         );
@@ -339,18 +334,15 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     }
 
     public void majBigTitre(TextView p_titre) {
-        if (Config.flagFromFavoris==1) {
+        if (Config.flagFromFavoris == 1) {
             p_titre.setText(getResources().getString(R.string.titreFavoris));
-        }else {
+        } else {
             if (Config.CODE_DE_MON_ACTIVITE == 1) {
                 p_titre.setText(getResources().getString(R.string.libHomeBt1));
-
             } else if (Config.CODE_DE_MON_ACTIVITE == 3) {
                 p_titre.setText(getResources().getString(R.string.libHomeBt3));
-
             } else if (Config.CODE_DE_MON_ACTIVITE == 5) {
                 p_titre.setText(getResources().getString(R.string.libHomeBt5));
-
             } else if (Config.CODE_DE_MON_ACTIVITE == 6) {
                 p_titre.setText(getResources().getString(R.string.libHomeBt6));
             }
@@ -398,7 +390,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     }
 
     public void openCarte() {
-
         flagCartoOpen = 1;
 
         android.view.ViewGroup.LayoutParams params = myCarte.getLayoutParams();
@@ -407,7 +398,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         Display display = getWindowManager().getDefaultDisplay();
 
         int height = display.getHeight();  // deprecated
-
         params.height = (height - (height / 3));
 
         btOpenCarte.setImageResource(R.drawable.fleche_haut);
@@ -417,16 +407,15 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         layBtFermerCarte.setVisibility(View.VISIBLE);
     }
 
-    public void checkGeocodeur(){
-
+    public void checkGeocodeur() {
         Geocoder geocoder = new Geocoder(getBaseContext());
         if (geocoder.isPresent()) {
             List<Address> addresses;
 
             try {
                 addresses = geocoder.getFromLocationName(myAdresse + " " + myCp + " " + myVille, 1);
-                if(addresses.size() > 0) {
-                    latitude  = (float) addresses.get(0).getLatitude();
+                if (addresses.size() > 0) {
+                    latitude = (float) addresses.get(0).getLatitude();
                     longitude = (float) addresses.get(0).getLongitude();
                 }
             } catch (Exception ex) {
@@ -436,15 +425,17 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     }
 
     public void centerTheMap() {
-        if (latitude!=0) {
+        if (latitude != 0) {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_map));
-            markerOptions.position(new LatLng(latitude, longitude));
+            if (Config.list_picto.contains(myPicto)) {
+                markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("picto_carto/" + myPicto + ".png"));
+            }
 
+            markerOptions.position(new LatLng(latitude, longitude));
             markerOptions.title(libEquip);
             mMap.addMarker(markerOptions);
-
             mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                 public void onMapLoaded() {
                     zoomTheMap();
@@ -452,7 +443,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
             });
 
             CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude));
-
             mMap.moveCamera(center);
         }
     }
@@ -478,10 +468,10 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         if (idEquip != 0) {
             if (myDbHelper.checkFavoris(idEquip) == 1) {
                 flagIsFavoris = 1;
-            }else if (myDbHelper.checkFavorisXml() == 1) {
+            } else if (myDbHelper.checkFavorisXml() == 1) {
                 flagIsFavoris = 1;
             }
-        }else{
+        } else {
             if (myDbHelper.checkFavorisXml() == 1) {
                 flagIsFavoris = 1;
             }
@@ -491,38 +481,22 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     }
 
     public void loadMap() {
-        if (latitude==0)
-        {
+        if (latitude == 0) {
             btOpenCarte.setVisibility(View.INVISIBLE);
-            myCarte.setVisibility    (View.GONE);
-        }
-        else
-        {
+            myCarte.setVisibility(View.GONE);
+        } else {
             btOpenCarte.setVisibility(View.VISIBLE);
-            myCarte.setVisibility    (View.VISIBLE);
+            myCarte.setVisibility(View.VISIBLE);
         }
 
         centerTheMap();
-        /*
-        SupportMapFragment fragment2 = new SupportMapFragment() {
-            @Override
-            public void onActivityCreated(Bundle savedInstanceState) {
-                super.onActivityCreated(savedInstanceState);
-
-                centerTheMap();
-            }
-        };
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.map, fragment2).commit();
-        */
-
     }
 
     public void addFavoris() {
         ContentValues myValue = new ContentValues();
 
-        myValue.put("libelle"       , libEquip);
-        myValue.put("id_equipement" , idEquip);
+        myValue.put("libelle", libEquip);
+        myValue.put("id_equipement", idEquip);
         myValue.put("xml_equipement", Config.xml_id);
 
 
@@ -542,7 +516,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         Log.d("myTag", "xml id : " + Config.xml_id);
 
 //        if (idEquip==0) {
-            myDbHelper.deleteFavorisXml(Config.xml_id);
+        myDbHelper.deleteFavorisXml(Config.xml_id);
   /*      }else{
             myDbHelper.deleteFavoris(String.valueOf(idEquip));
         }
@@ -597,7 +571,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
             try {
                 URL url;
 
-                url = new URL(Config.urlDomaine+"equipements.php?version=" + Config.VERSION_API + "&ids=" + Config.xml_id);
+                url = new URL(Config.urlDomaine + "equipements.php?version=" + Config.VERSION_API + "&ids=" + Config.xml_id);
 
                 URLConnection connection = url.openConnection();
 
@@ -608,8 +582,8 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
                 ContentValues myValue = new ContentValues();
 
-                contenu             = "";
-                String complement   = "";
+                contenu = "";
+                String complement = "";
                 int flag_complement = 0;
 
                 for (int i = 0; i < descNodes.getLength(); i++) {
@@ -633,35 +607,35 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                             contenu += listNode.item(j).getTextContent() + "<br>";
 
                         } else if (listNode.item(j).getNodeName().equals("site_web")) {
-                            if (listNode.item(j).getTextContent().length()>0) {
+                            if (listNode.item(j).getTextContent().length() > 0) {
                                 contenu += "Site web : <a href='" + listNode.item(j).getTextContent() + "'>" + listNode.item(j).getTextContent() + "</a><br>";
                             }
                         } else if (listNode.item(j).getNodeName().equals("email")) {
-                            if (listNode.item(j).getTextContent().length()>0) {
+                            if (listNode.item(j).getTextContent().length() > 0) {
                                 contenu += "Email : <a href='mailto:" + listNode.item(j).getTextContent() + "'>" + listNode.item(j).getTextContent() + "</a><br>";
                             }
                         } else if (listNode.item(j).getNodeName().equals("telephone")) {
-                            if (listNode.item(j).getTextContent().length()>0) {
+                            if (listNode.item(j).getTextContent().length() > 0) {
                                 contenu += "Tel : <a href='tel:" + listNode.item(j).getTextContent() + "'>" + listNode.item(j).getTextContent() + "</a><br>";
                             }
                         } else if (listNode.item(j).getNodeName().equals("longitude")) {
-                            if (listNode.item(j).getTextContent().length()>0) {
+                            if (listNode.item(j).getTextContent().length() > 0) {
                                 longitude = Float.valueOf(listNode.item(j).getTextContent());
                             }
                         } else if (listNode.item(j).getNodeName().equals("latitude")) {
-                            if (listNode.item(j).getTextContent().length()>0) {
+                            if (listNode.item(j).getTextContent().length() > 0) {
                                 latitude = Float.valueOf(listNode.item(j).getTextContent());
                             }
                         } else if (listNode.item(j).getNodeName().equals("horaires")) {
-                            contenu  += listNode.item(j).getTextContent() + "<br>";
+                            contenu += listNode.item(j).getTextContent() + "<br>";
 
                         } else if (listNode.item(j).getNodeName().equals("fermeture_exceptionnelle")) {
-                            contenu  += listNode.item(j).getTextContent() + "<br>";
+                            contenu += listNode.item(j).getTextContent() + "<br>";
 
                         } else if (listNode.item(j).getNodeName().equals("afficher_complement_info")) {
-                            if (listNode.item(j).getTextContent().length()>0) {
+                            if (listNode.item(j).getTextContent().length() > 0) {
                                 flag_complement = 1;
-                            }else{
+                            } else {
                                 flag_complement = 0;
                             }
 
@@ -671,12 +645,12 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                     }
                 }
 
-                if (flag_complement==1) {
+                if (flag_complement == 1) {
                     contenu += complement;
                 }
 
 
-                if (latitude==0) {
+                if (latitude == 0) {
                     checkGeocodeur();
                 }
 
@@ -697,8 +671,9 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     class myAsyncTask2 extends AsyncTask<Void, Void, Void> {
         TextView tv;
 
-        myAsyncTask2()    {
+        myAsyncTask2() {
         }
+
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -709,7 +684,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
             myTitreEquipement.setText(Config.formatLastWord(libEquip));
 
-            WebView myTexte  = (WebView) findViewById(R.id.description);
+            WebView myTexte = (WebView) findViewById(R.id.description);
             WebSettings settings = myTexte.getSettings();
             settings.setDefaultTextEncodingName("utf-8");
 
@@ -731,27 +706,25 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
         @Override
         protected Void doInBackground(Void... params) {
-            Log.d("myTag", "Config.flagContentEquip : " + Config.flagContentEquip);
+            if (Config.flagContentEquip == 1) {
 
+                idEquip = 0;
 
-            if (Config.flagContentEquip==1) {
-
-                idEquip     = 0;
+                myPicto = Config.myContentValue.get("picto").toString();
 
                 try {
-                    libEquip    = Config.myContentValue.get("titre").toString();
+                    libEquip = Config.myContentValue.get("titre").toString();
                 } catch (Exception e) {}
                 try {
-                    contenu     = Config.myContentValue.get("adresse").toString() + "<br>";
+                    contenu = Config.myContentValue.get("adresse").toString() + "<br>";
                 } catch (Exception e) {}
                 try {
-                    myAdresse   = Config.myContentValue.get("adresse").toString();
+                    myAdresse = Config.myContentValue.get("adresse").toString();
                 } catch (Exception e) {}
 
                 try {
                     contenu += Config.myContentValue.get("code_postal").toString() + " " + Config.myContentValue.get("ville").toString() + "<br>";
-
-                    myCp    = Config.myContentValue.get("code_postal").toString();
+                    myCp = Config.myContentValue.get("code_postal").toString();
                     myVille = Config.myContentValue.get("ville").toString();
 
                 } catch (Exception e) {
@@ -774,7 +747,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                     }
                 } catch (Exception e) {
                 }
-
                 try {
                     if (Config.myContentValue.get("horaires").toString().length() > 0) {
                         contenu += Config.myContentValue.get("horaires").toString() + "<br>";
@@ -808,17 +780,17 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                 }
 
                 try {
-                   Config.xml_id = Config.myContentValue.get("xml_id").toString();
+                    Config.xml_id = Config.myContentValue.get("xml_id").toString();
                 } catch (Exception e) {
                 }
 
                 return null;
 
 
-            }else {
+            } else {
                 Cursor c;
                 int flagTemp = 0;
-                idEquip      = 0;
+                idEquip = 0;
 
 
                 if (Config.xml_id.length() > 0) {
@@ -832,7 +804,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                         while (c.moveToNext()) {
                             flagTemp = 1;
                             try {
-                                idEquip  = c.getInt(13);
+                                idEquip = c.getInt(13);
                             } catch (Exception e) {
                             }
                             try {
@@ -841,14 +813,14 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                             }
 
                             try {
-                                contenu     = c.getString(1) + "<br>";
-                                myAdresse   = c.getString(1);
+                                contenu = c.getString(1) + "<br>";
+                                myAdresse = c.getString(1);
                             } catch (Exception e) {
                             }
                             try {
                                 contenu += c.getString(2) + " " + c.getString(3) + "<br>";
-                                myCp        = c.getString(2);
-                                myVille     = c.getString(3);
+                                myCp = c.getString(2);
+                                myVille = c.getString(3);
                             } catch (Exception e) {
                             }
                             try {
@@ -910,11 +882,11 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
                         }
 
-                        if (latitude==0) {
+                        if (latitude == 0) {
                             checkGeocodeur();
                         }
 
-                        if (flagTemp==0) {
+                        if (flagTemp == 0) {
                             loadEquipFromXml(Config.xml_id);
                         }
                     }

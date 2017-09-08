@@ -1,4 +1,5 @@
 package air.com.c2is.villedelyon;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -58,10 +59,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * A placeholder fragment containing a simple view.
  */
 public class ListTypeFragment extends Fragment {
-    protected DataBaseHelper    myDbHelper;
-    public LinearLayout         myChargement;
-    public TextView             myChargementText;
-    public ListView             mylistview;
+    protected DataBaseHelper myDbHelper;
+    public LinearLayout myChargement;
+    public TextView myChargementText;
+    public ListView mylistview;
     public ArrayList<HashMap<String, Object>> listItems;
     public int flagTypeToEquip;
     public int flagDirectEquipement;
@@ -82,26 +83,26 @@ public class ListTypeFragment extends Fragment {
         if (Config.MENU_ACTIVITE == 1) {
             if (Config.CODE_DE_MON_ACTIVITE == 3) {
                 str_tag = getResources().getString(R.string.libHomeBt1) + "/" + getResources().getString(R.string.libMenu1_3);
-            }else if (Config.CODE_DE_MON_ACTIVITE == 2) {
+            } else if (Config.CODE_DE_MON_ACTIVITE == 2) {
                 str_tag = getResources().getString(R.string.libHomeBt1) + "/" + getResources().getString(R.string.libMenu1_2);
-            }else {
+            } else {
                 str_tag = getResources().getString(R.string.libHomeBt1) + "/" + getResources().getString(R.string.libMenu1_1);
             }
-        }else if (Config.MENU_ACTIVITE == 3) {
+        } else if (Config.MENU_ACTIVITE == 3) {
             if (Config.CODE_DE_MON_ACTIVITE == 3) {
                 str_tag = getResources().getString(R.string.libHomeBt3) + "/" + getResources().getString(R.string.libMenu3_3);
-            }else if (Config.CODE_DE_MON_ACTIVITE == 2) {
+            } else if (Config.CODE_DE_MON_ACTIVITE == 2) {
                 str_tag = getResources().getString(R.string.libHomeBt3) + "/" + getResources().getString(R.string.libMenu3_2);
-            }else {
+            } else {
                 str_tag = getResources().getString(R.string.libHomeBt3) + "/" + getResources().getString(R.string.libMenu3_1);
             }
 
-        }else if (Config.MENU_ACTIVITE == 6) {
+        } else if (Config.MENU_ACTIVITE == 6) {
             if (Config.CODE_DE_MON_ACTIVITE == 3) {
                 str_tag = getResources().getString(R.string.libHomeBt6) + "/" + getResources().getString(R.string.libMenu6_3);
-            }else if (Config.CODE_DE_MON_ACTIVITE == 2) {
+            } else if (Config.CODE_DE_MON_ACTIVITE == 2) {
                 str_tag = getResources().getString(R.string.libHomeBt6) + "/" + getResources().getString(R.string.libMenu6_2);
-            }else {
+            } else {
                 str_tag = getResources().getString(R.string.libHomeBt6) + "/" + getResources().getString(R.string.libMenu6_1);
             }
         }
@@ -112,23 +113,23 @@ public class ListTypeFragment extends Fragment {
     }
 
     @Override
-     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         setGoogleAnalytics();
 
-        Config.pointCarto   = new ArrayList<HashMap<String, Object>>();
-        flagTypeToEquip     = 0;
-        flagDirectEquipement= 0;
-        View rootView       = inflater.inflate(R.layout.fragment_list_type, container, false);
+        Config.pointCarto = new ArrayList<HashMap<String, Object>>();
+        flagTypeToEquip = 0;
+        flagDirectEquipement = 0;
+        View rootView = inflater.inflate(R.layout.fragment_list_type, container, false);
         Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");
 
-        myChargement        =  (LinearLayout) rootView.findViewById(R.id.myChargement);
-        myChargementText    =  (TextView) rootView.findViewById(R.id.myChargementText);
+        myChargement = (LinearLayout) rootView.findViewById(R.id.myChargement);
+        myChargementText = (TextView) rootView.findViewById(R.id.myChargementText);
 
         LinearLayout layLyonDirect = (LinearLayout) rootView.findViewById(R.id.layLyonDirect);
 
-        if (Config.CODE_DE_MON_ACTIVITE==6) {
-            if (Config.MENU_ACTIVITE==1) {
+        if (Config.CODE_DE_MON_ACTIVITE == 6) {
+            if (Config.MENU_ACTIVITE == 1) {
                 Button btLyonDirect = (Button) rootView.findViewById(R.id.btLyonDirect);
                 btLyonDirect.setTypeface(myTypeface);
 
@@ -147,99 +148,94 @@ public class ListTypeFragment extends Fragment {
         myChargementText.setTypeface(myTypeface);
 
 
-
         mylistview = (ListView) rootView.findViewById(R.id.mylistview);
 
         mylistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-
-                if (flagTypeToEquip==1) {
+                if (flagTypeToEquip == 1) {
                     Config.sql_sous_type = listItems.get(position).get("slug").toString();
+
                     Config.myFragment.loadFragment(listItems.get(position).get("slug").toString());
                     Config.myFragment.setModeListe(listItems.get(position).get("mode_liste").toString());
+                    Config.flagForceRetour = 1;
 
-                    Config.flagForceRetour      = 1;
-
-                    if (Config.flagBisRetour==1) {
+                    if (Config.flagBisRetour == 1) {
                         Config.fragToReload = getResources().getString(R.string.sqlType1_2);
-                    }else if (Config.flagBisRetour==2) {
+                    } else if (Config.flagBisRetour == 2) {
                         Config.fragToReload = getResources().getString(R.string.sqlType1_3);
+                    } else if (Config.flagBisRetour == 4) {
+                        Config.fragToReload = getResources().getString(R.string.sqlType3_3);
                     }
 
-                    if (Config.fragToReload==getResources().getString(R.string.sqlType1_2)) {
+                    if (Config.fragToReload == getResources().getString(R.string.sqlType1_2)) {
                         Config.flagBisRetour = 1;
-                    }else if (Config.fragToReload==getResources().getString(R.string.sqlType1_3)) {
+                    } else if (Config.fragToReload == getResources().getString(R.string.sqlType1_3)) {
                         Config.flagBisRetour = 2;
-                    }else if (Config.fragToReload==getResources().getString(R.string.sqlType3_2)) {
+                    } else if (Config.fragToReload == getResources().getString(R.string.sqlType3_3)) {
+                        Config.flagBisRetour = 4;
+                    } else if (Config.fragToReload == getResources().getString(R.string.sqlType3_2)) {
                         Config.flagBisRetour = 3;
 
                     }
 
-                }else {
-                    Log.d("myTag", "code activite : " + Config.CODE_DE_MON_ACTIVITE + " menu : " +Config.MENU_ACTIVITE);
+                } else {
 
-                    if ((Config.CODE_DE_MON_ACTIVITE == 3) && (Config.MENU_ACTIVITE == 3)) {
-                        Config.myContentValue = listItems.get(position);
-                        Config.flagForceRetour = 1;
-                        Config.myFragment.loadBalade();
-
-                    } else if ((Config.CODE_DE_MON_ACTIVITE == 1) && (Config.MENU_ACTIVITE == 1)) {
-                        Config.actu_titre       = listItems.get(position).get("titre").toString();
-                        Config.actu_telephone   = listItems.get(position).get("mots_clefs").toString();
+                    if ((Config.CODE_DE_MON_ACTIVITE == 1) && (Config.MENU_ACTIVITE == 1)) {
+                        Config.actu_titre = listItems.get(position).get("titre").toString();
+                        Config.actu_telephone = listItems.get(position).get("mots_clefs").toString();
                         goTel();
 
                     } else if ((Config.CODE_DE_MON_ACTIVITE == 5) && (Config.MENU_ACTIVITE == 3)) {
                         Config.myContentValue = listItems.get(position);
                         Config.myFragment.loadIncontrounable();
 
-                    } else if ((Config.CODE_DE_MON_ACTIVITE == 6) && (flagDirectEquipement==1)) {
+                    } else if ((Config.CODE_DE_MON_ACTIVITE == 6) && (flagDirectEquipement == 1)) {
 
-                        Config.flagForceRetour       = 1;
-                        Config.myDemarcheTitre       = listItems.get(position).get("titre").toString();
-                        Config.myDemarcheDesc        = listItems.get(position).get("complement_info").toString();
-                        Config.myDemarcheUid         = listItems.get(position).get("type_associe").toString();
+                        Config.flagForceRetour = 1;
+                        Config.myDemarcheTitre = listItems.get(position).get("titre").toString();
+                        Config.myDemarcheDesc = listItems.get(position).get("complement_info").toString();
+                        Config.myDemarcheUid = listItems.get(position).get("type_associe").toString();
                         Config.myDemarcheLibelleType = listItems.get(position).get("type").toString();
-                        Config.myDemarcheLabel       = listItems.get(position).get("label").toString();
+                        Config.myDemarcheLabel = listItems.get(position).get("label").toString();
 
                         try {
-                            Config.myLabel          = listItems.get(position).get("label").toString();
-                            Config.myId             = listItems.get(position).get("id").toString();
-                            Config.myType           = listItems.get(position).get("type").toString();
+                            Config.myLabel = listItems.get(position).get("label").toString();
+                            Config.myId = listItems.get(position).get("id").toString();
+                            Config.myType = listItems.get(position).get("type").toString();
 
-                            Config.form_civilite	= listItems.get(position).get("form_civilite").toString();
-                            Config.form_nom		    = listItems.get(position).get("form_nom").toString();
-                            Config.form_prenom	    = listItems.get(position).get("form_prenom").toString();
-                            Config.form_tel		    = listItems.get(position).get("form_tel").toString();
-                            Config.form_email		= listItems.get(position).get("form_email").toString();
-                            Config.form_message	    = listItems.get(position).get("form_message").toString();
-                            Config.form_image		= listItems.get(position).get("form_image").toString();
-                            Config.form_loc         = listItems.get(position).get("form_loc").toString();
+                            Config.form_civilite = listItems.get(position).get("form_civilite").toString();
+                            Config.form_nom = listItems.get(position).get("form_nom").toString();
+                            Config.form_prenom = listItems.get(position).get("form_prenom").toString();
+                            Config.form_tel = listItems.get(position).get("form_tel").toString();
+                            Config.form_email = listItems.get(position).get("form_email").toString();
+                            Config.form_message = listItems.get(position).get("form_message").toString();
+                            Config.form_image = listItems.get(position).get("form_image").toString();
+                            Config.form_loc = listItems.get(position).get("form_loc").toString();
 
 
                         } catch (Exception e) {
                         }
 
-                        if (listItems.get(position).get("type_associe").toString().length()>0) {
+                        if (listItems.get(position).get("type_associe").toString().length() > 0) {
                             Config.myFragment.loadDemarche(listItems.get(position).get("type_associe").toString());
-                        }else{
+                        } else {
                             Config.myFragment.loadDemarche("");
                         }
 
-                    } else if (((Config.CODE_DE_MON_ACTIVITE == 3) && (Config.MENU_ACTIVITE == 1))||(flagDirectEquipement==1)) {
-                        if (flagDirectEquipement==1) {
+                    } else if (((Config.CODE_DE_MON_ACTIVITE == 3) && (Config.MENU_ACTIVITE == 1)) || (flagDirectEquipement == 1)) {
+                        if (flagDirectEquipement == 1) {
                             Config.flagContentEquip = 1;
                         }
-                        Config.myContentValue   = listItems.get(position);
-                        Config.sql_type         = listItems.get(position).get("id_equipement").toString();
-                        Config.xml_id           = "";
+                        Config.myContentValue = listItems.get(position);
+                        Config.sql_type = listItems.get(position).get("id_equipement").toString();
+                        Config.xml_id = "";
 
                         Config.myFragment.loadEquipement();
                     }
 
                 }
-
             }
         });
 
@@ -251,13 +247,13 @@ public class ListTypeFragment extends Fragment {
         myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
         try {
             myDbHelper.openDataBase();
-        }catch(SQLException sqle){
+        } catch (SQLException sqle) {
             throw sqle;
         }
 
         Log.d("myTag", "list type fragment");
 
-        if (Config.flagDirectDemarche!=1) {
+        if (Config.flagDirectDemarche != 1) {
             myWebFetch = new myAsyncTask2();
             Config.myWebFetch = myWebFetch;
             myWebFetch.execute();
@@ -269,25 +265,28 @@ public class ListTypeFragment extends Fragment {
     public void showBtCarto() {
         Config.myFragment.showBtCarto(0);
     }
+
     public void hideBtCarto() {
         Config.myFragment.hideBtCarto();
     }
 
     public void showNoResult() {
-       // Log.d("myTag", "showNoResult : " + Config.fragToReload + "/" + Config.sql_sous_type +"/"+ Config.wait_sous_type);
+        // Log.d("myTag", "showNoResult : " + Config.fragToReload + "/" + Config.sql_sous_type +"/"+ Config.wait_sous_type);
 
         myChargementText.setText(getResources().getString(R.string.libVide));
         myChargement.setVisibility(View.VISIBLE);
         mylistview.setVisibility(View.INVISIBLE);
         hideBtCarto();
     }
-    public void showChargement () {
+
+    public void showChargement() {
         myChargementText.setText(getResources().getString(R.string.libChargement2));
         myChargement.setVisibility(View.VISIBLE);
         mylistview.setVisibility(View.INVISIBLE);
 
     }
-   public void hideChargement() {
+
+    public void hideChargement() {
         myChargement.setVisibility(View.GONE);
         mylistview.setVisibility(View.VISIBLE);
     }
@@ -297,10 +296,9 @@ public class ListTypeFragment extends Fragment {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(Config.actu_titre)
                 .setMessage("Souhaitez vous appeler le : " + Config.actu_telephone + " ?")
-                .setPositiveButton("Oui", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Uri smsUri = Uri.parse("tel:"+Config.actu_telephone);
+                        Uri smsUri = Uri.parse("tel:" + Config.actu_telephone);
                         Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
                         startActivityForResult(intent, 15);
                     }
@@ -315,8 +313,7 @@ public class ListTypeFragment extends Fragment {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Lyon en direct")
                 .setMessage("Souhaitez vous appeler le 04 72 10 30 30 ?")
-                .setPositiveButton("Oui", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Uri smsUri = Uri.parse("tel:0472103030");
                         Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
@@ -332,10 +329,10 @@ public class ListTypeFragment extends Fragment {
         if (Config.str_marche_arrondissement != 0) {
             return 1;
         }
-        if (Config.str_marche_jour.length()>0) {
+        if (Config.str_marche_jour.length() > 0) {
             return 1;
         }
-        if (Config.str_marche_theme.length()>0) {
+        if (Config.str_marche_theme.length() > 0) {
             return 1;
         }
 
@@ -344,26 +341,22 @@ public class ListTypeFragment extends Fragment {
 
     public void resetRechercheMarche() {
         Config.str_marche_arrondissement = 0;
-        Config.str_marche_jour           = "";
-        Config.str_marche_theme          = "";
+        Config.str_marche_jour = "";
+        Config.str_marche_theme = "";
 
     }
 
     private Document parseXML(InputStream stream)
-            throws Exception
-    {
+            throws Exception {
         DocumentBuilderFactory objDocumentBuilderFactory = null;
-        DocumentBuilder objDocumentBuilder               = null;
-        Document doc                                     = null;
-        try
-        {
-            objDocumentBuilderFactory   = DocumentBuilderFactory.newInstance();
-            objDocumentBuilder          = objDocumentBuilderFactory.newDocumentBuilder();
+        DocumentBuilder objDocumentBuilder = null;
+        Document doc = null;
+        try {
+            objDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
+            objDocumentBuilder = objDocumentBuilderFactory.newDocumentBuilder();
 
             doc = objDocumentBuilder.parse(stream);
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             throw ex;
         }
 
@@ -376,33 +369,30 @@ public class ListTypeFragment extends Fragment {
         int kill3G;
         SimpleAdapter mSchedule;
 
-        myAsyncTask2()    {
+        myAsyncTask2() {
         }
-        @Override
-        protected void onPostExecute(Void result)
-        {
-            super.onPostExecute(result);
 
-            Log.d("myTag", "onPostExecute listtypefrag");
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
 
             Config.myFragment.majEtatBtCarto();
 
             mylistview.setAdapter(null);
             mylistview.setAdapter(mSchedule);
 
-            if (kill3G==0) {
+            if (kill3G == 0) {
                 if (listItems.size() == 0) {
                     myWebFetch.cancel(true);
                     Config.MENU_ACTIVITE = 1;
 
                     if (Config.CODE_DE_MON_ACTIVITE != 5) {
                         if ((Config.MENU_ACTIVITE == 1) || (Config.MENU_ACTIVITE == 3) || (Config.MENU_ACTIVITE == 6)) {
-                            if (Config.wait_sous_type!="") {
+                            if (Config.wait_sous_type != "") {
                                 Config.fragToReload = Config.wait_sous_type;
                                 Config.sql_sous_type = Config.wait_sous_type;
                                 Config.myFragment.loadFragment(Config.sql_sous_type);
                                 Config.resetFragment();
-                                Log.d("myTag", "je suis dans le reloader");
                             }
                         }
                     }
@@ -412,6 +402,11 @@ public class ListTypeFragment extends Fragment {
                 } else {
                     hideChargement();
 
+                    if (Config.myFragment.flagCarto==1) {
+                        Config.myFragment.showCarto();
+                        Config.myFragment.showBtCarto(0);
+                    }
+
                     if (Config.sql_type.equals("lieux-frais-en-cas-de-fortes-chaleurs")) {
                         Config.myFragment.loadCarto();
                     }
@@ -419,17 +414,15 @@ public class ListTypeFragment extends Fragment {
 
                 resetRechercheMarche();
 
-                Log.d("myTag", "victory list : " + listItems.size() + "/" + flag);
                 flag++;
             }
         }
 
         @Override
         protected void onPreExecute() {
-            Log.d("myTag", "onPreExecute");
             super.onPreExecute();
-            flag    = 0;
-            kill3G  = 0;
+            flag = 0;
+            kill3G = 0;
         }
 
 
@@ -437,35 +430,27 @@ public class ListTypeFragment extends Fragment {
         protected Void doInBackground(Void... params) {
             listItems = new ArrayList<HashMap<String, Object>>();
 
-            Log.d("myTag", "doInBackground");
-
-
             try {
                 HashMap<String, Object> item;
 
                 Cursor c;
-                int flagBalade      = 0;
-                int flagUrgence     = 0;
-                int flagInc         = 0;
-                int flagEq          = 0;
+                int flagBalade = 0;
+                int flagUrgence = 0;
+                int flagInc = 0;
+                int flagEq = 0;
                 int flagDemarcheXML = 0;
-                int flagTri         = 0;
+                int flagTri = 0;
 
-                if (Config.sql_sous_type.length()>0) {
+                if (Config.sql_sous_type.length() > 0) {
                     Config.wait_sous_type = Config.sql_sous_type;
                 }
 
-                Log.d("myTag", "code type : " + Config.CODE_DE_MON_ACTIVITE);
-
                 // >> numéro d'urgence
-                if ((Config.CODE_DE_MON_ACTIVITE==1)&&(Config.MENU_ACTIVITE==1)) {
-                    c           = myDbHelper.loadUrgence();
+                if ((Config.CODE_DE_MON_ACTIVITE == 1) && (Config.MENU_ACTIVITE == 1)) {
+                    c = myDbHelper.loadUrgence();
                     flagUrgence = 1;
 
-                }else {
-
-                    //if ((Config.CODE_DE_MON_ACTIVITE==5)&&(Config.MENU_ACTIVITE==1)) {      // EVTS
-
+                } else {
                     if (Config.sql_type.equals(getResources().getString(R.string.sqlBalade))) {
                         flagBalade = 1;
                         c = myDbHelper.loadBalade();
@@ -478,7 +463,7 @@ public class ListTypeFragment extends Fragment {
                         flagEq = 1;
                         c = myDbHelper.loadEquipementFromType(Config.sql_type);
 
-                    }else if (Config.sql_sous_type.length()>0) {
+                    } else if (Config.sql_sous_type.length() > 0) {
 
                         flagEq = 1;
                         c = myDbHelper.loadEquipementFromType(Config.sql_sous_type);
@@ -489,9 +474,9 @@ public class ListTypeFragment extends Fragment {
                         StrictMode.setThreadPolicy(policy);
 
                         try {
-                            String str_url = Config.urlDomaine+"equipements.php?version="+Config.VERSION_API+"&type="+Config.sql_type;
+                            String str_url = Config.urlDomaine + "equipements.php?version=" + Config.VERSION_API + "&type=" + Config.sql_type;
 
-                            Log.wtf("myTag", "je rentre dans le sous type : " + str_url);
+                            Log.wtf("myPicto",str_url);
 
                             URL url = new URL(str_url);
                             URLConnection connection = url.openConnection();
@@ -501,13 +486,13 @@ public class ListTypeFragment extends Fragment {
                             NodeList descNodes = doc.getElementsByTagName("equipement");
                             NodeList listChamps;
 
-                            for(int i=0; i<descNodes.getLength();i++) {
+                            for (int i = 0; i < descNodes.getLength(); i++) {
                                 HashMap<String, Object> mapping = new HashMap<String, Object>();
-                                Node courant        = descNodes.item(i);
-                                NodeList listNode   = courant.getChildNodes();
+                                Node courant = descNodes.item(i);
+                                NodeList listNode = courant.getChildNodes();
                                 int flagOk = 1;
 
-                                String tempLat  = "";
+                                String tempLat = "";
                                 String tempLong = "";
 
                                 for (int j = 0; j < listNode.getLength(); j++) {
@@ -519,10 +504,12 @@ public class ListTypeFragment extends Fragment {
                                     } else if (listNode.item(j).getNodeName().equals("latitude")) {
                                         mapping.put("latitude", listNode.item(j).getTextContent());
                                         tempLat = listNode.item(j).getTextContent();
+                                    } else if (listNode.item(j).getNodeName().equals("pictos")) {
+                                        mapping.put("picto", listNode.item(j).getTextContent());
 
-                                    }else if (listNode.item(j).getNodeName().equals("form_titre")) {
+                                    } else if (listNode.item(j).getNodeName().equals("form_titre")) {
 
-                                        NodeList temp        = listNode.item(j).getChildNodes();
+                                        NodeList temp = listNode.item(j).getChildNodes();
                                         for (int k = 0; k < temp.getLength(); k++) {
 
                                             if (temp.item(k).getNodeName().equals("label")) {
@@ -551,24 +538,18 @@ public class ListTypeFragment extends Fragment {
                                         mapping.put("form_image", listNode.item(j).getTextContent());
                                     } else if (listNode.item(j).getNodeName().equals("form_loc")) {
                                         mapping.put("form_loc", listNode.item(j).getTextContent());
-
-
                                     } else if (listNode.item(j).getNodeName().equals("code_postal")) {
                                         mapping.put("code_postal", listNode.item(j).getTextContent());
                                     } else if (listNode.item(j).getNodeName().equals("ville")) {
                                         mapping.put("ville", listNode.item(j).getTextContent());
                                     } else if (listNode.item(j).getNodeName().equals("email")) {
                                         mapping.put("email", listNode.item(j).getTextContent());
-
                                     } else if (listNode.item(j).getNodeName().equals("site_web")) {
                                         mapping.put("site_web", listNode.item(j).getTextContent());
-
                                     } else if (listNode.item(j).getNodeName().equals("horaires")) {
                                         mapping.put("horaires", listNode.item(j).getTextContent());
-
                                     } else if (listNode.item(j).getNodeName().equals("fermeture_exceptionnelle")) {
                                         mapping.put("fermeture_exceptionnelle", listNode.item(j).getTextContent());
-
                                     } else if (listNode.item(j).getNodeName().equals("afficher_complement_info")) {
                                         mapping.put("afficher_complement_info", listNode.item(j).getTextContent());
                                     } else if (listNode.item(j).getNodeName().equals("adresse")) {
@@ -594,8 +575,8 @@ public class ListTypeFragment extends Fragment {
                                 if (gps.canGetLocation()) {
                                     Location location = new Location("");
 
-                                    if (tempLat.length()>0) {
-                                        location.setLatitude(Double.parseDouble(tempLat) );
+                                    if (tempLat.length() > 0) {
+                                        location.setLatitude(Double.parseDouble(tempLat));
                                         location.setLongitude(Double.parseDouble(tempLong));
                                     }
 
@@ -605,7 +586,7 @@ public class ListTypeFragment extends Fragment {
                                     } catch (Exception e) {
                                         mapping.put("distance", 0);
                                     }
-                                }else{
+                                } else {
                                     gps.showSettingsAlert();
                                 }
 
@@ -616,15 +597,13 @@ public class ListTypeFragment extends Fragment {
                         }
 
                     } else {
-                        Log.d("myTag", "je rentre dans le else final");
-
                         flagTypeToEquip = 1;
                         c = myDbHelper.loadType(Config.sql_type);
                     }
                 }
                 int flagKo = 0;
 
-                if ((flagDemarcheXML==0)&&(flagDirectEquipement!=1)) {
+                if ((flagDemarcheXML == 0) && (flagDirectEquipement != 1)) {
                     try {
                         if (c != null) {
 
@@ -634,16 +613,16 @@ public class ListTypeFragment extends Fragment {
                                 flagKo = 0;
 
                                 if (flagBalade == 1) {
-                                    item.put("titre"        , c.getString(0));
-                                    item.put("content"      , c.getString(1));
-                                    item.put("visuel"       , c.getString(2));
-                                    item.put("tetiaire"     , c.getString(3));
-                                    item.put("tetiaire_hd"  , c.getString(4));
-                                    item.put("points"       , c.getString(5));
+                                    item.put("titre", c.getString(0));
+                                    item.put("content", c.getString(1));
+                                    item.put("visuel", c.getString(2));
+                                    item.put("tetiaire", c.getString(3));
+                                    item.put("tetiaire_hd", c.getString(4));
+                                    item.put("points", c.getString(5));
 
                                 } else if (flagUrgence == 1) {
-                                    item.put("titre"        , c.getString(0));
-                                    item.put("mots_clefs"   , c.getString(1));
+                                    item.put("titre", c.getString(0));
+                                    item.put("mots_clefs", c.getString(1));
                                 } else if (flagEq == 1) {
 
                                     if (Config.str_marche_theme.length() > 0) {
@@ -683,15 +662,22 @@ public class ListTypeFragment extends Fragment {
 
                                     try {
                                         item.put("titre", c.getString(0));
-                                        } catch (Exception e) { flagKo = 1; }
+                                    } catch (Exception e) {
+                                        flagKo = 1;
+                                    }
                                     try {
                                         item.put("longitude", c.getDouble(1));
-                                        } catch (Exception e) { flagKo = 1; }
+                                    } catch (Exception e) {
+                                        flagKo = 1;
+                                    }
                                     try {
                                         item.put("latitude", c.getDouble(2));
-                                        } catch (Exception e) { flagKo = 1; }
+                                    } catch (Exception e) {
+                                        flagKo = 1;
+                                    }
 
-                                    if (Config.flag_tri_geoloc==1) {
+
+                                    if (Config.flag_tri_geoloc == 1) {
                                         if (gps.canGetLocation()) {
                                             Location location = new Location("");
 
@@ -704,26 +690,34 @@ public class ListTypeFragment extends Fragment {
                                             } catch (Exception e) {
                                                 item.put("distance", 0);
                                             }
-                                        }else{
+                                        } else {
                                             gps.showSettingsAlert();
                                         }
-                                    }else{
+                                    } else {
                                         item.put("distance", 0);
                                     }
 
 
                                     try {
                                         item.put("id_equipement", c.getString(3));
-                                        } catch (Exception e) { flagKo = 1; }
+                                    } catch (Exception e) {
+                                        flagKo = 1;
+                                    }
                                     try {
                                         item.put("arrondissement", c.getString(4));
-                                        } catch (Exception e) { flagKo = 1; }
+                                    } catch (Exception e) {
+                                        flagKo = 1;
+                                    }
                                     try {
                                         item.put("jour", c.getString(5));
-                                        } catch (Exception e) { flagKo = 1; }
+                                    } catch (Exception e) {
+                                        flagKo = 1;
+                                    }
                                     try {
                                         item.put("type_associe", c.getString(6));
-                                        } catch (Exception e) { Log.d("myTag", "erreur type_associe"); }
+                                    } catch (Exception e) {
+                                        Log.d("myTag", "erreur type_associe");
+                                    }
                                     try {
                                         item.put("complement_info", c.getString(7));
                                     } catch (Exception e) {
@@ -731,20 +725,20 @@ public class ListTypeFragment extends Fragment {
                                     }
 
                                 } else if (flagInc == 1) {
-                                    item.put("titre"        , c.getString(0));
-                                    item.put("visuel"       , c.getString(1));
-                                    item.put("description"  , c.getString(3));
-                                    item.put("tetiaire"     , c.getString(7));
-                                    item.put("tetiaire_hd"  , c.getString(8));
-                                    item.put("accroche"     , c.getString(2));
+                                    item.put("titre", c.getString(0));
+                                    item.put("visuel", c.getString(1));
+                                    item.put("description", c.getString(3));
+                                    item.put("tetiaire", c.getString(7));
+                                    item.put("tetiaire_hd", c.getString(8));
+                                    item.put("accroche", c.getString(2));
                                     item.put("type_principal", c.getString(9));
 
                                 } else {
-                                    item.put("libelle"      , c.getString(0));
-                                    item.put("slug"         , c.getString(1));
-                                    item.put("mode_liste"   , c.getInt(2));
+                                    item.put("libelle", c.getString(0));
+                                    item.put("slug", c.getString(1));
+                                    item.put("mode_liste", c.getInt(2));
 
-                                    Log.d("myTag", "mode_liste :" + c.getInt(2));
+                                    //Log.wtf("myTag", "mode_liste :" + c.getInt(2));
                                 }
 
                                 if (flagKo == 0) {
@@ -759,7 +753,7 @@ public class ListTypeFragment extends Fragment {
                 }
 
                 // Tri de la liste en fonction de la géolocalisation
-                if (flagTri==1) {
+                if (flagTri == 1) {
                     if (Config.flag_tri_geoloc == 1) {
                         Collections.sort(listItems, new CustomComparator1());
                     }
@@ -767,32 +761,32 @@ public class ListTypeFragment extends Fragment {
 
                 Config.pointCarto = listItems;
 
-                if (flagBalade==1) {
+                if (flagBalade == 1) {
                     mSchedule = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itembalade,
                             new String[]{"titre", "visuel", "content"},
                             new int[]{R.id.titre, R.id.imgBalade, R.id.description});
 
                     mSchedule.setViewBinder(new MyViewBinderBalade());
-                }else if (flagUrgence==1) {
+                } else if (flagUrgence == 1) {
                     mSchedule = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itemurgence,
                             new String[]{"titre", "mots_clefs"},
                             new int[]{R.id.titre, R.id.numero});
 
                     mSchedule.setViewBinder(new MyViewBinderUrgence());
-                }else if (flagEq==1) {
+                } else if (flagEq == 1) {
                     mSchedule = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itemdefault,
                             new String[]{"titre"},
                             new int[]{R.id.titre});
 
                     mSchedule.setViewBinder(new MyViewBinderDefault());
 
-                }else if (flagInc==1) {
+                } else if (flagInc == 1) {
                     mSchedule = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itemevt,
-                            new String[]{"titre",  "accroche", "type_principal", "visuel"},
-                            new int[]{R.id.titreEvtListe,  R.id.accroche, R.id.type, R.id.imgactualite});
+                            new String[]{"titre", "accroche", "type_principal", "visuel"},
+                            new int[]{R.id.titreEvtListe, R.id.accroche, R.id.type, R.id.imgactualite});
 
                     mSchedule.setViewBinder(new MyViewBinderIncontournable());
-                }else {
+                } else {
                     mSchedule = new SimpleAdapter(Config.myHome.getBaseContext(), listItems, R.layout.itemdefault,
                             new String[]{"libelle", "slug"},
                             new int[]{R.id.titre, R.id.texte});
@@ -829,14 +823,15 @@ public class ListTypeFragment extends Fragment {
             try {
                 val1 = Float.parseFloat(arg0.get("distance").toString());
                 val2 = Float.parseFloat(arg1.get("distance").toString());
-            } catch (Exception e) { }
+            } catch (Exception e) {
+            }
 
-            if (val1==val2) {
+            if (val1 == val2) {
                 return 0;
 
-            }else if (val1<val2) {
+            } else if (val1 < val2) {
                 return -1;
-            }else{
+            } else {
                 return 1;
 
             }

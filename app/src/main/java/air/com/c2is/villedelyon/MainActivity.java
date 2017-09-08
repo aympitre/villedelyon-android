@@ -67,20 +67,22 @@ public class MainActivity extends Activity {
     public MediaPlayer mp;
     public SharedPreferences sharedPref;
     public Button myBt1;
-    PendingIntent       pi;
-    BroadcastReceiver   br;
-    AlarmManager        am;
+    PendingIntent pi;
+    BroadcastReceiver br;
+    AlarmManager am;
     public int flagNotif;
 
-    public static GoogleAnalytics   analytics;
-    public static Tracker           tracker;
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
 
     final static private long ONE_SECOND = 1000;
     final static private long TPSALARM = ONE_SECOND * 10;
     public GoogleCloudMessaging gcm;
     private AlarmManagerBroadcastReceiver alarm;
 
-    /** * Cette méthode permet l'enregistrement du terminal */
+    /**
+     * Cette méthode permet l'enregistrement du terminal
+     */
     private void registerInBackground() {
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -102,7 +104,7 @@ public class MainActivity extends Activity {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
 
-                    URL url = new URL("http://appvilledelyon.c2is.fr/register_app.php?token="+regId);
+                    URL url = new URL("http://appvilledelyon.c2is.fr/register_app.php?token=" + regId);
                     URLConnection connection2 = url.openConnection();
 
                 } catch (IOException ex) {
@@ -142,7 +144,7 @@ public class MainActivity extends Activity {
         final SharedPreferences prefs = getSharedPreferences("vdl", Context.MODE_PRIVATE);
         String strAlert = prefs.getString("alert_vdl", "");
 
-        if(strAlert.equalsIgnoreCase("aymeric")) {
+        if (strAlert.equalsIgnoreCase("aymeric")) {
 
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_notif)
@@ -168,7 +170,7 @@ public class MainActivity extends Activity {
                     .show();
 
 
-            SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("alert_vdl", "");
             editor.commit();
@@ -185,8 +187,8 @@ public class MainActivity extends Activity {
 
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "Oswald-Regular.ttf");
 
-        layChargement   = (LinearLayout) findViewById(R.id.layChargement);
-        layContenu      = (LinearLayout) findViewById(R.id.layContenu);
+        layChargement = (LinearLayout) findViewById(R.id.layChargement);
+        layContenu = (LinearLayout) findViewById(R.id.layContenu);
 
         TextView myChargement = (TextView) findViewById(R.id.libChargement);
         myChargement.setTypeface(myTypeface);
@@ -221,7 +223,7 @@ public class MainActivity extends Activity {
         myBt7.setTypeface(myTypeface);
         myBt8.setTypeface(myTypeface);
 
-        ImageButton myBtParam   = (ImageButton) findViewById(R.id.bt_param);
+        ImageButton myBtParam = (ImageButton) findViewById(R.id.bt_param);
 
         ImageButton myBtFavoris = (ImageButton) findViewById(R.id.bt_favoris);
         myBtParam.setOnClickListener(
@@ -316,7 +318,7 @@ public class MainActivity extends Activity {
             throw new Error("Unable to create database");
         }
 
-       // hideChargement();
+        // hideChargement();
 
         checkMajBdd();
 
@@ -324,23 +326,23 @@ public class MainActivity extends Activity {
         try {
             myDbHelper.openDataBase();
             Log.d("myTag", "ouverture bdd ok");
-        }catch(SQLException sqle){
+        } catch (SQLException sqle) {
             Log.d("myTag", "ouverture bdd KO");
             throw sqle;
         }
 
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
 
-        sharedPref             = this.getSharedPreferences("vdl", Context.MODE_PRIVATE);
+        sharedPref = this.getSharedPreferences("vdl", Context.MODE_PRIVATE);
         Config.flag_tri_geoloc = sharedPref.getInt("flag_geoloc", 1);
 
         resetRetour();
     }
 
     public void resetRetour() {
-        Config.flagDemarche     = 0;
-        Config.flagForceRetour  = 0;
-        Config.flagBisRetour    = 0;
+        Config.flagDemarche = 0;
+        Config.flagForceRetour = 0;
+        Config.flagBisRetour = 0;
     }
 
     public void goReveilOn() {
@@ -379,8 +381,8 @@ public class MainActivity extends Activity {
                 MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
         String tempo = prefs.getString("time_maj_vdl", "");
 
-        Calendar actu   = Calendar.getInstance();
-        long actu_long  = actu.getTimeInMillis();
+        Calendar actu = Calendar.getInstance();
+        long actu_long = actu.getTimeInMillis();
         String str_temp = "" + actu_long;
 
         goMajDonnee(str_temp, prefs);
@@ -404,11 +406,11 @@ public class MainActivity extends Activity {
 
     public void goAlarme() {
         Context context = this.getApplicationContext();
-        if(alarm != null){
-           // alarm.setOnetimeTimer(context);
+        if (alarm != null) {
+            // alarm.setOnetimeTimer(context);
             alarm.SetAlarm(context);
 
-        }else{
+        } else {
             Toast.makeText(context, "Alarm is null", Toast.LENGTH_SHORT).show();
         }
 
@@ -475,7 +477,7 @@ public class MainActivity extends Activity {
 
 
     public void notifyUser() {
-        NotificationManager notificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent intent = new Intent(MainActivity.this, Reveil.class);
         Bundle bundle = new Bundle();
@@ -494,16 +496,14 @@ public class MainActivity extends Activity {
         notificationManager.notify(10, notification);
 
 
-
-
     }
 
     public void goInfo() {
-        if (flagChargement==0) {
-            Config.flagDirectMarche     = 0;
-            Config.flagForceRetour      = 0;
-            Config.str_demarche         = "";
-            Config.MENU_ACTIVITE        = 1;
+        if (flagChargement == 0) {
+            Config.flagDirectMarche = 0;
+            Config.flagForceRetour = 0;
+            Config.str_demarche = "";
+            Config.MENU_ACTIVITE = 1;
             Config.CODE_DE_MON_ACTIVITE = 1;
             Intent intent = new Intent(MainActivity.this, ListType.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -511,12 +511,13 @@ public class MainActivity extends Activity {
             //overridePendingTransition(0,0); //0 for no animation
         }
     }
+
     public void goVie() {
-        if (flagChargement==0) {
-            Config.flagDirectMarche     = 0;
-            Config.flagForceRetour      = 0;
-            Config.str_demarche         = "";
-            Config.MENU_ACTIVITE        = 2;
+        if (flagChargement == 0) {
+            Config.flagDirectMarche = 0;
+            Config.flagForceRetour = 0;
+            Config.str_demarche = "";
+            Config.MENU_ACTIVITE = 2;
             Config.CODE_DE_MON_ACTIVITE = 1;
             Intent intent = new Intent(MainActivity.this, ListType.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -524,13 +525,14 @@ public class MainActivity extends Activity {
             //overridePendingTransition(0,0); //0 for no animation
         }
     }
+
     public void goLoisir() {
-        if (flagChargement==0) {
-            Config.codeInterne          = 3;
-            Config.flagDirectMarche     = 0;
-            Config.flagForceRetour      = 0;
-            Config.str_demarche         = "";
-            Config.MENU_ACTIVITE        = 3;
+        if (flagChargement == 0) {
+            Config.codeInterne = 3;
+            Config.flagDirectMarche = 0;
+            Config.flagForceRetour = 0;
+            Config.str_demarche = "";
+            Config.MENU_ACTIVITE = 3;
             Config.CODE_DE_MON_ACTIVITE = 1;
 
             Intent intent = new Intent(MainActivity.this, ListType.class);
@@ -539,22 +541,24 @@ public class MainActivity extends Activity {
             //overridePendingTransition(0,0); //0 for no animation
         }
     }
+
     public void goActualite() {
-        if (flagChargement==0) {
-            Config.str_demarche         = "";
-            Config.flagForceRetour      = 0;
-            Config.MENU_ACTIVITE        = 1;
+        if (flagChargement == 0) {
+            Config.str_demarche = "";
+            Config.flagForceRetour = 0;
+            Config.MENU_ACTIVITE = 1;
             Config.CODE_DE_MON_ACTIVITE = 2;
             Intent intent = new Intent(MainActivity.this, Actualite.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivityForResult(intent, 0);
         }
     }
+
     public void goDetendre() {
-        if (flagChargement==0) {
-            Config.str_demarche         = "";
-            Config.flagForceRetour      = 0;
-            Config.MENU_ACTIVITE        = 1;
+        if (flagChargement == 0) {
+            Config.str_demarche = "";
+            Config.flagForceRetour = 0;
+            Config.MENU_ACTIVITE = 1;
             Config.CODE_DE_MON_ACTIVITE = 3;
 
             Intent intent = new Intent(MainActivity.this, ListType.class);
@@ -563,11 +567,12 @@ public class MainActivity extends Activity {
 
         }
     }
+
     public void goDeplacer() {
-        if (flagChargement==0) {
-            Config.str_demarche         = "";
-            Config.flagForceRetour      = 0;
-            Config.MENU_ACTIVITE        = 1;
+        if (flagChargement == 0) {
+            Config.str_demarche = "";
+            Config.flagForceRetour = 0;
+            Config.MENU_ACTIVITE = 1;
             Config.CODE_DE_MON_ACTIVITE = 4;
             Intent intent = new Intent(MainActivity.this, SeDeplacer.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -575,23 +580,25 @@ public class MainActivity extends Activity {
 
         }
     }
+
     public void goAgenda() {
-        if (flagChargement==0) {
-            Config.str_demarche         = "";
-            Config.flagForceRetour      = 0;
-            Config.MENU_ACTIVITE        = 1;
+        if (flagChargement == 0) {
+            Config.str_demarche = "";
+            Config.flagForceRetour = 0;
+            Config.MENU_ACTIVITE = 1;
             Config.CODE_DE_MON_ACTIVITE = 5;
             Intent intent = new Intent(MainActivity.this, ListType.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivityForResult(intent, 0);
         }
     }
+
     public void goDemarche() {
-        if (flagChargement==0) {
-            Config.MENU_ACTIVITE        = 1;
-            Config.flagForceRetour      = 0;
+        if (flagChargement == 0) {
+            Config.MENU_ACTIVITE = 1;
+            Config.flagForceRetour = 0;
             Config.CODE_DE_MON_ACTIVITE = 6;
-            Config.sql_sous_type        = getResources().getString(R.string.sqlType6_1);
+            Config.sql_sous_type = getResources().getString(R.string.sqlType6_1);
 
             Intent intent = new Intent(MainActivity.this, ListType.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -599,20 +606,22 @@ public class MainActivity extends Activity {
 
         }
     }
+
     public void goSaviez() {
-        if (flagChargement==0) {
+        if (flagChargement == 0) {
             Config.CODE_DE_MON_ACTIVITE = 7;
-            Config.flagForceRetour      = 0;
+            Config.flagForceRetour = 0;
             Intent intent = new Intent(MainActivity.this, LeSaviezVous.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivityForResult(intent, 0);
 
         }
     }
+
     public void goReveil() {
-        if (flagChargement==0) {
+        if (flagChargement == 0) {
             Config.CODE_DE_MON_ACTIVITE = 8;
-            Config.flagForceRetour      = 0;
+            Config.flagForceRetour = 0;
             Intent intent = new Intent(MainActivity.this, Reveil.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivityForResult(intent, 0);
@@ -625,7 +634,8 @@ public class MainActivity extends Activity {
         layChargement.setVisibility(View.GONE);
         layContenu.setVisibility(View.VISIBLE);
     }
-    public void showChargement () {
+
+    public void showChargement() {
         flagChargement = 1;
         layChargement.setVisibility(View.VISIBLE);
         layContenu.setVisibility(View.GONE);
@@ -654,20 +664,16 @@ public class MainActivity extends Activity {
     }
 
     private Document parseXML(InputStream stream)
-            throws Exception
-    {
+            throws Exception {
         DocumentBuilderFactory objDocumentBuilderFactory = null;
-        DocumentBuilder objDocumentBuilder               = null;
-        Document doc                                     = null;
-        try
-        {
-            objDocumentBuilderFactory   = DocumentBuilderFactory.newInstance();
-            objDocumentBuilder          = objDocumentBuilderFactory.newDocumentBuilder();
+        DocumentBuilder objDocumentBuilder = null;
+        Document doc = null;
+        try {
+            objDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
+            objDocumentBuilder = objDocumentBuilderFactory.newDocumentBuilder();
 
             doc = objDocumentBuilder.parse(stream);
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             throw ex;
         }
 
@@ -696,22 +702,28 @@ public class MainActivity extends Activity {
         TextView tv;
         int flag;
 
-        myAsyncTask2()    {
+        myAsyncTask2() {
             flag = 0;
         }
+
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            if (this.flag<6) { //9
+            if (this.flag < 6) { //9
                 myAsyncTask2 myWebFetch = new myAsyncTask2();
-                myWebFetch.flag = this.flag+1;
+                myWebFetch.flag = this.flag + 1;
                 myWebFetch.execute();
-            }else{
+            } else if (this.flag == 10) {
                 hideChargement();
                 myDbHelper.close();
+            } else {
+                myAsyncTask2 myWebFetch = new myAsyncTask2();
+                myWebFetch.flag = 10;
+                myWebFetch.execute();
             }
         }
+
 
         @Override
         protected void onPreExecute() {
@@ -724,56 +736,30 @@ public class MainActivity extends Activity {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                // *** Les sous types
-                if (this.flag==2) {
+              // *** Les sous types
+                if ((this.flag == 2)||(this.flag == 3)||(this.flag == 5)||(this.flag == 10)) {
                     try {
-                        myDbHelper.deleteSousType();
-
                         String tmp_type = getResources().getString(R.string.sqlType1_2);
-                        URL url = new URL(Config.urlDomaine+"soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine + "soustypes.php?type=" + tmp_type + "&version=" + Config.VERSION_API);
 
-                        URLConnection connection = url.openConnection();
-
-                        Document doc = parseXML(connection.getInputStream());
-
-                        NodeList descNodes = doc.getElementsByTagName("soustype");
-                        NodeList listChamps;
-
-                        ContentValues myValue = new ContentValues();
-
-                        for(int i=0; i<descNodes.getLength();i++)
-                        {
-                            Node courant        = descNodes.item(i);
-                            NodeList listNode   = courant.getChildNodes();
-                            for(int j=0; j<listNode.getLength();j++) {
-                                if(listNode.item(j).getNodeName().equals("slug")){
-                                    myValue.put("slug", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("name")){
-                                    myValue.put("libelle", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("mode_liste")){
-                                    myValue.put("mode_liste", listNode.item(j).getTextContent());
-                                }
-                            }
-                            myValue.put("ordre",i);
-                            myValue.put("type", tmp_type);
-
-                            myDbHelper.insertType(myValue);
+                        if (this.flag==2) {
+                            myDbHelper.deleteSousType();
+                            tmp_type = getResources().getString(R.string.sqlType1_2);
+                            url = new URL(Config.urlDomaine + "soustypes.php?type=" + tmp_type + "&version=" + Config.VERSION_API);
+                        }else if (this.flag==3) {
+                            tmp_type = getResources().getString(R.string.sqlType1_3);
+                            url = new URL(Config.urlDomaine + "soustypes.php?type=" + tmp_type + "&version=" + Config.VERSION_API);
+                        }else if (this.flag==10) {
+                            tmp_type = getResources().getString(R.string.sqlType3_3);
+                            url = new URL(Config.urlDomaine + "soustypes.php?type=" + tmp_type + "&version=" + Config.VERSION_API);
+                        }else if (this.flag==5) {
+                            tmp_type = getResources().getString(R.string.sqlType3_2);
+                            url = new URL(Config.urlDomaine + "soustypes.php?type=" + tmp_type + "&version=" + Config.VERSION_API);
                         }
 
-                    } catch (MalformedURLException e) {
-                        Log.d("myTag", "This is my MalformedURLException");
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                        String temp = e.toString();
+                        Log.wtf("myTag", url.toString());
 
-                    }
-                }else if (this.flag==3) {
-                    try {
-                        String tmp_type = getResources().getString(R.string.sqlType1_3);
-                        URL url = new URL(Config.urlDomaine+"soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
                         URLConnection connection = url.openConnection();
-
                         Document doc = parseXML(connection.getInputStream());
 
                         NodeList descNodes = doc.getElementsByTagName("soustype");
@@ -781,20 +767,21 @@ public class MainActivity extends Activity {
 
                         ContentValues myValue = new ContentValues();
 
-                        for(int i=0; i<descNodes.getLength();i++)
-                        {
+                        for (int i = 0; i < descNodes.getLength(); i++) {
                             Node courant = descNodes.item(i);
                             NodeList listNode = courant.getChildNodes();
-                            for(int j=0; j<listNode.getLength();j++) {
-                                if(listNode.item(j).getNodeName().equals("slug")){
+                            for (int j = 0; j < listNode.getLength(); j++) {
+                                if (listNode.item(j).getNodeName().equals("slug")) {
                                     myValue.put("slug", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("name")){
+                                } else if (listNode.item(j).getNodeName().equals("name")) {
                                     myValue.put("libelle", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("mode_liste")){
+                                } else if (listNode.item(j).getNodeName().equals("mode_liste")) {
                                     myValue.put("mode_liste", listNode.item(j).getTextContent());
+//                                } else if (listNode.item(j).getNodeName().equals("description")) {
+  //                                  myValue.put("picto_carto", listNode.item(j).getTextContent());
                                 }
                             }
-                            myValue.put("ordre",i);
+                            myValue.put("ordre", i);
                             myValue.put("type", tmp_type);
 
                             myDbHelper.insertType(myValue);
@@ -808,11 +795,12 @@ public class MainActivity extends Activity {
                         String temp = e.toString();
 
                     }
+
                     // les balades
-                }else if (this.flag==4) {
+                } else if (this.flag == 4) {
 
                     try {
-                        URL url = new URL(Config.urlDomaine+"balades.php?version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine + "balades.php?version=" + Config.VERSION_API);
 
                         URLConnection connection = url.openConnection();
 
@@ -823,26 +811,25 @@ public class MainActivity extends Activity {
 
                         ContentValues myValue = new ContentValues();
 
-                        if (descNodes.getLength()>0) {
+                        if (descNodes.getLength() > 0) {
                             myDbHelper.deleteBalade();
                         }
 
-                        for(int i=0; i<descNodes.getLength();i++)
-                        {
+                        for (int i = 0; i < descNodes.getLength(); i++) {
                             Node courant = descNodes.item(i);
                             NodeList listNode = courant.getChildNodes();
-                            for(int j=0; j<listNode.getLength();j++) {
-                                if(listNode.item(j).getNodeName().equals("title")){
+                            for (int j = 0; j < listNode.getLength(); j++) {
+                                if (listNode.item(j).getNodeName().equals("title")) {
                                     myValue.put("titre", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("content")){
+                                } else if (listNode.item(j).getNodeName().equals("content")) {
                                     myValue.put("content", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("visuel")){
+                                } else if (listNode.item(j).getNodeName().equals("visuel")) {
                                     myValue.put("visuel", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("tetiaire")){
+                                } else if (listNode.item(j).getNodeName().equals("tetiaire")) {
                                     myValue.put("tetiaire", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("tetiaire_hd")){
+                                } else if (listNode.item(j).getNodeName().equals("tetiaire_hd")) {
                                     myValue.put("tetiaire_hd", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("points")){
+                                } else if (listNode.item(j).getNodeName().equals("points")) {
                                     myValue.put("points", listNode.item(j).getTextContent());
                                 }
                             }
@@ -861,11 +848,10 @@ public class MainActivity extends Activity {
                     }
 
 
-
                     // les urgences
-                }else if (this.flag==77) {
+                } else if (this.flag == 77) {
                     try {
-                        URL url = new URL(Config.urlDomaine+"equipements.php?type=urgence&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine + "equipements.php?type=urgence&version=" + Config.VERSION_API);
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -875,18 +861,17 @@ public class MainActivity extends Activity {
 
                         ContentValues myValue = new ContentValues();
 
-                        if (descNodes.getLength()>0) {
+                        if (descNodes.getLength() > 0) {
                             myDbHelper.deleteUrgence();
                         }
 
-                        for(int i=0; i<descNodes.getLength();i++)
-                        {
+                        for (int i = 0; i < descNodes.getLength(); i++) {
                             Node courant = descNodes.item(i);
                             NodeList listNode = courant.getChildNodes();
-                            for(int j=0; j<listNode.getLength();j++) {
-                                if(listNode.item(j).getNodeName().equals("titre")){
+                            for (int j = 0; j < listNode.getLength(); j++) {
+                                if (listNode.item(j).getNodeName().equals("titre")) {
                                     myValue.put("titre", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("mots_clefs")){
+                                } else if (listNode.item(j).getNodeName().equals("mots_clefs")) {
                                     myValue.put("mots_clefs", listNode.item(j).getTextContent());
                                 }
                             }
@@ -905,11 +890,11 @@ public class MainActivity extends Activity {
 
                     }
                     // les evenements incontournables
-                }else if (this.flag==6) {
+                } else if (this.flag == 6) {
 
                     try {
 
-                        URL url = new URL(Config.urlDomaine+"evenements.php?inc=1&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine + "evenements.php?inc=1&version=" + Config.VERSION_API);
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -919,38 +904,37 @@ public class MainActivity extends Activity {
 
                         ContentValues myValue = new ContentValues();
 
-                        if (descNodes.getLength()>0) {
+                        if (descNodes.getLength() > 0) {
                             myDbHelper.deleteIncontrounables();
                         }
 
-                        for(int i=0; i<descNodes.getLength();i++)
-                        {
+                        for (int i = 0; i < descNodes.getLength(); i++) {
                             Node courant = descNodes.item(i);
                             NodeList listNode = courant.getChildNodes();
 
-                            for(int j=0; j<listNode.getLength();j++) {
-                                if(listNode.item(j).getNodeName().equals("titre")){
+                            for (int j = 0; j < listNode.getLength(); j++) {
+                                if (listNode.item(j).getNodeName().equals("titre")) {
                                     myValue.put("titre", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("visuel_wp")){
+                                } else if (listNode.item(j).getNodeName().equals("visuel_wp")) {
                                     myValue.put("visuel_wp", listNode.item(j).getTextContent());
 
-                                }else if(listNode.item(j).getNodeName().equals("type_principal")){
+                                } else if (listNode.item(j).getNodeName().equals("type_principal")) {
                                     myValue.put("type_principal", listNode.item(j).getTextContent());
 
-                                }else if(listNode.item(j).getNodeName().equals("accroche_detaillee")){
+                                } else if (listNode.item(j).getNodeName().equals("accroche_detaillee")) {
                                     myValue.put("description", listNode.item(j).getTextContent());
 
-                                }else if(listNode.item(j).getNodeName().equals("visuel")){
+                                } else if (listNode.item(j).getNodeName().equals("visuel")) {
                                     myValue.put("visuel", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("site_web")){
+                                } else if (listNode.item(j).getNodeName().equals("site_web")) {
                                     myValue.put("site_web", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("visuel_hd")){
+                                } else if (listNode.item(j).getNodeName().equals("visuel_hd")) {
                                     myValue.put("visuel_hd", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("tetiaire")){
+                                } else if (listNode.item(j).getNodeName().equals("tetiaire")) {
                                     myValue.put("tetiaire", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("tetiaire_hd")){
+                                } else if (listNode.item(j).getNodeName().equals("tetiaire_hd")) {
                                     myValue.put("tetiaire_hd", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("accroche_date_lieu")){
+                                } else if (listNode.item(j).getNodeName().equals("accroche_date_lieu")) {
                                     myValue.put("accroche", listNode.item(j).getTextContent());
                                 }
 
@@ -968,51 +952,13 @@ public class MainActivity extends Activity {
                         String temp = e.toString();
 
                     }
-                }else if (this.flag==5) {
-                    try {
-                        String tmp_type = getResources().getString(R.string.sqlType3_2);
 
-                        URL url = new URL(Config.urlDomaine+"soustypes.php?type="+tmp_type+"&version="+Config.VERSION_API);
-                        URLConnection connection = url.openConnection();
-
-                        Document doc = parseXML(connection.getInputStream());
-
-                        NodeList descNodes = doc.getElementsByTagName("soustype");
-                        NodeList listChamps;
-
-                        ContentValues myValue = new ContentValues();
-
-                        for(int i=0; i<descNodes.getLength();i++)
-                        {
-                            Node courant = descNodes.item(i);
-                            NodeList listNode = courant.getChildNodes();
-                            for(int j=0; j<listNode.getLength();j++) {
-                                if(listNode.item(j).getNodeName().equals("slug")){
-                                    myValue.put("slug", listNode.item(j).getTextContent());
-                                }else if(listNode.item(j).getNodeName().equals("name")){
-                                    myValue.put("libelle", listNode.item(j).getTextContent());
-                                }
-                            }
-                            myValue.put("ordre",i);
-                            myValue.put("type", tmp_type);
-
-                            myDbHelper.insertType(myValue);
-                        }
-
-                    } catch (MalformedURLException e) {
-                        Log.d("myTag", "This is my MalformedURLException");
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                        String temp = e.toString();
-
-                    }
                     // Tous les equipements
-                }else if (this.flag==8) {
+                } else if (this.flag == 8) {
                     try {
                         String str_type = getResources().getString(R.string.sqlType3_1);
 
-                        URL url = new URL(Config.urlDomaine+"equipements.php?type="+str_type+"&version="+Config.VERSION_API);
+                        URL url = new URL(Config.urlDomaine + "equipements.php?type=" + str_type + "&version=" + Config.VERSION_API);
                         URLConnection connection = url.openConnection();
 
                         Document doc = parseXML(connection.getInputStream());
@@ -1078,111 +1024,109 @@ public class MainActivity extends Activity {
 
                     }
                     // Equipements dans liste
-                }else if (this.flag==9) {
+                } else if (this.flag == 9) {
                     myDbHelper.close();
 
                     try {
                         myDbHelper.openDataBase();
-                        Log.d("myTag", "ouverture 3 bdd ok");
-                    }catch(SQLException sqle){
-                        Log.d("myTag", "ouverture 3 bdd KO");
+                    } catch (SQLException sqle) {
                         throw sqle;
                     }
 
                     Cursor c2 = myDbHelper.loadAllType();
 
-                        if (c2 != null) {
-                            while (c2.moveToNext()) {
-                                //Log.d("myTag", "Sous type : " +  c2.getString(0));
-                                String str_type = c2.getString(0);
+                    if (c2 != null) {
+                        while (c2.moveToNext()) {
+                            //Log.d("myTag", "Sous type : " +  c2.getString(0));
+                            String str_type = c2.getString(0);
 
-                                try {
+                            try {
 
-                                    URL url = new URL(Config.urlDomaine+"equipements.php?type="+str_type+"&version="+Config.VERSION_API);
-                                    URLConnection connection = url.openConnection();
+                                URL url = new URL(Config.urlDomaine + "equipements.php?type=" + str_type + "&version=" + Config.VERSION_API);
+                                URLConnection connection = url.openConnection();
 
-                                    Document doc = parseXML(connection.getInputStream());
+                                Document doc = parseXML(connection.getInputStream());
 
-                                    NodeList descNodes = doc.getElementsByTagName("equipement");
-                                    NodeList listChamps;
+                                NodeList descNodes = doc.getElementsByTagName("equipement");
+                                NodeList listChamps;
 
-                                    ContentValues myValue = new ContentValues();
+                                ContentValues myValue = new ContentValues();
 
-                                    for (int i = 0; i < descNodes.getLength(); i++) {
-                                        Node courant = descNodes.item(i);
-                                        NodeList listNode = courant.getChildNodes();
-                                        for (int j = 0; j < listNode.getLength(); j++) {
-                                            if (listNode.item(j).getNodeName().equals("titre")) {
-                                                myValue.put("titre", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("xml_id")) {
-                                                myValue.put("xml_id", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("mots_clefs")) {
-                                                myValue.put("mots_clefs", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("adresse")) {
-                                                myValue.put("adresse", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("code_postal")) {
-                                                myValue.put("code_postal", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("ville")) {
-                                                myValue.put("ville", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("complement_info")) {
-                                                myValue.put("complement_info", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("site_web")) {
-                                                myValue.put("site_web", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("email")) {
-                                                myValue.put("email", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("telephone")) {
-                                                myValue.put("telephone", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("afficher_complement_info")) {
-                                                myValue.put("afficher_complement", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("longitude")) {
-                                                myValue.put("longitude", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("latitude")) {
-                                                myValue.put("latitude", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("horaires")) {
-                                                myValue.put("horaires", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("jour")) {
-                                                myValue.put("jour", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("arrondissement")) {
-                                                myValue.put("arrondissement", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("type_associe")) {
-                                                myValue.put("type_associe", listNode.item(j).getTextContent());
-                                            } else if (listNode.item(j).getNodeName().equals("fermeture_exceptionnelle")) {
-                                                myValue.put("fermeture_exceptionnelle", listNode.item(j).getTextContent());
-                                            }
+                                for (int i = 0; i < descNodes.getLength(); i++) {
+                                    Node courant = descNodes.item(i);
+                                    NodeList listNode = courant.getChildNodes();
+                                    for (int j = 0; j < listNode.getLength(); j++) {
+                                        if (listNode.item(j).getNodeName().equals("titre")) {
+                                            myValue.put("titre", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("xml_id")) {
+                                            myValue.put("xml_id", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("mots_clefs")) {
+                                            myValue.put("mots_clefs", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("adresse")) {
+                                            myValue.put("adresse", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("code_postal")) {
+                                            myValue.put("code_postal", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("ville")) {
+                                            myValue.put("ville", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("complement_info")) {
+                                            myValue.put("complement_info", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("site_web")) {
+                                            myValue.put("site_web", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("email")) {
+                                            myValue.put("email", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("telephone")) {
+                                            myValue.put("telephone", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("afficher_complement_info")) {
+                                            myValue.put("afficher_complement", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("longitude")) {
+                                            myValue.put("longitude", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("latitude")) {
+                                            myValue.put("latitude", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("horaires")) {
+                                            myValue.put("horaires", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("jour")) {
+                                            myValue.put("jour", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("arrondissement")) {
+                                            myValue.put("arrondissement", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("type_associe")) {
+                                            myValue.put("type_associe", listNode.item(j).getTextContent());
+                                        } else if (listNode.item(j).getNodeName().equals("fermeture_exceptionnelle")) {
+                                            myValue.put("fermeture_exceptionnelle", listNode.item(j).getTextContent());
                                         }
-                                        myValue.put("type", str_type);
-
-                                        //myDbHelper.updateUrgence(myValue);
                                     }
+                                    myValue.put("type", str_type);
 
-                                } catch (MalformedURLException e) {
-                                    Log.d("myTag", "This is my MalformedURLException");
-                                } catch (Exception e) {
-                                    Log.d("myTag", "Exception");
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                    String temp = e.toString();
-                                    Log.d("myTag", temp);
-
+                                    //myDbHelper.updateUrgence(myValue);
                                 }
 
+                            } catch (MalformedURLException e) {
+                                Log.d("myTag", "This is my MalformedURLException");
+                            } catch (Exception e) {
+                                Log.d("myTag", "Exception");
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                                String temp = e.toString();
+                                Log.d("myTag", temp);
 
                             }
-                        }
-                    // les demarches
-                }else if (this.flag==7) {
 
-                    String[] tabType = {"et-si","par-organisme","par-demarche"};
+
+                        }
+                    }
+                    // les demarches
+                } else if (this.flag == 7) {
+
+                    String[] tabType = {"et-si", "par-organisme", "par-demarche"};
                     String str_type = "";
 
                     myDbHelper.deleteDemarche();
 
-                    for (int k=0;k<tabType.length;k++) {
+                    for (int k = 0; k < tabType.length; k++) {
                         str_type = tabType[k];
 
                         try {
 
-                            URL url = new URL(Config.urlDomaine+"equipements.php?type=" + str_type + "&version="+Config.VERSION_API);
+                            URL url = new URL(Config.urlDomaine + "equipements.php?type=" + str_type + "&version=" + Config.VERSION_API);
                             URLConnection connection = url.openConnection();
 
                             Document doc = parseXML(connection.getInputStream());
@@ -1255,7 +1199,6 @@ public class MainActivity extends Activity {
                 }
 
 
-
             } catch (Exception e) {
                 //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
                 Log.d("myTag", "catché : " + e.toString());
@@ -1270,7 +1213,7 @@ public class MainActivity extends Activity {
     public void onResume() {
         super.onResume();  // Always call the superclass method first
 
-        if (Config.flag_is_playing==1) {
+        if (Config.flag_is_playing == 1) {
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_notif)
                     .setTitle("Réveil")
@@ -1293,16 +1236,16 @@ public class MainActivity extends Activity {
                     .show();
 
 
-            SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("alert_vdl", "");
             editor.commit();
-        }else{
+        } else {
 
             final SharedPreferences prefs = getSharedPreferences("vdl", Context.MODE_PRIVATE);
             String strAlert = prefs.getString("alert_vdl", "");
 
-            if(strAlert.equalsIgnoreCase("aymeric")) {
+            if (strAlert.equalsIgnoreCase("aymeric")) {
 
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.ic_notif)
@@ -1326,7 +1269,7 @@ public class MainActivity extends Activity {
                         .show();
 
 
-                SharedPreferences sharedPref  = getSharedPreferences("vdl", Context.MODE_PRIVATE);
+                SharedPreferences sharedPref = getSharedPreferences("vdl", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("alert_vdl", "");
                 editor.commit();
@@ -1341,8 +1284,8 @@ public class MainActivity extends Activity {
         Config.showAlertNotif(this);
 
 
-
     }
+
     @Override
     protected void onPause() {
         super.onPause();

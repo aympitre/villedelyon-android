@@ -87,7 +87,7 @@
     <string name="libMenu1_3">LOISIRS</string>
     <string name="libMenu3_1">PARCS &#38; JARDINS</string>
     <string name="libMenu3_2">SPORT</string>
-    <string name="libMenu3_3">BALADES</string>
+    <string name="libMenu3_3">GRANDS PARCS</string>
     <string name="libMenu4_1">A PIED</string>
     <string name="libMenu4_2">A VELO</string>
     <string name="libMenu4_3">EN VOITURE</string>
@@ -103,6 +103,7 @@
     <string name="sqlType1_3">loisirs</string>
     <string name="sqlType3_1">parcs-jardins</string>
     <string name="sqlType3_2">sport</string>
+    <string name="sqlType3_3">grands-parcs</string>
     <string name="sqlType6_1">et-si</string>
     <string name="sqlType6_2">par-organisme</string>
     <string name="sqlType6_3">par-demarche</string>
