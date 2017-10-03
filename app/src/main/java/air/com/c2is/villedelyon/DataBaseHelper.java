@@ -360,6 +360,8 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
 		c = myDataBase.rawQuery("SELECT libelle FROM Favoris WHERE id_equipement="+p_id, null);
 
+		Log.wtf("mylyon", "SELECT libelle FROM Favoris WHERE id_equipement="+p_id);
+
 		if (c.moveToFirst()) {
 			return 1;
 		}
@@ -375,6 +377,8 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 		Cursor c;
 
 		c = myDataBase.rawQuery("SELECT libelle FROM Favoris WHERE type!=2 AND xml_equipement='"+Config.xml_id+"'", null);
+
+		Log.wtf("mylyon", ">> SELECT libelle FROM Favoris WHERE type!=2 AND xml_equipement='"+Config.xml_id);
 
 		if (c.moveToFirst()) {
 			return 1;
@@ -397,7 +401,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 		Cursor c;
 
 		c = myDataBase.rawQuery("SELECT libelle, id_equipement, xml_equipement, type, type_principal, accroche, visuel, description, id_favoris, url, uid, libelle_type, label, id_demarche_serveur FROM Favoris", null);
-
 
 		return c;
 	}

@@ -9,8 +9,8 @@ android {
         applicationId "air.com.c2is.villedelyon"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 2000007
-        versionName "2.7"
+        versionCode 2000009
+        versionName "2.9"
     }
     buildTypes {
         release {

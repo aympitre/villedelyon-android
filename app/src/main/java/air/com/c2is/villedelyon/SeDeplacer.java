@@ -5,7 +5,9 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.ViewGroup;
+
 import java.net.URLDecoder;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -13,6 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,6 +40,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import java.nio.charset.Charset;
 
 import com.facebook.FacebookSdk;
@@ -54,6 +58,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.os.Handler;
 
 public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -85,30 +90,23 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
     public int flagLegende = 0;
 
     public RelativeLayout layLegende;
-    public WebView        description;
-    public ImageButton    btLegende;
+    public WebView description;
+    public ImageButton btLegende;
     public int flagMap = 0;
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
 
-    public String urlAuto       = "https://download.data.grandlyon.com/wfs/grandlyon";
-    public String urlParking    = "http://appvilledelyon.c2is.fr/opendata.php?flag=1";
-    public String urlPmr        = "https://download.data.grandlyon.com/wfs/grandlyon";
+    public String urlAuto = "https://download.data.grandlyon.com/wfs/grandlyon?SERVICE=WFS&VERSION=2.0.0&outputformat=GEOJSON&maxfeatures=30&request=GetFeature&typename=pvo_patrimoine_voirie.pvostationautopartage";
+    public String urlParking = "http://appvilledelyon.c2is.fr/opendata.php?flag=1";
+    public String urlPmr = "https://download.data.grandlyon.com/wfs/grandlyon?SERVICE=WFS&VERSION=2.0.0&outputformat=GEOJSON&maxfeatures=2000&request=GetFeature&typename=vdl_deplacements.emplacement_pmr";
+    public String urlVelov = "http://appvilledelyon.c2is.fr/opendata.php?flag=0";
+    public String urlParcVelo = "https://download.data.grandlyon.com/wfs/grandlyon?SERVICE=WFS&VERSION=2.0.0&outputformat=GEOJSON&maxfeatures=300&request=GetFeature&typename=pvo_patrimoine_voirie.pvostationnementvelo";
 
-    public String urlVelov      = "http://appvilledelyon.c2is.fr/opendata.php?flag=0";
-    public String urlParcVelo   = "https://download.data.grandlyon.com/wfs/grandlyon";
-
-    public List<NameValuePair> nameValuePairAuto;
-    public List<NameValuePair> nameValuePairParking;
-    public List<NameValuePair> nameValuePairPmr;
-    public List<NameValuePair> nameValuePairVelov;
-    public List<NameValuePair> nameValuePairParcVelo;
-
-    public JSONArray contactVelov    = null;
+    public JSONArray contactVelov = null;
     public JSONArray contactParcVelo = null;
     public JSONArray contactsPartage = null;
     public JSONArray contactsParking = null;
-    public JSONArray contactsPmr     = null;
+    public JSONArray contactsPmr = null;
 
     public DialogLoading myDialLoading;
     private static final int MY_LOCATION_REQUEST_CODE = 1;
@@ -130,56 +128,11 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         analytics.setLocalDispatchPeriod(1800);
         tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
 
-        // Init des parametres des webservices
-            nameValuePairAuto = new ArrayList<NameValuePair>(2);
-            nameValuePairAuto.add(new BasicNameValuePair("SERVICE"      , "WFS"));
-            nameValuePairAuto.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
-            nameValuePairAuto.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
-            nameValuePairAuto.add(new BasicNameValuePair("maxfeatures"  , "2000"));
-            nameValuePairAuto.add(new BasicNameValuePair("request"      , "GetFeature"));
-            nameValuePairAuto.add(new BasicNameValuePair("typename"     , "pvo_patrimoine_voirie.pvostationautopartage"));
+        myDialLoading = new DialogLoading(this);
 
-            nameValuePairParking = new ArrayList<NameValuePair>(2);
-        /*
-        nameValuePairParking.add(new BasicNameValuePair("SERVICE"      , "WFS"));
-            nameValuePairParking.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
-            nameValuePairParking.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
-            nameValuePairParking.add(new BasicNameValuePair("maxfeatures"  , "2000"));
-            nameValuePairParking.add(new BasicNameValuePair("request"      , "GetFeature"));
-            nameValuePairParking.add(new BasicNameValuePair("typename"     , "pvo_patrimoine_voirie.pvoparkingtr"));
-*/
-            nameValuePairPmr = new ArrayList<NameValuePair>(2);
-            nameValuePairPmr.add(new BasicNameValuePair("SERVICE"      , "WFS"));
-            nameValuePairPmr.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
-            nameValuePairPmr.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
-            nameValuePairPmr.add(new BasicNameValuePair("maxfeatures"  , "2000"));
-            nameValuePairPmr.add(new BasicNameValuePair("request"      , "GetFeature"));
-            nameValuePairPmr.add(new BasicNameValuePair("typename"     , "vdl_deplacements.emplacement_pmr"));
-
-        nameValuePairVelov = new ArrayList<NameValuePair>(2);
-        /*
-        nameValuePairVelov.add(new BasicNameValuePair("SERVICE"      , "WFS"));
-        nameValuePairVelov.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
-        nameValuePairVelov.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
-        nameValuePairVelov.add(new BasicNameValuePair("maxfeatures"  , "3030"));
-        nameValuePairVelov.add(new BasicNameValuePair("request"      , "GetFeature"));
-        nameValuePairVelov.add(new BasicNameValuePair("typename"     , "jcd_jcdecaux.jcdvelov"));
-        nameValuePairVelov.add(new BasicNameValuePair("SRSNAME"     , "urn:ogc:def:crs:EPSG::4326"));
-*/
-        nameValuePairParcVelo = new ArrayList<NameValuePair>(2);
-        nameValuePairParcVelo.add(new BasicNameValuePair("SERVICE"      , "WFS"));
-        nameValuePairParcVelo.add(new BasicNameValuePair("VERSION"      , "2.0.0"));
-        nameValuePairParcVelo.add(new BasicNameValuePair("outputformat" , "GEOJSON"));
-        nameValuePairParcVelo.add(new BasicNameValuePair("maxfeatures"  , "3030"));
-        nameValuePairParcVelo.add(new BasicNameValuePair("request"      , "GetFeature"));
-        nameValuePairParcVelo.add(new BasicNameValuePair("typename"     , "pvo_patrimoine_voirie.pvostationnementvelo"));
-        nameValuePairParcVelo.add(new BasicNameValuePair("SRSNAME"     , "urn:ogc:def:crs:EPSG::4326"));
-
-        myDialLoading         = new DialogLoading(this);
-
-        if (Config.MENU_ACTIVITE==2) {
+        if (Config.MENU_ACTIVITE == 2) {
             tracker.setScreenName("/Se deplacer à velo");
-        }else if (Config.MENU_ACTIVITE==3) {
+        } else if (Config.MENU_ACTIVITE == 3) {
             tracker.setScreenName("/Se deplacer en voiture");
         } else {
             tracker.setScreenName("/Se deplacer à pied");
@@ -193,11 +146,11 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         Config.mySeDeplacer = this;
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-        Config.myActu  = this;
+        Config.myActu = this;
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "Oswald-Regular.ttf");
-        TextView myTitre    = (TextView) findViewById(R.id.titre);
+        TextView myTitre = (TextView) findViewById(R.id.titre);
 
-        layFondMenu  = (LinearLayout) findViewById(R.id.layFondMenu);
+        layFondMenu = (LinearLayout) findViewById(R.id.layFondMenu);
         layMenuPicto = (RelativeLayout) findViewById(R.id.layMenuPicto);
 
         myTitre.setTypeface(myTypeface);
@@ -207,18 +160,18 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         settings.setDefaultTextEncodingName("utf-8");
         description.setBackgroundColor(Color.TRANSPARENT);
 
-        layLegende       = (RelativeLayout) findViewById(R.id.layLegende);
-        btPicto1         = (ImageButton) findViewById(R.id.btPicto1);
-        btPicto2         = (ImageButton) findViewById(R.id.btPicto2);
-        btPicto3         = (ImageButton) findViewById(R.id.btPicto3);
-        btPicto4         = (ImageButton) findViewById(R.id.btPicto4);
-        btMenuLayer      = (ImageButton) findViewById(R.id.btMenuLayer);
+        layLegende = (RelativeLayout) findViewById(R.id.layLegende);
+        btPicto1 = (ImageButton) findViewById(R.id.btPicto1);
+        btPicto2 = (ImageButton) findViewById(R.id.btPicto2);
+        btPicto3 = (ImageButton) findViewById(R.id.btPicto3);
+        btPicto4 = (ImageButton) findViewById(R.id.btPicto4);
+        btMenuLayer = (ImageButton) findViewById(R.id.btMenuLayer);
         btMenuLayerPetit = (ImageButton) findViewById(R.id.btMenuLayerPetit);
         setMenuLayerAction();
 
         ImageButton myBtMenu = (ImageButton) findViewById(R.id.bt_menu);
 
-        ImageView myLogo     = (ImageView) findViewById(R.id.logo);
+        ImageView myLogo = (ImageView) findViewById(R.id.logo);
         // ACTION DES BOUTONS DE LA HOME
         myLogo.setOnClickListener(
                 new View.OnClickListener() {
@@ -237,7 +190,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                 }
         );
 
-        ImageButton myBtParam   = (ImageButton) findViewById(R.id.bt_param);
+        ImageButton myBtParam = (ImageButton) findViewById(R.id.bt_param);
         ImageButton myBtFavoris = (ImageButton) findViewById(R.id.bt_favoris);
         myBtParam.setOnClickListener(
                 new View.OnClickListener() {
@@ -266,30 +219,30 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                 }
         );
 
-        btLegende  = (ImageButton) findViewById(R.id.btLegende);
+        btLegende = (ImageButton) findViewById(R.id.btLegende);
         btLegende.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (flagLegende==1) {
+                        if (flagLegende == 1) {
                             closeLegende();
-                        }else{
+                        } else {
                             openLegende();
                         }
                     }
                 }
         );
 
-        myMenu1    = (Button) findViewById(R.id.bt_menu1);
-        myMenu2    = (Button) findViewById(R.id.bt_menu2);
-        myMenu3    = (Button) findViewById(R.id.bt_menu3);
+        myMenu1 = (Button) findViewById(R.id.bt_menu1);
+        myMenu2 = (Button) findViewById(R.id.bt_menu2);
+        myMenu3 = (Button) findViewById(R.id.bt_menu3);
 
-        if (Config.MENU_ACTIVITE==2) {
+        if (Config.MENU_ACTIVITE == 2) {
             myMenu2.setTextColor(getResources().getColor(R.color.blanc));
             myMenu2.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else if (Config.MENU_ACTIVITE==3) {
+        } else if (Config.MENU_ACTIVITE == 3) {
             myMenu3.setTextColor(getResources().getColor(R.color.blanc));
             myMenu3.setBackground(getResources().getDrawable(R.drawable.menu_actif));
-        }else{
+        } else {
             myMenu1.setTextColor(getResources().getColor(R.color.blanc));
             myMenu1.setBackground(getResources().getDrawable(R.drawable.menu_actif));
         }
@@ -310,7 +263,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                         showLoading();
 
                         mMap.clear();
-                        if (flagMap!=1) {
+                        if (flagMap != 1) {
                             flagMap = 1;
                             mMap.clear();
 
@@ -337,7 +290,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                             @Override
                             public void run() {
                                 mMap.clear();
-                                if (flagMap!=2) {
+                                if (flagMap != 2) {
                                     flagMap = 2;
                                     mMap.clear();
 
@@ -367,7 +320,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                             @Override
                             public void run() {
                                 mMap.clear();
-                                if (flagMap!=3) {
+                                if (flagMap != 3) {
                                     flagMap = 3;
                                     mMap.clear();
 
@@ -386,7 +339,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         try {
             myDbHelper.openDataBase();
             Log.d("myTag", "ouverture bdd ok");
-        }catch(SQLException sqle){
+        } catch (SQLException sqle) {
             Log.d("myTag", "ouverture bdd KO");
             throw sqle;
         }
@@ -406,17 +359,17 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         });
     }
 
-    public void initBtMenu(){
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)layFondMenu.getLayoutParams();
+    public void initBtMenu() {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) layFondMenu.getLayoutParams();
 
-        if (Config.MENU_ACTIVITE==2) {
+        if (Config.MENU_ACTIVITE == 2) {
             params.setMargins(0, 200, 0, 0);
             layFondMenu.setLayoutParams(params);
 
-            if (Config.checkDevice()>=2) {
+            if (Config.checkDevice() >= 2) {
                 btPicto1.setImageResource(R.drawable.picto_velov_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_velo_grand_off);
-            }else {
+            } else {
                 btPicto1.setImageResource(R.drawable.picto_velov_on);
                 btPicto2.setImageResource(R.drawable.picto_velo_off);
             }
@@ -426,16 +379,16 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
             btPicto2.setVisibility(View.VISIBLE);
             btPicto3.setVisibility(View.INVISIBLE);
             btPicto4.setVisibility(View.INVISIBLE);
-        }else if (Config.MENU_ACTIVITE==3) {
+        } else if (Config.MENU_ACTIVITE == 3) {
             params.setMargins(0, 0, 0, 0);
             layFondMenu.setLayoutParams(params);
 
-            if (Config.checkDevice()>=2) {
+            if (Config.checkDevice() >= 2) {
                 btPicto1.setImageResource(R.drawable.picto_parking_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_pmr_grand_off);
                 btPicto3.setImageResource(R.drawable.picto_autolib_grand_off);
                 btPicto4.setImageResource(R.drawable.picto_bluely_grand_off);
-            }else {
+            } else {
                 btPicto1.setImageResource(R.drawable.picto_parking_on);
                 btPicto2.setImageResource(R.drawable.picto_pmr_off);
                 btPicto3.setImageResource(R.drawable.picto_autolib_off);
@@ -449,16 +402,16 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
             btPicto2.setVisibility(View.VISIBLE);
             btPicto3.setVisibility(View.VISIBLE);
             btPicto4.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             params.setMargins(0, 0, 0, 0);
             layFondMenu.setLayoutParams(params);
 
-            if (Config.checkDevice()>=2) {
+            if (Config.checkDevice() >= 2) {
                 btPicto1.setImageResource(R.drawable.picto_tramway_grand_on);
                 btPicto2.setImageResource(R.drawable.picto_metro_grand_off);
                 btPicto3.setImageResource(R.drawable.picto_taxi_grand_off);
                 btPicto4.setImageResource(R.drawable.picto_train_grand_off);
-            }else {
+            } else {
                 btPicto1.setImageResource(R.drawable.picto_tramway_on);
                 btPicto2.setImageResource(R.drawable.picto_metro_off);
                 btPicto3.setImageResource(R.drawable.picto_taxi_off);
@@ -480,7 +433,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         btMenuLayer.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (flagOpenMenu==1) {
+                        if (flagOpenMenu == 1) {
                             layMenuPicto.animate().setDuration(100);
                             layMenuPicto.animate().translationX(-250);  //-200
                             layMenuPicto.animate().start();
@@ -513,10 +466,10 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         btPicto1.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (flagPicto1==0) {
+                        if (flagPicto1 == 0) {
                             btPicto1.setAlpha(255);
 
-                            if (Config.checkDevice()>=2) {
+                            if (Config.checkDevice() >= 2) {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto1.setImageResource(R.drawable.picto_velov_grand_on);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -524,7 +477,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                                 } else {
                                     btPicto1.setImageResource(R.drawable.picto_tramway_grand_on);
                                 }
-                            }else {
+                            } else {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto1.setImageResource(R.drawable.picto_velov_on);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -535,9 +488,9 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                             }
 
                             flagPicto1 = 1;
-                        }else{
+                        } else {
                             btPicto1.setAlpha(128);
-                            if (Config.checkDevice()>=2) {
+                            if (Config.checkDevice() >= 2) {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto1.setImageResource(R.drawable.picto_velov_grand_off);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -545,7 +498,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                                 } else {
                                     btPicto1.setImageResource(R.drawable.picto_tramway_grand_off);
                                 }
-                            }else {
+                            } else {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto1.setImageResource(R.drawable.picto_velov_off);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -557,11 +510,11 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                             flagPicto1 = 0;
                         }
 
-                        if (Config.MENU_ACTIVITE==1) {
+                        if (Config.MENU_ACTIVITE == 1) {
                             showMapPied();
-                        }else if (Config.MENU_ACTIVITE==2) {
+                        } else if (Config.MENU_ACTIVITE == 2) {
                             showMapVeloFromPicto();
-                        }else if (Config.MENU_ACTIVITE==3) {
+                        } else if (Config.MENU_ACTIVITE == 3) {
                             showMapVoitureFromPicto();
                         }
                     }
@@ -570,10 +523,10 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         btPicto2.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (flagPicto2==0) {
+                        if (flagPicto2 == 0) {
                             btPicto2.setAlpha(255);
 
-                            if (Config.checkDevice()>=2) {
+                            if (Config.checkDevice() >= 2) {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto2.setImageResource(R.drawable.picto_velo_grand_on);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -581,7 +534,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                                 } else {
                                     btPicto2.setImageResource(R.drawable.picto_metro_grand_on);
                                 }
-                            }else {
+                            } else {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto2.setImageResource(R.drawable.picto_velo_on);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -592,10 +545,10 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                             }
 
                             flagPicto2 = 1;
-                        }else{
+                        } else {
                             btPicto2.setAlpha(128);
 
-                            if (Config.checkDevice()>=2) {
+                            if (Config.checkDevice() >= 2) {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto2.setImageResource(R.drawable.picto_velo_grand_off);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -603,7 +556,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                                 } else {
                                     btPicto2.setImageResource(R.drawable.picto_metro_grand_off);
                                 }
-                            }else {
+                            } else {
                                 if (Config.MENU_ACTIVITE == 2) {
                                     btPicto2.setImageResource(R.drawable.picto_velo_off);
                                 } else if (Config.MENU_ACTIVITE == 3) {
@@ -616,12 +569,12 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                             flagPicto2 = 0;
                         }
 
-                        if (Config.MENU_ACTIVITE==1) {
+                        if (Config.MENU_ACTIVITE == 1) {
                             showMapPied();
-                        }else if (Config.MENU_ACTIVITE==2) {
+                        } else if (Config.MENU_ACTIVITE == 2) {
                             showMapVeloFromPicto();
 
-                        }else if (Config.MENU_ACTIVITE==3) {
+                        } else if (Config.MENU_ACTIVITE == 3) {
                             showMapVoitureFromPicto();
                         }
 
@@ -631,17 +584,17 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         btPicto3.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (flagPicto3==0) {
+                        if (flagPicto3 == 0) {
                             btPicto3.setAlpha(255);
 
-                            if (Config.checkDevice()>=2) {
+                            if (Config.checkDevice() >= 2) {
                                 if (Config.MENU_ACTIVITE == 3) {
                                     btPicto3.setImageResource(R.drawable.picto_autolib_grand_on);
                                 } else {
                                     btPicto3.setImageResource(R.drawable.picto_taxi_grand_on);
                                 }
 
-                            }else {
+                            } else {
                                 if (Config.MENU_ACTIVITE == 3) {
                                     btPicto3.setImageResource(R.drawable.picto_autolib_on);
                                 } else {
@@ -649,15 +602,15 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                                 }
                             }
                             flagPicto3 = 1;
-                        }else{
+                        } else {
                             btPicto3.setAlpha(128);
-                            if (Config.checkDevice()>=2) {
+                            if (Config.checkDevice() >= 2) {
                                 if (Config.MENU_ACTIVITE == 3) {
                                     btPicto3.setImageResource(R.drawable.picto_autolib_grand_off);
                                 } else {
                                     btPicto3.setImageResource(R.drawable.picto_taxi_grand_off);
                                 }
-                            }else {
+                            } else {
                                 if (Config.MENU_ACTIVITE == 3) {
                                     btPicto3.setImageResource(R.drawable.picto_autolib_off);
                                 } else {
@@ -666,9 +619,9 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                             }
                             flagPicto3 = 0;
                         }
-                        if (Config.MENU_ACTIVITE==1) {
+                        if (Config.MENU_ACTIVITE == 1) {
                             showMapPied();
-                        }else if (Config.MENU_ACTIVITE==3) {
+                        } else if (Config.MENU_ACTIVITE == 3) {
                             showMapVoitureFromPicto();
                         }
                     }
@@ -677,16 +630,16 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         btPicto4.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (flagPicto4==0) {
+                        if (flagPicto4 == 0) {
                             btPicto4.setAlpha(255);
 
-                            if (Config.MENU_ACTIVITE==3) {
+                            if (Config.MENU_ACTIVITE == 3) {
                                 if (Config.checkDevice() >= 2) {
                                     btPicto4.setImageResource(R.drawable.picto_bluely_grand_on);
                                 } else {
                                     btPicto4.setImageResource(R.drawable.picto_bluely_on);
                                 }
-                            }else {
+                            } else {
                                 if (Config.checkDevice() >= 2) {
                                     btPicto4.setImageResource(R.drawable.picto_train_grand_on);
                                 } else {
@@ -694,15 +647,15 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                                 }
                             }
                             flagPicto4 = 1;
-                        }else{
+                        } else {
                             btPicto4.setAlpha(128);
-                            if (Config.MENU_ACTIVITE==3) {
+                            if (Config.MENU_ACTIVITE == 3) {
                                 if (Config.checkDevice() >= 2) {
                                     btPicto4.setImageResource(R.drawable.picto_bluely_grand_off);
                                 } else {
                                     btPicto4.setImageResource(R.drawable.picto_bluely_off);
                                 }
-                            }else {
+                            } else {
                                 if (Config.checkDevice() >= 2) {
                                     btPicto4.setImageResource(R.drawable.picto_train_grand_off);
                                 } else {
@@ -711,9 +664,9 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                             }
                             flagPicto4 = 0;
                         }
-                        if (Config.MENU_ACTIVITE==1) {
+                        if (Config.MENU_ACTIVITE == 1) {
                             showMapPied();
-                        }else{
+                        } else {
                             showMapVoitureFromPicto();
                         }
                     }
@@ -727,11 +680,11 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
     }
 
     public void loadLegende(int p_param) {
-        if (p_param==3) {
+        if (p_param == 3) {
             description.loadUrl("file:///android_asset/legende3.html");
-        }else if (p_param==2) {
+        } else if (p_param == 2) {
             description.loadUrl("file:///android_asset/legende2.html");
-        }else{
+        } else {
             description.loadUrl("file:///android_asset/legende1.html");
         }
 
@@ -741,17 +694,19 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         initBtMenu();
         myDialLoading.show();
     }
+
     public void hideLoading() {
         myDialLoading.hide();
     }
 
-    public void openLegende () {
+    public void openLegende() {
         layMenuPicto.setVisibility(View.GONE);
         layLegende.setVisibility(View.VISIBLE);
         loadLegende(Config.MENU_ACTIVITE);
         flagLegende = 1;
     }
-    public void closeLegende () {
+
+    public void closeLegende() {
         layMenuPicto.setVisibility(View.VISIBLE);
         layLegende.setVisibility(View.GONE);
         flagLegende = 0;
@@ -827,7 +782,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
     protected void onResume() {
         super.onResume();
         AppEventsLogger.activateApp(this);
-        Config.myActu  =this;
+        Config.myActu = this;
         setUpMapIfNeeded();
         Config.majNbeFav((TextView) findViewById(R.id.txt_nbe_favoris), this.getBaseContext());
         Config.showAlertNotif(this);
@@ -924,7 +879,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
     }
 
     public void loadPmr() {
-        if (flagMap==3) {
+        if (flagMap == 3) {
             Cursor c = myDbHelper.loadPmr();
 
             try {
@@ -946,13 +901,13 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
     }
 
     public void zoomTheMap() {
-        if (markerActu!=null) {
+        if (markerActu != null) {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerActu.getPosition(), 15));
         }
     }
 
     public void killPmr() {
-        if (flagMap==3) {
+        if (flagMap == 3) {
 
         }
     }
@@ -965,7 +920,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         mMap.clear();
 
         try {
-            if (flagPicto1==1) {
+            if (flagPicto1 == 1) {
                 for (int i = 0; i < contactVelov.length(); i++) {
 
                     JSONObject c = contactVelov.getJSONObject(i);
@@ -994,13 +949,14 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         }
 
         try {
-            if (flagPicto2==1) {
+            if (flagPicto2 == 1) {
                 for (int i = 0; i < contactParcVelo.length(); i++) {
-                    JSONObject c    = contactParcVelo.getJSONObject(i);
-                    JSONObject o    = c.getJSONObject("properties");
-                    String adresse  = o.getString("adresse");
-                    String commune  = o.getString("commune");
-                    JSONObject g    = c.getJSONObject("geometry");
+                    JSONObject c = contactParcVelo.getJSONObject(i);
+
+                    JSONObject o = c.getJSONObject("properties");
+                    String adresse = o.getString("adresse");
+                    String commune = o.getString("commune");
+                    JSONObject g = c.getJSONObject("geometry");
 
                     MarkerOptions markerOptions = new MarkerOptions();
 
@@ -1017,10 +973,11 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                 }
             }
         } catch (Exception e) {
-            Log.d("myTag", "mon erreur : " + e.getMessage());
+            Log.wtf("myTag", "mon erreur : " + e.getMessage());
             e.printStackTrace();
         }
     }
+
     public void showMapVoitureFromPicto() {
         if (mMap == null) {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
@@ -1028,43 +985,48 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         }
         mMap.clear();
 
+        Log.wtf("myTag", "flagPicto2 : " + flagPicto2);
+        Log.wtf("myTag", "flagPicto3 : " + flagPicto3);
+        Log.wtf("myTag", "flagPicto4 : " + flagPicto4);
+
+
         // AUTO-PARTAGE
-        if ((flagPicto3==1)||(flagPicto4==1)) {
+        if ((flagPicto3 == 1) || (flagPicto4 == 1)) {
             try {
                 for (int i = 0; i < contactsPartage.length(); i++) {
-                    JSONObject c   = contactsPartage.getJSONObject(i);
-                    JSONObject o   = c.getJSONObject("properties");
-                    String nom     = o.getString("nom");
+                    JSONObject c = contactsPartage.getJSONObject(i);
+                    JSONObject o = c.getJSONObject("properties");
+                    String nom = o.getString("nom");
                     String nbeEmpl = o.getString("nbemplacements");
-                    JSONObject g   = c.getJSONObject("geometry");
-                    String type    = o.getString("typeautopartage");
+                    JSONObject g = c.getJSONObject("geometry");
+                    String type = o.getString("typeautopartage");
 
                     MarkerOptions markerOptions = new MarkerOptions();
 
                     int flag = 0;
                     if (type.equalsIgnoreCase("Citiz LPA")) {
-                        if (flagPicto3==1) {
+                        if (flagPicto3 == 1) {
                             flag = 1;
                             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
                         }
                     } else if (type.equalsIgnoreCase("SunMoov")) {
-                        if (flagPicto4==1) {
+                        if (flagPicto4 == 1) {
                             flag = 1;
                             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
                         }
                     } else if (type.equalsIgnoreCase("Wattmobile")) {
-                        if (flagPicto4==1) {
+                        if (flagPicto4 == 1) {
                             flag = 1;
                             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
                         }
                     } else if (type.equalsIgnoreCase("Bluely")) {
-                        if (flagPicto4==1) {
+                        if (flagPicto4 == 1) {
                             flag = 1;
                             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
                         }
                     }
 
-                    if (flag==1) {
+                    if (flag == 1) {
                         markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
 
                         markerOptions.title(type);
@@ -1076,14 +1038,14 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
 
                 }
             } catch (Exception e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
+                Log.wtf("myTag", "mon erreur AUTO-PARTAGE : " + e.getMessage());
                 e.printStackTrace();
             }
         }
 
         // PARKINGS
-        if (flagPicto1==1) {
-           try {
+        if (flagPicto1 == 1) {
+            try {
                 for (int i = 0; i < contactsParking.length(); i++) {
 
                     JSONObject c = contactsParking.getJSONObject(i);
@@ -1108,18 +1070,17 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                     markerActu = markerOptions;
                 }
             } catch (Exception e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
+                Log.wtf("myTag", "mon erreur parking : " + e.getMessage());
                 e.printStackTrace();
             }
         }
 
         // PMR
-        if (flagPicto2==1) {
+        if (flagPicto2 == 1) {
             try {
                 for (int i = 0; i < contactsPmr.length(); i++) {
 
                     JSONObject c = contactsPmr.getJSONObject(i);
-
                     JSONObject o = c.getJSONObject("properties");
                     String nom = o.getString("nom");
                     String nbeEmpl = o.getString("nb_places");
@@ -1137,7 +1098,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
                 }
 
             } catch (Exception e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
+                Log.wtf("myTag", "mon erreur pmr : " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -1145,83 +1106,78 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
 
 
     private void showMapVelo() {
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
+
+        try {
             // VELO'V
             JSONParser jParser = new JSONParser();
-            JSONObject json = jParser.getJSONFromUrl(urlVelov, nameValuePairVelov);
+            JSONObject json = jParser.getJSONFromUrl(urlVelov);
             contactVelov = null;
+            contactVelov = json.getJSONArray("features");
 
-            try {
-                contactVelov = json.getJSONArray("features");
+            if (flagPicto1 == 1) {
+                for (int i = 0; i < contactVelov.length(); i++) {
 
-                if (flagPicto1==1) {
-                    for (int i = 0; i < contactVelov.length(); i++) {
+                    JSONObject c = contactVelov.getJSONObject(i);
 
-                        JSONObject c = contactVelov.getJSONObject(i);
-
-                        JSONObject o = c.getJSONObject("properties");
-                        int nbeEmpl = o.getInt("available_bikes");
-                        int nbeEmplRestant = o.getInt("available_bike_stands");
+                    JSONObject o = c.getJSONObject("properties");
+                    int nbeEmpl = o.getInt("available_bikes");
+                    int nbeEmplRestant = o.getInt("available_bike_stands");
 
 
-                        MarkerOptions markerOptions = new MarkerOptions();
+                    MarkerOptions markerOptions = new MarkerOptions();
 
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_velib));
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_velib));
 
-                        markerOptions.position(new LatLng(o.getDouble("lat"), o.getDouble("lng")));
+                    markerOptions.position(new LatLng(o.getDouble("lat"), o.getDouble("lng")));
 
-                        markerOptions.title("Station Velo'v");
-                        markerOptions.snippet(nbeEmpl + "/" + (nbeEmpl + nbeEmplRestant) + " vélos disponibles");
-                        mMap.addMarker(markerOptions);
-                        markerActu = markerOptions;
-                    }
+                    markerOptions.title("Station Velo'v");
+                    markerOptions.snippet(nbeEmpl + "/" + (nbeEmpl + nbeEmplRestant) + " vélos disponibles");
+                    mMap.addMarker(markerOptions);
+                    markerActu = markerOptions;
                 }
-            } catch (JSONException e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
-                e.printStackTrace();
             }
-
-            // PARC A VELO
-            jParser         = new JSONParser();
-            json            = jParser.getJSONFromUrl(urlParcVelo, nameValuePairParcVelo);
-            contactParcVelo = null;
-
-            try {
-                contactParcVelo = json.getJSONArray("features");
-
-                if (flagPicto2==1) {
-                    for (int i = 0; i < contactParcVelo.length(); i++) {
-                        JSONObject c    = contactParcVelo.getJSONObject(i);
-                        JSONObject o    = c.getJSONObject("properties");
-                        String adresse  = o.getString("adresse");
-                        String commune  = o.getString("commune");
-                        JSONObject g    = c.getJSONObject("geometry");
-
-                        MarkerOptions markerOptions = new MarkerOptions();
-
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_velo));
-                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
-
-                        markerOptions.title("Parc à vélo");
-                        markerOptions.snippet(new String(adresse.getBytes("ISO-8859-1")));
-
-                        mMap.addMarker(markerOptions);
-                        markerActu = markerOptions;
-                    }
-                }
-            } catch (JSONException e) {
-                Log.d("myTag", "mon erreur : " + e.getMessage());
-                e.printStackTrace();
-            }
-
         } catch (Exception e) {
-            Log.d("myTag", "mon Exception : " + e.getMessage());
+            Log.d("myTag", "mon erreur velov : " + e.getMessage());
+            e.printStackTrace();
         }
-    }
 
+
+        try {
+            // PARC A VELO
+            JSONParser jParser = new JSONParser();
+            JSONObject json = jParser.getJSONFromUrl(urlParcVelo);
+            contactParcVelo = null;
+            contactParcVelo = json.getJSONArray("features");
+
+            if (flagPicto2 == 1) {
+                for (int i = 0; i < contactParcVelo.length(); i++) {
+                    JSONObject c = contactParcVelo.getJSONObject(i);
+                    JSONObject o = c.getJSONObject("properties");
+                    String adresse = o.getString("adresse");
+                    String commune = o.getString("commune");
+                    JSONObject g = c.getJSONObject("geometry");
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_velo));
+                    markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+
+                    markerOptions.title("Parc à vélo");
+                    markerOptions.snippet(new String(adresse.getBytes("ISO-8859-1")));
+
+                    mMap.addMarker(markerOptions);
+                    markerActu = markerOptions;
+                }
+            }
+        } catch (Exception e) {
+            Log.wtf("myTag", "mon erreur parc : " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
 
 
     private void showMapVelo2() {
@@ -1245,140 +1201,145 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
     }
 
     private void showMapVoiture() {
+        Log.wtf("myTag", "show map voiture");
+
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
             // AUTO-PARTAGE
 
-                JSONParser jParser = new JSONParser();
-                JSONObject json = jParser.getJSONFromUrl(urlAuto, nameValuePairAuto);
-                contactsPartage = null;
+            JSONParser jParser = new JSONParser();
+            JSONObject json = jParser.getJSONFromUrl(urlAuto);
+            contactsPartage = null;
 
-                try {
-                    contactsPartage = json.getJSONArray("features");
+            try {
+                contactsPartage = json.getJSONArray("features");
 
-                    if (flagPicto3==1) {
-                        for (int i = 0; i < contactsPartage.length(); i++) {
+                if (flagPicto3 == 1) {
+                    for (int i = 0; i < contactsPartage.length(); i++) {
 
-                            JSONObject c = contactsPartage.getJSONObject(i);
+                        JSONObject c = contactsPartage.getJSONObject(i);
 
-                            JSONObject o = c.getJSONObject("properties");
-                            String nom = o.getString("nom");
-                            String nbeEmpl = o.getString("nbemplacements");
-                            JSONObject g = c.getJSONObject("geometry");
-                            String type = o.getString("typeautopartage");
+                        Log.wtf("myTag", "obj : " + c.toString());
 
-                            MarkerOptions markerOptions = new MarkerOptions();
+                        JSONObject o = c.getJSONObject("properties");
+                        String nom = o.getString("nom");
+                        String nbeEmpl = o.getString("nbemplacements");
+                        JSONObject g = c.getJSONObject("geometry");
+                        String type = o.getString("typeautopartage");
 
-                            if (type.equalsIgnoreCase("Citiz LPA")) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
-                            } else if (type.equalsIgnoreCase("SunMoov")) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
-                            } else if (type.equalsIgnoreCase("Wattmobile")) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
-                            } else if (type.equalsIgnoreCase("Bluely")) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
-                            }
+                        MarkerOptions markerOptions = new MarkerOptions();
 
-                            //                    Log.d("myTag", type + nbeEmpl + " emplacements");
-
-                            markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
-
-                            markerOptions.title(type);
-                            markerOptions.snippet(nbeEmpl + " emplacement(s)");
-
-                            mMap.addMarker(markerOptions);
-                            markerActu = markerOptions;
+                        if (type.equalsIgnoreCase("Citiz LPA")) {
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_autolib));
+                        } else if (type.equalsIgnoreCase("SunMoov")) {
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_sunmoov));
+                        } else if (type.equalsIgnoreCase("Wattmobile")) {
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_watt));
+                        } else if (type.equalsIgnoreCase("Bluely")) {
+                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_bluely));
                         }
+
+                        //                    Log.d("myTag", type + nbeEmpl + " emplacements");
+
+                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+
+                        markerOptions.title(type);
+                        markerOptions.snippet(nbeEmpl + " emplacement(s)");
+
+                        mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
-                } catch (JSONException e) {
-                    Log.d("myTag", "mon erreur : " + e.getMessage());
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                Log.wtf("myTag", "mon erreur partage : " + e.getMessage());
+                e.printStackTrace();
+            }
 
 
             // PARKINGS
 
-                jParser = new JSONParser();
-                json = jParser.getJSONFromUrl(urlParking, nameValuePairParking);
-                contactsParking = null;
+            jParser = new JSONParser();
+            json = jParser.getJSONFromUrl(urlParking);
+            contactsParking = null;
 
-                try {
-                    contactsParking = json.getJSONArray("features");
-                    if (flagPicto1==1) {
-                        for (int i = 0; i < contactsParking.length(); i++) {
+            try {
+                contactsParking = json.getJSONArray("features");
+                if (flagPicto1 == 1) {
+                    for (int i = 0; i < contactsParking.length(); i++) {
 
-                            JSONObject c = contactsParking.getJSONObject(i);
+                        JSONObject c = contactsParking.getJSONObject(i);
 
-                            JSONObject o = c.getJSONObject("properties");
-                            String nom = o.getString("nom");
-                            String etat = o.getString("etat");
-                            String nbeEmpl = o.getString("capacitevoiture");
-                            JSONObject g = c.getJSONObject("geometry");
+                        JSONObject o = c.getJSONObject("properties");
+                        String nom = o.getString("nom");
+                        String etat = o.getString("etat");
+                        String nbeEmpl = o.getString("capacitevoiture");
+                        JSONObject g = c.getJSONObject("geometry");
 
-                            MarkerOptions markerOptions = new MarkerOptions();
+                        MarkerOptions markerOptions = new MarkerOptions();
 
-                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
 
 
-                            markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
-                            markerOptions.title(Config.formatCharFlux(nom));
+                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+                        markerOptions.title(Config.formatCharFlux(nom));
 
-                            markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
-                            //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
+                        markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
+                        //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
 
-                            mMap.addMarker(markerOptions);
-                            markerActu = markerOptions;
-                        }
+                        mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
-                } catch (JSONException e) {
-                    Log.d("myTag", "mon erreur : " + e.getMessage());
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                Log.wtf("myTag", "mon erreur parking : " + e.getMessage());
+                e.printStackTrace();
+            }
 
 
             // PMR
 
-                jParser = new JSONParser();
-                json = jParser.getJSONFromUrl(urlPmr, nameValuePairPmr);
-                contactsPmr = null;
+            jParser = new JSONParser();
+            json = jParser.getJSONFromUrl(urlPmr);
+            contactsPmr = null;
 
-                try {
-                    contactsPmr = json.getJSONArray("features");
+            try {
+                contactsPmr = json.getJSONArray("features");
 
-                    if (flagPicto2==1) {
-                        for (int i = 0; i < contactsPmr.length(); i++) {
 
-                            JSONObject c = contactsPmr.getJSONObject(i);
+                if (flagPicto2 == 1) {
+                    for (int i = 0; i < contactsPmr.length(); i++) {
 
-                            JSONObject o = c.getJSONObject("properties");
-                            String nom = o.getString("nom");
-                            String nbeEmpl = o.getString("nb_places");
-                            JSONObject g = c.getJSONObject("geometry");
+                        JSONObject c = contactsPmr.getJSONObject(i);
 
-                            MarkerOptions markerOptions = new MarkerOptions();
+                        JSONObject o = c.getJSONObject("properties");
+                        String nom = o.getString("nom");
+                        String nbeEmpl = o.getString("nb_places");
+                        JSONObject g = c.getJSONObject("geometry");
 
-                            markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
-                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
-                            markerOptions.title("Stationnement PMR");
-                            markerOptions.snippet(nbeEmpl + " emplacement");
+                        MarkerOptions markerOptions = new MarkerOptions();
 
-                            //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
+                        markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_pmr));
+                        markerOptions.title("Stationnement PMR");
+                        markerOptions.snippet(nbeEmpl + " emplacement");
 
-                            mMap.addMarker(markerOptions);
-                            markerActu = markerOptions;
-                        }
+                        //               Log.d("myTag", "Stationnement PMR" + nbeEmpl + " emplacements");
+
+                        mMap.addMarker(markerOptions);
+                        markerActu = markerOptions;
                     }
-
-                } catch (JSONException e) {
-                    Log.d("myTag", "mon erreur : " + e.getMessage());
-                    e.printStackTrace();
                 }
+
+            } catch (Exception e) {
+                Log.wtf("myTag", "mon erreur pmr : " + e.getMessage());
+                e.printStackTrace();
+            }
 
 
         } catch (Exception e) {
-            Log.d("myTag", "mon Exception : " + e.getMessage());
+            Log.wtf("myTag", "mon Exception : " + e.getMessage());
             //	Toast.makeText(Config.myResVehicule,"erreur : " + e.toString(), Toast.LENGTH_LONG).show();
         }
     }
@@ -1389,7 +1350,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
 
         Cursor c = myDbHelper.loadPied();
 
-        if (flagPicto2==1){
+        if (flagPicto2 == 1) {
             try {
                 if (c != null) {
                     while (c.moveToNext()) {
@@ -1407,7 +1368,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
             }
         }
 
-        if (flagPicto3==1) {
+        if (flagPicto3 == 1) {
             c = myDbHelper.loadTaxi();
 
             try {
@@ -1426,7 +1387,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
             }
         }
 
-        if (flagPicto1==1) {
+        if (flagPicto1 == 1) {
             c = myDbHelper.loadTram();
 
             try {
@@ -1445,7 +1406,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
             }
         }
 
-        if (flagPicto4==1) {
+        if (flagPicto4 == 1) {
             c = myDbHelper.loadGare();
 
             try {
@@ -1486,18 +1447,19 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         TextView tv;
         int flag;
 
-        myAsyncTask2()    {
+        myAsyncTask2() {
             flag = 0;
         }
+
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            if (flag==1) {
+            if (flag == 1) {
                 showMapPied();
-            }else if (flag==2) {
+            } else if (flag == 2) {
                 showMapVelo();
-            }else if (flag==3) {
+            } else if (flag == 3) {
                 showMapVoiture();
             }
 

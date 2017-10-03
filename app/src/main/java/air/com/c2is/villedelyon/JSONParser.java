@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.InputStream;
 import java.io.Reader;
+
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 import org.apache.http.*;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -37,6 +39,9 @@ import org.apache.http.HttpEntity;
 import org.json.JSONException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.NameValuePair;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
@@ -53,28 +58,15 @@ public class JSONParser {
     // constructor
     public JSONParser() {}
 
-    public JSONObject getJSONFromUrl(String url, List<NameValuePair> nameValuePair) {
-
+    public JSONObject getJSONFromUrl(String url) {
         // Making HTTP request
         try {
-            // defaultHttpClient
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
-
-            try {
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
-            }
-            catch (Exception e) {
-                // writing error to Log
-                e.printStackTrace();
-            }
-
-            HttpResponse httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();
+            URL myUrl = new URL(url);
+            HttpURLConnection urlConnection = (HttpURLConnection) myUrl.openConnection();
+            is = urlConnection.getInputStream();
 
         } catch (IOException e) {
-            Log.d("myTag", "mon defaultHttpClient : " + e.getMessage());
+            Log.wtf("myTag", "mon defaultHttpClient : " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -90,14 +82,15 @@ public class JSONParser {
             json = sb.toString();
             //Log.d("myTag", "mon json : " + json);
         } catch (Exception e) {
-            Log.d("myTag", "Error converting result " + e.toString());
+            Log.wtf("myTag", "Error converting result " + e.toString());
         }
 
         // try parse the string to a JSON object
         try {
             jObj = new JSONObject(json);
+            Log.wtf("myTag","retour json : " + jObj.get("name").toString());
         } catch (JSONException e) {
-            Log.d("myTag", "Error parsing data " + e.toString());
+            Log.wtf("myTag", "Error parsing data " + e.toString() + '/' + json);
         }
 
         // return JSON String

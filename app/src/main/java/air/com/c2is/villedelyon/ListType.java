@@ -485,8 +485,6 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
     private void setUpMapIfNeeded() {
 
         if (mMap == null) {
-
-            Log.d("MyMap", "setUpMapIfNeeded");
             ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMapAsync(this);
         }
@@ -595,8 +593,8 @@ public class ListType extends android.support.v4.app.FragmentActivity implements
                     Config.flagContentEquip = 1;
                 }
                 Config.myContentValue = Config.pointCarto.get(i);
-                Config.sql_type = temp2.toString();
-                Config.xml_id = "";
+                Config.sql_type = temp2;
+                Config.xml_id = "" + Config.pointCarto.get(i).get("xml_id").toString();
 
                 Intent intent = new Intent(ListType.this, FragmentDetailEquipement.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

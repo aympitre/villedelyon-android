@@ -429,8 +429,13 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_map));
-            if (Config.list_picto.contains(myPicto)) {
-                markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("picto_carto/" + myPicto + ".png"));
+
+            if (myPicto!=null) {
+                if (myPicto.length()>0) {
+                    if (Config.list_picto.contains(myPicto)) {
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromAsset("picto_carto/" + myPicto + ".png"));
+                    }
+                }
             }
 
             markerOptions.position(new LatLng(latitude, longitude));
@@ -464,7 +469,7 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
     public void checkFavoris() {
         flagIsFavoris = 0;
-
+        btAddFavoris.setVisibility(View.VISIBLE);
         if (idEquip != 0) {
             if (myDbHelper.checkFavoris(idEquip) == 1) {
                 flagIsFavoris = 1;
@@ -472,8 +477,12 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
                 flagIsFavoris = 1;
             }
         } else {
-            if (myDbHelper.checkFavorisXml() == 1) {
-                flagIsFavoris = 1;
+            if (Config.xml_id.length()==0) {
+                btAddFavoris.setVisibility(View.GONE);
+            }else {
+                if (myDbHelper.checkFavorisXml() == 1) {
+                    flagIsFavoris = 1;
+                }
             }
         }
 
@@ -498,7 +507,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         myValue.put("libelle", libEquip);
         myValue.put("id_equipement", idEquip);
         myValue.put("xml_equipement", Config.xml_id);
-
 
         Log.d("myTag", "libEquip : " + libEquip);
         Log.d("myTag", "idEquip : " + idEquip);
@@ -710,8 +718,15 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
                 idEquip = 0;
 
-                myPicto = Config.myContentValue.get("picto").toString();
-
+                if (Config.myContentValue.get("picto")!=null) {
+                    try {
+                        myPicto = Config.myContentValue.get("picto").toString();
+                    } catch (Exception e) {
+                        myPicto = "";
+                    }
+                }else{
+                    myPicto = "";
+                }
                 try {
                     libEquip = Config.myContentValue.get("titre").toString();
                 } catch (Exception e) {}

@@ -199,8 +199,8 @@ public class FragmentCarte extends FragmentActivity {
                     Config.flagContentEquip = 1;
                 }
                 Config.myContentValue   = Config.pointCarto.get(i);
-                Config.sql_type         = temp2.toString();
-                Config.xml_id           = "";
+                Config.sql_type         = temp2;
+                Config.xml_id           = "" + Config.pointCarto.get(i).get("id_equipement").toString();
 
                 Intent intent = new Intent(FragmentCarte.this, FragmentDetailEquipement.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

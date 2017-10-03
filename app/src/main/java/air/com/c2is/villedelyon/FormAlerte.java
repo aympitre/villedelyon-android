@@ -11,21 +11,27 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.provider.MediaStore.Images;
+
 import java.io.ByteArrayOutputStream;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Typeface;
 import android.location.Location;
+
 import java.net.URLEncoder;
+
 import android.opengl.Matrix;
 
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
+
 import java.io.FileInputStream;
 import java.util.List;
+
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Build;
@@ -46,6 +52,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.EditText;
 import android.net.Uri;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileDescriptor;
@@ -73,12 +80,16 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
 import android.widget.RadioButton;
 import android.view.View.OnFocusChangeListener;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
 import android.location.Geocoder;
 import android.location.Address;
+
 import java.util.Locale;
 import java.util.ArrayList;
 
@@ -110,10 +121,10 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     public EditText chpVille;
     public EditText chpTelephone;
 
-    public int flagAuthor   = 0;
-    public String monImage  = "";
-    public int    flagPhoto = 0;
-    public int    flagCiv   = 1;
+    public int flagAuthor = 0;
+    public String monImage = "";
+    public int flagPhoto = 0;
+    public int flagCiv = 1;
     public String strNom;
     public String strPrenom;
     public String strEmail;
@@ -160,8 +171,8 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         myDialLoading = new DialogLoading(this);
-        myDialOk      = new DialogOk(this);
-        myDialKo      = new DialogKo(this);
+        myDialOk = new DialogOk(this);
+        myDialKo = new DialogKo(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_alerte);
@@ -179,61 +190,79 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
         TextView titreKo = (TextView) findViewById(R.id.titreConfKo);
         titreKo.setTypeface(myTypeface);
 
-        RadioButton radio_monsieur  = (RadioButton) findViewById(R.id.radio_monsieur);
+        RadioButton radio_monsieur = (RadioButton) findViewById(R.id.radio_monsieur);
         radio_monsieur.setTypeface(myTypeface);
-        RadioButton radio_madame    = (RadioButton) findViewById(R.id.radio_madame);
+        RadioButton radio_madame = (RadioButton) findViewById(R.id.radio_madame);
         radio_madame.setTypeface(myTypeface);
 
-        chpNom      = (EditText) findViewById(R.id.chpNom);
-        chpPrenom   = (EditText) findViewById(R.id.chpPrenom);
-        chpEmail    = (EditText) findViewById(R.id.chpEmail);
-        chpMessage  = (EditText) findViewById(R.id.chpMessage);
-        chpNumero   = (EditText) findViewById(R.id.chpNumero);
-        chpRue      = (EditText) findViewById(R.id.chpRue);
-        chpCp       = (EditText) findViewById(R.id.chpCp);
-        chpVille    = (EditText) findViewById(R.id.chpVille);
-        chpTelephone= (EditText) findViewById(R.id.chpTelephone);
-        layImage    = (LinearLayout) findViewById(R.id.layImage);
+        chpNom = (EditText) findViewById(R.id.chpNom);
+        chpPrenom = (EditText) findViewById(R.id.chpPrenom);
+        chpEmail = (EditText) findViewById(R.id.chpEmail);
+        chpMessage = (EditText) findViewById(R.id.chpMessage);
+        chpNumero = (EditText) findViewById(R.id.chpNumero);
+        chpRue = (EditText) findViewById(R.id.chpRue);
+        chpCp = (EditText) findViewById(R.id.chpCp);
+        chpVille = (EditText) findViewById(R.id.chpVille);
+        chpTelephone = (EditText) findViewById(R.id.chpTelephone);
+        layImage = (LinearLayout) findViewById(R.id.layImage);
         libLocalisation = (TextView) findViewById(R.id.libLocalisation);
 
         chpNom.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
         chpPrenom.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
         chpEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
         chpMessage.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
         chpNumero.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
         chpRue.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
         chpCp.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
         chpVille.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
         chpTelephone.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) { onChampSelect(v); }
+            public void onFocusChange(View v, boolean hasFocus) {
+                onChampSelect(v);
+            }
         });
 
-        layRadio    = (LinearLayout) findViewById(R.id.layRadio);
+        layRadio = (LinearLayout) findViewById(R.id.layRadio);
         checkChamps();
 
         libLocalisation.setTypeface(myTypeface);
@@ -322,15 +351,15 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                 }
         );
 
-        myLayConfKo     = (LinearLayout) findViewById(R.id.myLayConfKo);
+        myLayConfKo = (LinearLayout) findViewById(R.id.myLayConfKo);
         //myLayConfOk     = (LinearLayout) findViewById(R.id.myLayConfOk);
-        myScrollForm    = (ScrollView) findViewById(R.id.myScrollForm);
+        myScrollForm = (ScrollView) findViewById(R.id.myScrollForm);
 
-        sharedPref      = this.getSharedPreferences("vdl", Context.MODE_PRIVATE);
+        sharedPref = this.getSharedPreferences("vdl", Context.MODE_PRIVATE);
 
         int flag_geoloc = sharedPref.getInt("flag_geoloc", 1);
 
-        if (flag_geoloc==1) {
+        if (flag_geoloc == 1) {
             Log.wtf("myTag", ">> je suis dans le geocodeur : " + flag_geoloc);
 
             geocoder = new Geocoder(this, Locale.getDefault());
@@ -351,7 +380,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
         myDbHelper = new DataBaseHelper(Config.myHome.getBaseContext());
         try {
             myDbHelper.openDataBase();
-        }catch(SQLException sqle){
+        } catch (SQLException sqle) {
             throw sqle;
         }
 
@@ -366,7 +395,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                     chpTelephone.setText(c.getString(3));
                 }
             }
-        }catch(SQLException sqle){
+        } catch (SQLException sqle) {
             throw sqle;
         }
 
@@ -375,37 +404,37 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     public void checkChamps() {
         if (Config.form_civilite.equals("1")) {
             layRadio.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             layRadio.setVisibility(View.GONE);
         }
         if (Config.form_nom.equals("1")) {
             chpNom.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             chpNom.setVisibility(View.GONE);
         }
         if (Config.form_prenom.equals("1")) {
             chpPrenom.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             chpPrenom.setVisibility(View.GONE);
         }
         if (Config.form_tel.equals("1")) {
             chpTelephone.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             chpTelephone.setVisibility(View.GONE);
         }
         if (Config.form_email.equals("1")) {
             chpEmail.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             chpEmail.setVisibility(View.GONE);
         }
         if (Config.form_message.equals("1")) {
             chpMessage.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             chpMessage.setVisibility(View.GONE);
         }
         if (Config.form_image.equals("1")) {
             layImage.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             layImage.setVisibility(View.GONE);
         }
 
@@ -415,7 +444,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
             chpCp.setVisibility(View.VISIBLE);
             chpVille.setVisibility(View.VISIBLE);
             libLocalisation.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             chpNumero.setVisibility(View.GONE);
             chpRue.setVisibility(View.GONE);
             chpCp.setVisibility(View.GONE);
@@ -429,7 +458,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
-            String[] proj = { MediaStore.Images.Media.DATA };
+            String[] proj = {MediaStore.Images.Media.DATA};
             cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
@@ -446,11 +475,11 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
 
         Uri photoUri = data.getData();
 
-        monImage = getRealPathFromUri(getApplicationContext(),photoUri);
+        monImage = getRealPathFromUri(getApplicationContext(), photoUri);
 
         if (photoUri != null) {
             try {
-              takenPictureData = getBitmapFromUri(photoUri);
+                takenPictureData = getBitmapFromUri(photoUri);
 
 
             } catch (Exception e) {
@@ -471,25 +500,25 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.radio_monsieur:
                 if (checked)
                     flagCiv = 1;
-                    break;
+                break;
             case R.id.radio_madame:
                 if (checked)
                     flagCiv = 2;
-                    break;
+                break;
         }
     }
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor =
-                    getContentResolver().openFileDescriptor(uri, "r");
+                getContentResolver().openFileDescriptor(uri, "r");
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
 
         Bitmap image = null;
-        if (fileDescriptor!=null) {
+        if (fileDescriptor != null) {
             if (fileDescriptor.valid()) {
                 try {
                     final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -518,7 +547,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
             imgPreview.setImageBitmap(thumbnail);
             takenPictureData = thumbnail;
 
-            monImage = getRealPathFromUri(getApplicationContext(),imageUri);
+            monImage = getRealPathFromUri(getApplicationContext(), imageUri);
 
             String filename = "alerte-ville-de-lyon.png";
             File sd = Environment.getExternalStorageDirectory();
@@ -621,15 +650,15 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-            if (flagAuthor==1) {
+            if (flagAuthor == 1) {
                 dispatchTakePictureIntent();
-            }else{
+            } else {
                 goAlertePhp();
             }
         }
     }
 
-    private void checkPermission(){
+    private void checkPermission() {
         flagAuthor = 1;
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -640,7 +669,8 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
             dispatchTakePictureIntent();
         }
     }
-    private void checkPermissionLecture(){
+
+    private void checkPermissionLecture() {
         flagAuthor = 2;
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
@@ -658,11 +688,11 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
 
         String[] myTab = p_param.split("@");
 
-        if (myTab.length>1) {
+        if (myTab.length > 1) {
             String[] myTab2 = myTab[1].split("\\.");
 
-            if (myTab2.length>1) {
-                if (myTab2[1].toString().length()>1) {
+            if (myTab2.length > 1) {
+                if (myTab2[1].toString().length() > 1) {
                     flag = 1;
                 }
             }
@@ -672,45 +702,45 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     }
 
     public void goAlertePhp() {
-        strNom       = chpNom.getText().toString();
-        strPrenom    = chpPrenom.getText().toString();
-        strEmail     = chpEmail.getText().toString();
-        strMessage   = chpMessage.getText().toString();
-        strNumero    = chpNumero.getText().toString();
-        strRue       = chpRue.getText().toString();
-        strCp        = chpCp.getText().toString();
-        strVille     = chpVille.getText().toString();
+        strNom = chpNom.getText().toString();
+        strPrenom = chpPrenom.getText().toString();
+        strEmail = chpEmail.getText().toString();
+        strMessage = chpMessage.getText().toString();
+        strNumero = chpNumero.getText().toString();
+        strRue = chpRue.getText().toString();
+        strCp = chpCp.getText().toString();
+        strVille = chpVille.getText().toString();
         strTelephone = chpTelephone.getText().toString();
 
         int flag = 1;
 
-        if ((strNom.length()==0)&&(Config.form_nom.equals("1"))) {
+        if ((strNom.length() == 0) && (Config.form_nom.equals("1"))) {
             chpNom.setBackgroundColor(getResources().getColor(R.color.rouge));
-            flag=0;
+            flag = 0;
         }
-        if ((strPrenom.length()==0)&&(Config.form_prenom.equals("1"))) {
+        if ((strPrenom.length() == 0) && (Config.form_prenom.equals("1"))) {
             chpPrenom.setBackgroundColor(getResources().getColor(R.color.rouge));
-            flag=0;
+            flag = 0;
         }
-        if ((strEmail.length()==0)&&(Config.form_email.equals("1"))) {
+        if ((strEmail.length() == 0) && (Config.form_email.equals("1"))) {
             chpEmail.setBackgroundColor(getResources().getColor(R.color.rouge));
-            flag=0;
+            flag = 0;
         }
-        if ((strMessage.length()==0)&&(Config.form_message.equals("1"))) {
+        if ((strMessage.length() == 0) && (Config.form_message.equals("1"))) {
             chpMessage.setBackgroundColor(getResources().getColor(R.color.rouge));
-            flag=0;
+            flag = 0;
         }
-        if (flagPhoto==0) {
+        if (flagPhoto == 0) {
             imgPreview.setBackgroundColor(getResources().getColor(R.color.rouge));
-            flag=0;
+            flag = 0;
         }
 
         String strEmail = chpEmail.getText().toString();
 
         final String EMAIL_PATTERN = "^[_'-A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@['-A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-        if (checkFormatMail(strEmail)==0) {
-            flag=2;
+        if (checkFormatMail(strEmail) == 0) {
+            flag = 2;
             chpEmail.setBackgroundColor(getResources().getColor(R.color.rouge));
         }
 
@@ -733,19 +763,19 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
             }
         }
 
-        if ((strTelephone.length()==0)&&(Config.form_tel.equals("1"))) {
+        if ((strTelephone.length() == 0) && (Config.form_tel.equals("1"))) {
             chpTelephone.setBackgroundColor(getResources().getColor(R.color.rouge));
-            flag=0;
+            flag = 0;
 
         }
 
-        if (flag==1) {
-            if (flagPhoto==1) {
+        if (flag == 1) {
+            if (flagPhoto == 1) {
                 int bitmapByteCount = 0;
-                int bytesAvailable  = 0;
+                int bytesAvailable = 0;
 
                 try {
-                    monImage = getRealPathFromUri(getApplicationContext(),imageUri);
+                    monImage = getRealPathFromUri(getApplicationContext(), imageUri);
 
                     FileInputStream fileInputStream = new FileInputStream(monImage);
                     bytesAvailable = fileInputStream.available();
@@ -779,9 +809,9 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                     btValider.setVisibility(View.GONE);
 
                     ContentValues myValue = new ContentValues();
-                    myValue.put("nom",strNom);
-                    myValue.put("prenom",strPrenom);
-                    myValue.put("email",strEmail);
+                    myValue.put("nom", strNom);
+                    myValue.put("prenom", strPrenom);
+                    myValue.put("email", strEmail);
                     myValue.put("telephone", strTelephone);
 
                     myDbHelper.updateUtilisateur(myValue);
@@ -789,15 +819,15 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                     myAsyncTask2 myWebFetch = new myAsyncTask2();
                     myWebFetch.execute();
                 }
-            }else{
+            } else {
                 myDialLoading.show();
 
                 btValider.setVisibility(View.GONE);
 
                 ContentValues myValue = new ContentValues();
-                myValue.put("nom",strNom);
-                myValue.put("prenom",strPrenom);
-                myValue.put("email",strEmail);
+                myValue.put("nom", strNom);
+                myValue.put("prenom", strPrenom);
+                myValue.put("email", strEmail);
                 myValue.put("telephone", strTelephone);
 
                 myDbHelper.updateUtilisateur(myValue);
@@ -805,8 +835,8 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                 myAsyncTask2 myWebFetch = new myAsyncTask2();
                 myWebFetch.execute();
             }
-        }else{
-            if (flag==2) {
+        } else {
+            if (flag == 2) {
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.ic_notif)
                         .setTitle("Attention")
@@ -818,7 +848,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
 
                         })
                         .show();
-            }else {
+            } else {
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.ic_notif)
                         .setTitle("Attention")
@@ -873,10 +903,10 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     }
 
     public void majLocalisation() {
-        chpNumero.setText   (strNumero);
-        chpRue.setText      (strRue);
-        chpCp.setText       (strCp);
-        chpVille.setText    (strVille);
+        chpNumero.setText(strNumero);
+        chpRue.setText(strRue);
+        chpCp.setText(strCp);
+        chpVille.setText(strVille);
     }
 
     public String getImageUri(Context inContext, Bitmap inImage) {
@@ -887,7 +917,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     }
 
     class myAsyncTask2 extends AsyncTask<Void, Void, Void> {
-        myAsyncTask2()    {
+        myAsyncTask2() {
 
         }
 
@@ -898,9 +928,9 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
             super.onPostExecute(result);
             myDialLoading.hide();
 
-            if (flagOk==1) {
+            if (flagOk == 1) {
                 showOk();
-            }else{
+            } else {
                 showKo();
             }
         }
@@ -921,7 +951,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                 try {
 
                     String strCiv = "Monsieur";
-                    if (flagCiv==2) {
+                    if (flagCiv == 2) {
                         strCiv = "Madame";
                     }
 
@@ -952,8 +982,8 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                         myUrl = myUrl + "&ville=" + strVille;
                     }
 
-                    myUrl = myUrl + "&id="          + Config.myId;
-                    myUrl = myUrl + "&type="        + Config.myType;
+                    myUrl = myUrl + "&id=" + Config.myId;
+                    myUrl = myUrl + "&type=" + Config.myType;
 
                     Log.d("myTag", "mon url : " + myUrl);
 
@@ -966,19 +996,19 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                     int maxBufferSize = 1 * 1024 * 1024;
 
 
-                        URL url = new URL(urlAlerte);
+                    URL url = new URL(urlAlerte);
 
-                        // Open a HTTP  connection to  the URL
-                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                        conn.setDoInput(true); // Allow Inputs
-                        conn.setDoOutput(true); // Allow Outputs
-                        conn.setUseCaches(false); // Don't use a Cached Copy
-                        conn.setRequestMethod("POST");
-                        conn.setRequestProperty("Connection", "Keep-Alive");
-                        conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                        conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                    // Open a HTTP  connection to  the URL
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true); // Allow Inputs
+                    conn.setDoOutput(true); // Allow Outputs
+                    conn.setUseCaches(false); // Don't use a Cached Copy
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Connection", "Keep-Alive");
+                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 
-                        dos = new DataOutputStream(conn.getOutputStream());
+                    dos = new DataOutputStream(conn.getOutputStream());
 
 
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
@@ -1069,7 +1099,7 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                         dos.writeBytes(twoHyphens + boundary + lineEnd);
                     }
 
-                    if (monImage.length()>0) {
+                    if (monImage.length() > 0) {
                         Log.d("myTag", "upload de l'imae : " + monImage);
 
                         FileInputStream fileInputStream = new FileInputStream(monImage);
@@ -1102,16 +1132,14 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
                         fileInputStream.close();
                     }
 
-                    int serverResponseCode       = conn.getResponseCode();
+                    int serverResponseCode = conn.getResponseCode();
                     String serverResponseMessage = conn.getResponseMessage();
 
                     if (serverResponseMessage.equalsIgnoreCase("OK")) {
                         flagOk = 1;
-                    }else{
+                    } else {
                         flagOk = 0;
                     }
-
-                    Log.d("myTag", "serverResponseMessage : " + serverResponseMessage);
 
                     dos.flush();
 
@@ -1140,9 +1168,10 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     class myAsyncTask3 extends AsyncTask<Void, Void, Void> {
         public ArrayList<String> addressFragments;
 
-        myAsyncTask3()    {
+        myAsyncTask3() {
 
         }
+
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -1176,26 +1205,18 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
             }
 
             // Handle case where no address was found.
-            if (addresses == null || addresses.size()  == 0) {
+            if (addresses == null || addresses.size() == 0) {
                 if (errorMessage.isEmpty()) {
                     Log.wtf("myTag", "pas trouvé l'adresse");
                 }
-               //deliverResultToReceiver(Constants.FAILURE_RESULT, errorMessage);
+                //deliverResultToReceiver(Constants.FAILURE_RESULT, errorMessage);
             } else {
-                Address address  = addresses.get(0);
+                Address address = addresses.get(0);
                 addressFragments = new ArrayList<String>();
-                strCp            = address.getPostalCode();
-                strVille         = address.getLocality();
-
-                for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                    addressFragments.add(address.getAddressLine(i));
-
-                    String[] separated = address.getAddressLine(i).split(" ");
-                    if (i==0) {
-                        strNumero = separated[0];
-                        strRue    = address.getAddressLine(i).replace(separated[0], "");
-                    }
-                }
+                strCp = address.getPostalCode();
+                strVille = address.getLocality();
+                strNumero = address.getFeatureName();
+                strRue = address.getThoroughfare();
             }
 
             return null;
@@ -1205,9 +1226,10 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
     class myAsyncTask4 extends AsyncTask<Void, Void, Void> {
         public ArrayList<String> addressFragments;
 
-        myAsyncTask4()    {
+        myAsyncTask4() {
 
         }
+
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);

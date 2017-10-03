@@ -402,7 +402,7 @@ public class ListTypeFragment extends Fragment {
                 } else {
                     hideChargement();
 
-                    if (Config.myFragment.flagCarto==1) {
+                    if (Config.myFragment.flagCarto == 1) {
                         Config.myFragment.showCarto();
                         Config.myFragment.showBtCarto(0);
                     }
@@ -476,7 +476,7 @@ public class ListTypeFragment extends Fragment {
                         try {
                             String str_url = Config.urlDomaine + "equipements.php?version=" + Config.VERSION_API + "&type=" + Config.sql_type;
 
-                            Log.wtf("myPicto",str_url);
+                            Log.wtf("myPicto", str_url);
 
                             URL url = new URL(str_url);
                             URLConnection connection = url.openConnection();
@@ -632,7 +632,6 @@ public class ListTypeFragment extends Fragment {
                                             }
                                         } catch (Exception e) {
                                             flagKo = 1;
-                                            Log.d("myTag", "mini Exception dans la liste");
                                         }
                                     }
 
@@ -645,7 +644,6 @@ public class ListTypeFragment extends Fragment {
                                             }
                                         } catch (Exception e) {
                                             flagKo = 1;
-                                            Log.d("myTag", "mini Exception dans la liste");
                                         }
                                     }
 
@@ -656,7 +654,6 @@ public class ListTypeFragment extends Fragment {
                                             }
                                         } catch (Exception e) {
                                             flagKo = 1;
-                                            Log.d("myTag", "mini Exception dans la liste");
                                         }
                                     }
 

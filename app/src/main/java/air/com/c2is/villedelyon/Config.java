@@ -100,8 +100,8 @@ public class Config {
 
     public static String urlMeteo = "http://www.meteorologic.net/webmaster/xml/xml_file_27595.xml";
 
-    //public static String urlDomaine = "http://appvilledelyon.c2is.fr/";
-    public static String urlDomaine = "http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/";
+    public static String urlDomaine = "http://appvilledelyon.c2is.fr/";
+    //public static String urlDomaine = "http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/";
     public static String urlDomaineEvt = "http://appvilledelyon.c2is.fr/";
 
     public static String slugTeteOr = "tete-or";
