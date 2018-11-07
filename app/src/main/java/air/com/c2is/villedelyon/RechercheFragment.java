@@ -20,9 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -55,9 +52,6 @@ public class RechercheFragment extends Fragment {
     public int flagFirstDatePicker = 0;
     public ImageButton btFermerPicker;
 
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
-
     public RechercheFragment() {
     }
 
@@ -70,11 +64,6 @@ public class RechercheFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Recherche agenda");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         View rootView       = inflater.inflate(R.layout.fragment_recherche_evt, container, false);
 

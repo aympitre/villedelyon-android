@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -53,11 +54,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class MainActivity extends Activity {
     public LinearLayout layChargement;
@@ -72,12 +68,8 @@ public class MainActivity extends Activity {
     AlarmManager am;
     public int flagNotif;
 
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
-
     final static private long ONE_SECOND = 1000;
     final static private long TPSALARM = ONE_SECOND * 10;
-    public GoogleCloudMessaging gcm;
     private AlarmManagerBroadcastReceiver alarm;
 
     /**
@@ -88,29 +80,17 @@ public class MainActivity extends Activity {
             @Override
             protected String doInBackground(Void... params) {
                 String msg = "";
+                /*
                 try {
-                    if (gcm == null) {
-                        gcm = GoogleCloudMessaging.getInstance(Config.myActu.getApplicationContext());
-                    }
-                    String regId = gcm.register("228960025800");
-                    msg = "Terminal enregistré, register ID=" + regId;
-
-                    Log.d("myTag", msg);
-
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("notif_vdl", regId);
-                    editor.commit();
-
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
 
-                    URL url = new URL("http://appvilledelyon.c2is.fr/register_app.php?token=" + regId);
-                    URLConnection connection2 = url.openConnection();
 
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
                     Log.d("myTag", msg);
                 }
+                */
                 return msg;
             }
         }.execute(null, null, null);
@@ -128,11 +108,30 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*
         analytics = GoogleAnalytics.getInstance(this);
         analytics.setLocalDispatchPeriod(1800);
         tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
         tracker.setScreenName("/Accueil");
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+*/
+
+        Intent myIntent = getIntent();
+        String notification = myIntent.getStringExtra("notification");
+
+        if (notification!=null) {
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.ic_notif)
+                    .setTitle("Notification")
+                    .setMessage(notification)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+
+                    })
+                    .show();
+        }
 
         alarm = new AlarmManagerBroadcastReceiver();
         super.onCreate(savedInstanceState);
@@ -182,7 +181,7 @@ public class MainActivity extends Activity {
 
         String regId = getRegistrationId(getApplicationContext());
         if (TextUtils.isEmpty(regId)) {
-            registerInBackground();
+           // registerInBackground();
         }
 
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "Oswald-Regular.ttf");
@@ -343,6 +342,18 @@ public class MainActivity extends Activity {
         Config.flagDemarche = 0;
         Config.flagForceRetour = 0;
         Config.flagBisRetour = 0;
+    }
+
+    public void showNotif(String p_param) {
+        Config.debugMe("je suis la");
+
+        ((Button) findViewById(R.id.bt_infos_utiles)).setVisibility(View.GONE);
+
+        /*
+        DialogAlerte myDial = new DialogAlerte(this);
+        myDial.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        myDial.show();
+*/
     }
 
     public void goReveilOn() {

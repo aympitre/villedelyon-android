@@ -20,9 +20,6 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -45,18 +42,11 @@ public class ResVie extends Activity {
     public TextView myChargementText;
     public TextView myAucunText;
     public ArrayList<HashMap<String, Object>> listItems;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
     public int nbeResultat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         nbeResultat = 0;
-        analytics   = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Resultat recherche lyon ville equitable");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_res_marche);
@@ -267,20 +257,20 @@ public class ResVie extends Activity {
                                 mapping.put("titre", listNode.item(j).getTextContent());
 
                             }else if(listNode.item(j).getNodeName().equals("arrondissement")){
-
-                                if ((Config.str_marche_arrondissement != 0)&&(Config.str_marche_arrondissement != 10)) {
-                                    try {
-                                        if (!listNode.item(j).getTextContent().equals(String.valueOf(Config.str_marche_arrondissement))) {
-                                            flagOk = 0;
-                                        }
-                                    } catch (Exception e) {
-                                    }
-                                }
                                 mapping.put("arrondissement", listNode.item(j).getTextContent());
 
                             }else if(listNode.item(j).getNodeName().equals("adresse")){
                                 mapping.put("adresse", listNode.item(j).getTextContent());
                             }else if(listNode.item(j).getNodeName().equals("code_postal")){
+                                if ((Config.str_marche_arrondissement != 0)&&(Config.str_marche_arrondissement != 10)) {
+                                    try {
+                                        if (!listNode.item(j).getTextContent().equals("6900" + String.valueOf(Config.str_marche_arrondissement))) {
+                                            flagOk = 0;
+                                        }
+                                    } catch (Exception e) {
+                                    }
+                                }
+
                                 mapping.put("code_postal", listNode.item(j).getTextContent());
                             }else if(listNode.item(j).getNodeName().equals("ville")){
                                 mapping.put("ville", listNode.item(j).getTextContent());

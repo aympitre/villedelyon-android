@@ -22,9 +22,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -57,8 +54,6 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
     public int flagDirectEquipement;
     public Spinner spinnerJour;
     public Spinner spinnerTheme;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
     public ArrayList<HashMap<String, Object>> tabCategorie;
     public String[] arraySpinner;
 
@@ -80,11 +75,6 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Recherche ville equitable");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_recherche_vie);
@@ -335,9 +325,6 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
 
                 try {
                     URL url = new URL(Config.urlDomaine + "types.php?annuaire=label-lyon-ville-equitable-et-durable");
-
-                    //  URL url = new URL("http://c2is:c2is@prep.c2is.fr/appvilledelyon/current/types.php?annuaire=label-lyon-ville-equitable-et-durable");
-
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());
@@ -353,17 +340,7 @@ public class RechercheVieFragment extends android.support.v4.app.FragmentActivit
                         NodeList listNode   = courant.getChildNodes();
                         for(int j=0; j<listNode.getLength();j++) {
                             if(listNode.item(j).getNodeName().equals("name")){
-
                                 list.add(listNode.item(j).getTextContent());
-/*
-                                String[] parts = listNode.item(j).getTextContent().split(";");
-
-                                for(int k=0;k<parts.length;k++) {
-                                    if (checkInList(parts[k])==0) {
-                                        list.add(parts[k]);
-                                    }
-                                }
-*/
                             }
                         }
                     }

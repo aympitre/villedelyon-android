@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,13 +19,12 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -34,19 +35,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FragmentCarte extends FragmentActivity {
+public class FragmentCarte extends FragmentActivity implements OnMapReadyCallback {
     protected GoogleMap mMap;
     public String tempMarker;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Liste cartographie");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_carte);
@@ -169,21 +163,21 @@ public class FragmentCarte extends FragmentActivity {
         editor.commit();
     }
 
-    private void setUpMapIfNeeded() {
-        if (mMap == null) {
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            if (mMap != null) {
-                setUpMap();
-            }
 
-            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-                public void onMapLoaded() {
-                    zoomTheMap();
-                }
-            });
-        }
- }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+
+        setUpMap();
+        zoomTheMap();
+    }
+
+    private void setUpMapIfNeeded() {
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
 
     public void gotoEquipement(String p_titre) {
         for (int i=0;i<Config.pointCarto.size();i++) {
@@ -211,7 +205,11 @@ public class FragmentCarte extends FragmentActivity {
 
 
     private void setUpMap() {
-        mMap.setMyLocationEnabled(true);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        }
 
         for (int i=0;i<Config.pointCarto.size();i++) {
             String temp = "" + Config.pointCarto.get(i).get("latitude");

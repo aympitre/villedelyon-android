@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 
@@ -39,9 +40,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 public class Actualite extends Activity {
 
@@ -54,16 +52,8 @@ public class Actualite extends Activity {
     public myAsyncTask2 myWebFetch;
     public int flag_load_fini = 0;
 
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Actualite");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actualite);
@@ -268,6 +258,7 @@ public class Actualite extends Activity {
 
                 try {
                     URL url = new URL(Config.urlDomaine+"actualites.php?limit="+Config.LIMIT_ACTU+"&version="+Config.VERSION_API);
+
                     URLConnection connection = url.openConnection();
 
                     Document doc = parseXML(connection.getInputStream());
@@ -284,14 +275,20 @@ public class Actualite extends Activity {
                         NodeList listNode = courant.getChildNodes();
                         for(int j=0; j<listNode.getLength();j++) {
                             if(listNode.item(j).getNodeName().equals("titre")){
-                                mapping.put("titreActu", listNode.item(j).getTextContent());
+                                if (android.os.Build.VERSION.SDK_INT >= 24) {
+                                    mapping.put("titreActu", Html.fromHtml(listNode.item(j).getTextContent(), Html.FROM_HTML_MODE_LEGACY).toString());
+                                }else{
+                                    mapping.put("titreActu", Config.killHtml(listNode.item(j).getTextContent()));
+                                }
 
                             }else if(listNode.item(j).getNodeName().equals("accroche_detaillee")){
-                                String temp = listNode.item(j).getTextContent();
-                                temp        = temp.replace("<p>","");
-                                temp        = temp.replace("</p>","");
 
-                                mapping.put("texte", temp);
+                                String strTexte = listNode.item(j).getTextContent();
+                                if (android.os.Build.VERSION.SDK_INT >= 24) {
+                                    mapping.put("texte", Html.fromHtml(strTexte, Html.FROM_HTML_MODE_LEGACY).toString());
+                                }else{
+                                    mapping.put("texte", Config.killHtml(strTexte));
+                                }
 
                             }else if(listNode.item(j).getNodeName().equals("visuel")){
                                 mapping.put("image", listNode.item(j).getTextContent());

@@ -26,11 +26,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
-
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -53,8 +48,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class FragmentDetailActualite extends android.support.v4.app.FragmentActivity {
     private DataBaseHelper myDbHelper;
     public ArrayList<HashMap<String, Object>> listItems;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
     public WebView myTexte;
     public ImageButton myAddFavoris;
     public int id_favoris;
@@ -73,11 +66,6 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Fiche detail actualite");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail_actualite);
@@ -192,7 +180,6 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
         myValue.put("url"            , Config.urlActu);
         myValue.put("xml_equipement" , "");
 
-
         id_favoris = (int) myDbHelper.insertFavorisActu(myValue);
     }
 
@@ -209,16 +196,16 @@ public class FragmentDetailActualite extends android.support.v4.app.FragmentActi
 
             try {
                 String retour   = doc.outerHtml().toString();
-                int dep         = retour.indexOf("alaune_detail_chapo");
+                int dep         = retour.indexOf("</h1>");
 
                 if (dep==-1) {
                     dep         = retour.indexOf("alaune_detail_actu");
                 }
-                int fin         = retour.indexOf("milieu_colonne_droite");
+                int fin         = retour.indexOf("</section>");
 
-                retour = retour.substring(dep+21,fin);
+                retour = retour.substring(dep+5,fin);
 
-                myTexte.loadDataWithBaseURL(null, "<head><base href='http://www.lyon.fr/' target='_blank'></head>"+retour.replace("Et aussi...","<!--"), "text/html", "UTF-8", null);
+                myTexte.loadDataWithBaseURL(null, "<head><base href='https://www.lyon.fr/' target='_blank'><style>.sr-only {display:none} .img-responsive {display:none}</style></head>"+retour.replace("Et aussi...","<!--"), "text/html", "UTF-8", null);
             } catch (Exception e) {
                 myTexte.loadDataWithBaseURL(null, "<br>Problème de connexion à lyon.fr.", "text/html", "UTF-8", null);
 

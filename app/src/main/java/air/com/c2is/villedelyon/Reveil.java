@@ -27,9 +27,6 @@ import android.widget.TimePicker;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -66,17 +63,9 @@ public class Reveil extends Activity {
     public TimePicker   myTime;
     public Button       btHorloge;
     public Button       btAlarme;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Reveil");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         Config.myReveil = this;
 
         super.onCreate(savedInstanceState);

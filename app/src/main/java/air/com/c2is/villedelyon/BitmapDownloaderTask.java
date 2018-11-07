@@ -24,8 +24,7 @@ public class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
     	
     	  try {
 	        	URL pictureURL = new URL(params[0]);
-	        	 
-	        	Bitmap bitmap = BitmapFactory.decodeStream(pictureURL.openStream());
+                Bitmap bitmap = BitmapFactory.decodeStream(pictureURL.openStream());
 
 	        	return bitmap;
 	             

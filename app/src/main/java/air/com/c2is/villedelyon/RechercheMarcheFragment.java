@@ -17,9 +17,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,8 +38,6 @@ public class RechercheMarcheFragment extends android.support.v4.app.FragmentActi
     public Spinner spinnerArrondissement;
     public Spinner spinnerJour;
     public Spinner spinnerTheme;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     public RechercheMarcheFragment() {
     }
@@ -58,12 +53,6 @@ public class RechercheMarcheFragment extends android.support.v4.app.FragmentActi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Recherche marche");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_recherche_marche);
 

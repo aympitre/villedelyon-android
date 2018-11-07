@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "526949724292",
+    "firebase_url": "https://ville-de-lyon.firebaseio.com",
+    "project_id": "ville-de-lyon",
+    "storage_bucket": "ville-de-lyon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526949724292:android:e93aad01d062308f",
+        "android_client_info": {
+          "package_name": "air.com.c2is.villedelyon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526949724292-8tll4s7ga1t58kuuvpk2vcupv1ii62ut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "air.com.c2is.villedelyon",
+            "certificate_hash": "cdfd47895c9b5cefe9997a8c81379a79c002285c"
+          }
+        },
+        {
+          "client_id": "526949724292-ggubth9qioijf9t22ou1ammmctfc6jor.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_-KbilH0lerdJbihVr8tLy33yAiy0bmM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526949724292-ggubth9qioijf9t22ou1ammmctfc6jor.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

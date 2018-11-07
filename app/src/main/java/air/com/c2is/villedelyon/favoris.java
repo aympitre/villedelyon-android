@@ -14,22 +14,11 @@ import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.FacebookSdk;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 public class favoris extends android.support.v4.app.FragmentActivity {
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Favoris");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favoris_type);
 

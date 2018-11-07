@@ -45,9 +45,6 @@ import java.nio.charset.Charset;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -93,8 +90,6 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
     public WebView description;
     public ImageButton btLegende;
     public int flagMap = 0;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     public String urlAuto = "https://download.data.grandlyon.com/wfs/grandlyon?SERVICE=WFS&VERSION=2.0.0&outputformat=GEOJSON&maxfeatures=30&request=GetFeature&typename=pvo_patrimoine_voirie.pvostationautopartage";
     public String urlParking = "http://appvilledelyon.c2is.fr/opendata.php?flag=1";
@@ -117,28 +112,15 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
             if (permissions.length == 1 &&
                     permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mMap.setMyLocationEnabled(true);
+             //   mMap.setMyLocationEnabled(true);
             }
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
 
         myDialLoading = new DialogLoading(this);
-
-        if (Config.MENU_ACTIVITE == 2) {
-            tracker.setScreenName("/Se deplacer à velo");
-        } else if (Config.MENU_ACTIVITE == 3) {
-            tracker.setScreenName("/Se deplacer en voiture");
-        } else {
-            tracker.setScreenName("/Se deplacer à pied");
-        }
-
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_se_deplacer);
@@ -788,38 +770,10 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         Config.showAlertNotif(this);
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
     private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
-
-            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-                public void onMapLoaded() {
-                    zoomTheMap();
-                }
-            });
-        }
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
 
@@ -914,8 +868,8 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
 
     public void showMapVeloFromPicto() {
         if (mMap == null) {
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
+//            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+  //                  .getMap();
         }
         mMap.clear();
 
@@ -980,11 +934,13 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
 
     public void showMapVoitureFromPicto() {
         if (mMap == null) {
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+/*            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
+                    */
         }
         mMap.clear();
 
+        Log.wtf("myTag", "flagPicto1 : " + flagPicto1);
         Log.wtf("myTag", "flagPicto2 : " + flagPicto2);
         Log.wtf("myTag", "flagPicto3 : " + flagPicto3);
         Log.wtf("myTag", "flagPicto4 : " + flagPicto4);
@@ -1046,6 +1002,7 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
         // PARKINGS
         if (flagPicto1 == 1) {
             try {
+                Log.wtf("myTag", "mon taille parking : " + contactsParking.length());
                 for (int i = 0; i < contactsParking.length(); i++) {
 
                     JSONObject c = contactsParking.getJSONObject(i);
@@ -1281,12 +1238,12 @@ public class SeDeplacer extends FragmentActivity implements OnMapReadyCallback, 
 
                         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_parking));
 
-
                         markerOptions.position(new LatLng(g.getJSONArray("coordinates").getDouble(1), g.getJSONArray("coordinates").getDouble(0)));
                         markerOptions.title(Config.formatCharFlux(nom));
 
                         markerOptions.snippet(etat + " sur " + nbeEmpl + " emplacements");
-                        //                  Log.d("myTag", nom + etat + "sur" + nbeEmpl + " emplacements");
+
+                        Log.wtf("myTag", ">>" + g);
 
                         mMap.addMarker(markerOptions);
                         markerActu = markerOptions;

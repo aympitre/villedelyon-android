@@ -18,23 +18,12 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 
 public class LeSaviezVousDetail extends Activity {
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Le saviez vous detail : " + Config.titre_savoir);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_le_saviez_vous_detail);
 

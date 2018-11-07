@@ -20,9 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,8 +31,6 @@ import java.util.HashMap;
 public class FragmentDetailIncontournable extends android.support.v4.app.FragmentActivity {
     private DataBaseHelper myDbHelper;
     public ArrayList<HashMap<String, Object>> listItems;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     public FragmentDetailIncontournable() {
     }
@@ -51,12 +46,6 @@ public class FragmentDetailIncontournable extends android.support.v4.app.Fragmen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Fiche detail incontournable : " + Config.myContentValue.get("titre").toString());
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail_inc);
         Config.myDetailIncontournable = this;

@@ -24,9 +24,6 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -47,17 +44,9 @@ public class LeSaviezVous extends Activity {
     public ListView mylistview;
     public LinearLayout myChargement;
     public ArrayList<HashMap<String, Object>> listItems;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Le saviez vous");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_le_saviez_vous);
 

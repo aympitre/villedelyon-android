@@ -13,10 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,8 +24,6 @@ public class FragmentDetailBalade extends Fragment {
     private DataBaseHelper myDbHelper;
     public ArrayList<HashMap<String, Object>> listItems;
     public View rootView;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     public FragmentDetailBalade() {
     }
@@ -37,11 +31,6 @@ public class FragmentDetailBalade extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Fiche detail balade : " + Config.myContentValue.get("titre").toString());
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         rootView            = inflater.inflate(R.layout.fragment_detail_balade, container, false);
         Typeface myTypeface = Typeface.createFromAsset(Config.myHome.getAssets(), "Oswald-Regular.ttf");

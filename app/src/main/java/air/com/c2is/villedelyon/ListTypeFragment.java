@@ -26,9 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -68,16 +65,12 @@ public class ListTypeFragment extends Fragment {
     public int flagDirectEquipement;
     public myAsyncTask2 myWebFetch;
     public GPSTracker gps;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     public ListTypeFragment() {
     }
 
 
     public void setGoogleAnalytics() {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
 
         String str_tag = "";
         if (Config.MENU_ACTIVITE == 1) {
@@ -107,9 +100,6 @@ public class ListTypeFragment extends Fragment {
             }
         }
 
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Liste : " + str_tag);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

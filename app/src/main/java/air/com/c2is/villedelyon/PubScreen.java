@@ -12,28 +12,16 @@ import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 public class PubScreen extends Activity {
 
     private static String TAG       = PubScreen.class.getName();
     private static long SLEEP_TIME  = 3;    // Sleep for some time
     public int flagNoSuite          = 0;
     public SharedPreferences sharedPref;
-    public static GoogleAnalytics   analytics;
-    public static Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Splashscreen pub");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);    // Removes title bar
@@ -55,11 +43,6 @@ public class PubScreen extends Activity {
         btMain.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        tracker.send(new HitBuilders.EventBuilder()
-                                .setCategory("liens")
-                                .setAction("click_out")
-                                .setLabel("pub_splashcreen")
-                                .build());
 
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.url_pub));
                         startActivity(browserIntent);

@@ -31,12 +31,10 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -62,7 +60,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FragmentDetailEquipement extends android.support.v4.app.FragmentActivity {
+public class FragmentDetailEquipement extends android.support.v4.app.FragmentActivity implements OnMapReadyCallback {
     private DataBaseHelper myDbHelper;
     public RelativeLayout layBtFermerCarte;
     public ListView mylistview;
@@ -82,8 +80,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
     public float longitude;
     public Timer myTimer;
     public GoogleMap mMap;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
     public String myAdresse;
     public String myVille;
     public String myCp;
@@ -91,8 +87,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail_equipement);
@@ -106,6 +100,10 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         Button myMenu1 = (Button) findViewById(R.id.bt_menu1);
         Button myMenu2 = (Button) findViewById(R.id.bt_menu2);
         Button myMenu3 = (Button) findViewById(R.id.bt_menu3);
+
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         if (Config.flagFromFavoris == 1) {
             LinearLayout layMenu = (LinearLayout) findViewById(R.id.layMenu);
@@ -349,6 +347,13 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         }
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+    }
+
+
     public void goReveilOn() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_notif)
@@ -426,8 +431,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
 
     public void centerTheMap() {
         if (latitude != 0) {
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.picto_map));
 
             if (myPicto!=null) {
@@ -686,9 +689,6 @@ public class FragmentDetailEquipement extends android.support.v4.app.FragmentAct
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-            tracker.setScreenName("/Fiche detail equipement : " + libEquip);
-            tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
             myTitreEquipement.setText(Config.formatLastWord(libEquip));
 

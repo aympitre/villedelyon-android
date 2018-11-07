@@ -14,9 +14,6 @@ import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.FacebookSdk;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -43,9 +40,13 @@ import org.apache.http.NameValuePair;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
 import org.apache.http.message.BasicNameValuePair;
+
 import java.util.ArrayList;
+
 import android.util.Base64;
+
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.auth.UsernamePasswordCredentials;
 
@@ -56,7 +57,8 @@ public class JSONParser {
     static String json = "";
 
     // constructor
-    public JSONParser() {}
+    public JSONParser() {
+    }
 
     public JSONObject getJSONFromUrl(String url) {
         // Making HTTP request
@@ -88,7 +90,7 @@ public class JSONParser {
         // try parse the string to a JSON object
         try {
             jObj = new JSONObject(json);
-            Log.wtf("myTag","retour json : " + jObj.get("name").toString());
+            Log.wtf("myTag", "retour json : " + jObj.get("name").toString());
         } catch (JSONException e) {
             Log.wtf("myTag", "Error parsing data " + e.toString() + '/' + json);
         }

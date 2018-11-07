@@ -74,12 +74,6 @@ import android.support.v4.graphics.BitmapCompat;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import android.widget.RadioButton;
 import android.view.View.OnFocusChangeListener;
@@ -99,8 +93,6 @@ import org.w3c.dom.NodeList;
 
 public class FormAlerte extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
     public Switch myGeoloc;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     public ImageView imgPreview;
     public LinearLayout myLayConfKo;
@@ -160,15 +152,10 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
+//    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Formulaire alerte");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         myDialLoading = new DialogLoading(this);
         myDialOk = new DialogOk(this);
@@ -680,6 +667,8 @@ public class FormAlerte extends Activity implements ActivityCompat.OnRequestPerm
         } else {
             goAlertePhp();
         }
+
+        goAlertePhp();
     }
 
 

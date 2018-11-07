@@ -188,6 +188,10 @@ public class Config {
         }
     }
 
+    public static void debugMe(String p_param) {
+        Log.wtf("myTag", p_param);
+    }
+
     public static int paddingToPixel(int p_padding, Activity p_activite) {
         final float scale = p_activite.getResources().getDisplayMetrics().density;
         int pixels = (int) (p_padding * scale + 0.5f);

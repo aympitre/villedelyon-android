@@ -21,24 +21,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 
 public class Parametre extends Activity {
     public Switch myGeoloc;
     public SharedPreferences sharedPref;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Parametre");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         Config.myParametre = this;
 

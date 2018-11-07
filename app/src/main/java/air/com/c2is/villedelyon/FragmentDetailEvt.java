@@ -45,9 +45,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -57,8 +54,6 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
     public ArrayList<HashMap<String, Object>> listItems;
     public String idToLoad;
     public Button btEquipement;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
     public ImageButton myAddFavoris;
     public int id_favoris;
 
@@ -105,12 +100,6 @@ public class FragmentDetailEvt extends android.support.v4.app.FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(Config.myHome.getBaseContext());
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Fiche detail evenement : " + Config.myContentValue.get("titre").toString());
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail_evt);
         Config.myDetailEvt = this;

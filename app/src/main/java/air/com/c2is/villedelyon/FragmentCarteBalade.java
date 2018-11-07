@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,11 +20,9 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,10 +37,8 @@ import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FragmentCarteBalade extends FragmentActivity {
+public class FragmentCarteBalade extends FragmentActivity implements OnMapReadyCallback {
     protected GoogleMap mMap;
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
     public String tempMarker;
     public LatLng firstLocation = null;
     public LatLng oldLocation;
@@ -51,11 +49,6 @@ public class FragmentCarteBalade extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_id));
-        tracker.setScreenName("/Carto balade");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_carte);
@@ -120,6 +113,15 @@ public class FragmentCarteBalade extends FragmentActivity {
     }
 
     @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+
+        setUpMap();
+        zoomTheMap();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
 
@@ -139,22 +141,9 @@ public class FragmentCarteBalade extends FragmentActivity {
     }
 
     private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
-
-            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-                public void onMapLoaded() {
-                    zoomTheMap();
-                }
-            });
-        }
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     public void goReveilOn() {
@@ -187,7 +176,12 @@ public class FragmentCarteBalade extends FragmentActivity {
     }
 
     private void setUpMap() {
-        mMap.setMyLocationEnabled(true);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        }
+
 
         String str_point = Config.myContentValue.get("points").toString();
 
